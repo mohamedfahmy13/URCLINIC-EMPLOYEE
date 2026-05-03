@@ -10,6 +10,16 @@ import '../screens/clinic/add_clinic_form/model/clinic_session_response.dart';
 import '../utils/api_end_points.dart';
 
 class DoctorApis {
+  static List<int> _normalizeIds(dynamic rawIds) {
+    if (rawIds is List) {
+      return rawIds
+          .map((e) => e.toString().toInt(defaultValue: -1))
+          .where((id) => id > 0)
+          .toList();
+    }
+    return <int>[];
+  }
+
   static Future<CommissionListRes> getCommission() async {
     return CommissionListRes.fromJson(await handleResponse(
         await buildHttpResponse(APIEndPoints.doctorCommissionList)));
@@ -31,9 +41,10 @@ class DoctorApis {
     final Map<String, dynamic> fields = Map<String, dynamic>.from(request);
     final String? qualificationsJson = fields.remove('qualifications');
 
-    List<int> clinicIds = fields.remove('clinic_id') ?? [];
-    List<int> serviceIds = fields.remove('service_id') ?? [];
-    List<int> commissionIds = fields.remove('commission_id') ?? [];
+    final List<int> clinicIds = _normalizeIds(fields.remove('clinic_id'));
+    final List<int> serviceIds = _normalizeIds(fields.remove('service_id'));
+    final List<int> commissionIds =
+        _normalizeIds(fields.remove('commission_id'));
 
     multiPartRequest.fields.addAll(await getMultipartFields(val: fields));
 

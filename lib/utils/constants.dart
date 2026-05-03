@@ -14,7 +14,7 @@ class Constants {
   static var googleMapPrefix =
       'https://www.google.com/maps/search/?api=1&query=';
   static const DEFAULT_EMAIL = 'vendor@kivicare.com';
-  static const DEFAULT_PASS = '12345678';
+  static const DEFAULT_PASS = '132001gG?';
   static const appLogoSize = 120.0;
   static const DECIMAL_POINT = 2;
 }

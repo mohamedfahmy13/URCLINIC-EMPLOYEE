@@ -6,14 +6,11 @@ class AddDoctorReq {
   String firstName;
   String lastName;
   String email;
-  String password;
-  String confirmPassword;
   String gender;
   String mobile;
   List<int> clinicId;
   String status;
   List<int> serviceId;
-  List<int> commissionId;
   String aboutSelf;
   String expert;
   String facebookLink;
@@ -28,21 +25,17 @@ class AddDoctorReq {
   String latitude;
   String longitude;
   String experience;
-  String signature;
   List<QualificationModel> qualifications;
 
   AddDoctorReq({
     this.firstName = "",
     this.lastName = "",
     this.email = "",
-    this.password = "",
-    this.confirmPassword = "",
     this.gender = "",
     this.mobile = "",
     this.clinicId = const [],
     this.status = "",
     this.serviceId = const [],
-    this.commissionId = const [],
     this.aboutSelf = "",
     this.expert = "",
     this.facebookLink = "",
@@ -57,7 +50,6 @@ class AddDoctorReq {
     this.latitude = "",
     this.longitude = "",
     this.experience = "",
-    this.signature = "",
     this.qualifications = const <QualificationModel>[],
   });
 
@@ -66,14 +58,11 @@ class AddDoctorReq {
       'first_name': firstName,
       'last_name': lastName,
       'doctor_email': email,
-      'password': password,
-      'confirm_password': confirmPassword,
       'gender': gender,
       'mobile': mobile,
       'clinic_id': clinicId,
       'status': status,
       'service_id': serviceId,
-      'commission_id': commissionId,
       'about_self': aboutSelf,
       'expert': expert,
       'facebook_link': facebookLink,
@@ -88,8 +77,8 @@ class AddDoctorReq {
       'latitude': latitude,
       'longitude': longitude,
       'experience': experience,
-      'signature': signature,
-      'qualifications': jsonEncode(qualifications.map((e) => e.toJson()).toList()),
+      'qualifications':
+          jsonEncode(qualifications.map((e) => e.toJson()).toList()),
     };
   }
 }

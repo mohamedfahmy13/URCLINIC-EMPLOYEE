@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:signature/signature.dart';
 import 'package:kivicare_clinic_admin/utils/colors.dart';
 import '../../../api/core_apis.dart';
@@ -429,7 +430,10 @@ class AddDoctorController extends GetxController {
 
   void setCommissionContValue(
       {required List<CommissionElement> commissionList}) {
-    commissionIds(commissionList.map((e) => e.id).toList());
+    commissionIds(commissionList
+        .where((e) => e.isSelected.value)
+        .map((e) => e.id)
+        .toList());
     commissionCont.text = commissionList
         .where((e) => e.isSelected.value)
         .map((e) =>
@@ -489,18 +493,25 @@ class AddDoctorController extends GetxController {
   Future<void> addDoctor() async {
     isLoading(true);
     hideKeyBoardWithoutContext();
+    final String localImagePath = imageFile.value.path.trim();
+    final bool hasLocalImage = localImagePath.isNotEmpty;
+
+    if (hasLocalImage && !File(localImagePath).existsSync()) {
+      imageFile(File(""));
+      isLoading(false);
+      toast(locale.value.pleaseSelectADoctorImage);
+      return;
+    }
+
     final AddDoctorReq addDoctorReq = AddDoctorReq(
       firstName: firstNameCont.text.trim(),
       lastName: lastNameCont.text.trim(),
       email: emailCont.text.trim(),
-      password: passwordCont.text.trim(),
-      confirmPassword: confirmPasswordCont.text.trim(),
       gender: selectedGender.value.slug,
       mobile: "+${pickedPhoneCode.value.phoneCode} ${phoneCont.text.trim()}",
       clinicId: clinicIds,
       status: status.value.getIntBool().toString(),
       serviceId: serviceIds,
-      commissionId: commissionIds,
       aboutSelf: aboutSelfCont.text,
       expert: expertCont.text,
       facebookLink: fbCont.text.trim(),
@@ -515,15 +526,58 @@ class AddDoctorController extends GetxController {
       latitude: latCont.text.trim(),
       longitude: lonCont.text.trim(),
       experience: experienceCont.text,
-      signature: signatureCont.value.text,
       qualifications: qualifications,
     );
+    final Map<String, dynamic> doctorRequest = addDoctorReq.toJson();
+
+    List<int> selectedCommissionIds = commissionList
+        .where((item) => item.isSelected.value)
+        .map((item) => item.id)
+        .toList();
+
+    if (selectedCommissionIds.isEmpty &&
+        doctorData.value.commissions.isNotEmpty) {
+      selectedCommissionIds = doctorData.value.commissions
+          .map((item) => item.commissionId)
+          .where((id) => id > 0)
+          .toList();
+    }
+
+    if (selectedCommissionIds.isEmpty && commissionList.isNotEmpty) {
+      selectedCommissionIds = [commissionList.first.id];
+    }
+
+    if (selectedCommissionIds.isEmpty) {
+      await getCommission();
+      selectedCommissionIds = commissionList
+          .where((item) => item.isSelected.value)
+          .map((item) => item.id)
+          .toList();
+      if (selectedCommissionIds.isEmpty && commissionList.isNotEmpty) {
+        selectedCommissionIds = [commissionList.first.id];
+      }
+    }
+
+    if (selectedCommissionIds.isEmpty) {
+      isLoading(false);
+      toast(locale.value.noCommissionFound);
+      return;
+    }
+
+    doctorRequest['commission_id'] = selectedCommissionIds;
+    for (int i = 0; i < selectedCommissionIds.length; i++) {
+      doctorRequest['commission_id[$i]'] = selectedCommissionIds[i].toString();
+    }
+    if (!isEdit.value) {
+      doctorRequest['password'] = Constants.DEFAULT_PASS;
+      doctorRequest['confirm_password'] = Constants.DEFAULT_PASS;
+    }
 
     DoctorApis.addDoctor(
       isEdit: isEdit.value,
-      request: addDoctorReq.toJson(),
+      request: doctorRequest,
       doctorId: doctorData.value.doctorId,
-      files: imageFile.value.path.isNotEmpty ? [imageFile.value] : null,
+      files: hasLocalImage ? [imageFile.value] : null,
     ).then((resp) {
       // log("Add  $resp");
       if (isEdit.value && doctorData.value.doctorId == loginUserData.value.id) {
@@ -551,8 +605,14 @@ class AddDoctorController extends GetxController {
     Get.back();
     pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      doctorImage('');
-      imageFile(File(pickedFile!.path));
+      try {
+        final File stableFile = await _persistPickedImage(pickedFile!);
+        doctorImage('');
+        imageFile(stableFile);
+      } on FileSystemException catch (e) {
+        log("Gallery image persist error: $e");
+        toast(locale.value.pleaseSelectADoctorImage);
+      }
     }
   }
 
@@ -560,9 +620,28 @@ class AddDoctorController extends GetxController {
     Get.back();
     pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      doctorImage('');
-      imageFile(File(pickedFile!.path));
+      try {
+        final File stableFile = await _persistPickedImage(pickedFile!);
+        doctorImage('');
+        imageFile(stableFile);
+      } on FileSystemException catch (e) {
+        log("Camera image persist error: $e");
+        toast(locale.value.pleaseSelectADoctorImage);
+      }
     }
+  }
+
+  Future<File> _persistPickedImage(XFile sourceFile) async {
+    final Directory tempDir = await getTemporaryDirectory();
+    final String sourcePath = sourceFile.path;
+    final String extension =
+        sourcePath.contains('.') ? '.${sourcePath.split('.').last}' : '.jpg';
+    final String fileName =
+        'doctor_${DateTime.now().millisecondsSinceEpoch}$extension';
+    final File copiedFile = await File(sourcePath).copy(
+      '${tempDir.path}/$fileName',
+    );
+    return copiedFile;
   }
 
   void showImagePicker(BuildContext context) {
