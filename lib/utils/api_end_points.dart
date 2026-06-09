@@ -52,7 +52,7 @@ class APIEndPoints {
   static const String getCategoryList = 'get-category-list';
   static const String doctorCommissionList = 'doctor-commission-list';
   static const String pharmaCommissionList = 'pharma/pharma-commission-list';
-  static const String addService = 'service';
+  static const String addService = 'save-clinic-service';
   static const String getRequestList = 'get-request-service';
   static const String saveRequestService = 'save-request-service';
   static const String getReceptionistList = 'get-receptionists';

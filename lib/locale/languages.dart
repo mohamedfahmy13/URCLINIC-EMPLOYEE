@@ -1762,4 +1762,33 @@ abstract class BaseLanguage {
   String get bedEditedSuccessfully;
 
   String get bedSavedSuccessfully;
+
+  // Create Service
+  String get createService;
+
+  String get nameInArabic;
+
+  String get nameInArabicHint;
+
+  String get descriptionInArabic;
+
+  String get descriptionInArabicHint;
+
+  String get serviceType;
+
+  String get serviceCreatedSuccessfully;
+
+  String get serviceUpdatedSuccessfully;
+
+  String get pleaseSelectType;
+
+  String get pleaseEnterServiceName;
+
+  String get pleaseEnterServiceNameAr;
+
+  String get pleaseEnterDuration;
+
+  String get pleaseEnterDefaultPrice;
+
+  String get invalidEmailOrPassword;
 }

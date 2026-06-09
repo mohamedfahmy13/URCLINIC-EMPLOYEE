@@ -24,6 +24,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -45,8 +47,6 @@
 	<string>URCLINIC needs permission to save edited images and generated files to your photo library when requested by you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>URCLINIC needs photo library access so you can select and upload existing profile pictures and medical document images from your device.</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

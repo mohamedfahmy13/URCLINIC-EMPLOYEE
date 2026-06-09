@@ -4,6 +4,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_clinic_admin/screens/clinic/clinic_session/clinic_session_screen.dart';
 import 'package:kivicare_clinic_admin/screens/doctor/doctor_list_screen.dart';
 import 'package:kivicare_clinic_admin/screens/service/all_service_list_screen.dart';
+import 'package:kivicare_clinic_admin/screens/service/manage_service/add_service_controller.dart';
+import 'package:kivicare_clinic_admin/screens/service/manage_service/add_service_form.dart';
 import '../../../generated/assets.dart';
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
@@ -50,6 +52,22 @@ class ClinicDetailBtmComp extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16).visible(!loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist)),
+          SettingItemWidget(
+            title: locale.value.createService,
+            decoration: boxDecorationDefault(color: context.cardColor),
+            subTitle: locale.value.addService,
+            splashColor: transparentColor,
+            onTap: () {
+              if (Get.isRegistered<CreateServiceController>()) {
+                Get.delete<CreateServiceController>();
+              }
+              Get.to(() => AddServiceForm(), arguments: clinicData);
+            },
+            titleTextStyle: boldTextStyle(size: 14),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: appColorSecondary),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+          ).paddingTop(16).visible(false),
           SettingItemWidget(
             title: locale.value.doctors,
             decoration: boxDecorationDefault(color: context.cardColor),

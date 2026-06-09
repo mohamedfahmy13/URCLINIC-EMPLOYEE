@@ -93,6 +93,12 @@ class DoctorsListScreen extends StatelessWidget {
                               (index) {
                                 return Obx(() {
                                   final doctor = doctorsListCont.doctors[index];
+                                  if (doctor.id.isNegative &&
+                                      doctor.doctorId.isNegative &&
+                                      doctor.fullName.isEmpty &&
+                                      doctor.profileImage.isEmpty) {
+                                    return const SizedBox.shrink();
+                                  }
                                   return Stack(
                                     clipBehavior: Clip.none,
                                     children: [

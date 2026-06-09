@@ -2636,4 +2636,46 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get bedSavedSuccessfully => 'Bed Saved Successfully';
+
+  @override
+  String get createService => 'Create Service';
+
+  @override
+  String get nameInArabic => 'Name (Arabic)';
+
+  @override
+  String get nameInArabicHint => 'الاسم بالعربي';
+
+  @override
+  String get descriptionInArabic => 'Description (Arabic)';
+
+  @override
+  String get descriptionInArabicHint => 'الوصف بالعربي';
+
+  @override
+  String get serviceType => 'Type';
+
+  @override
+  String get serviceCreatedSuccessfully => 'Service created successfully';
+
+  @override
+  String get serviceUpdatedSuccessfully => 'Service updated successfully';
+
+  @override
+  String get pleaseSelectType => 'Please select a type';
+
+  @override
+  String get pleaseEnterServiceName => 'Please enter service name';
+
+  @override
+  String get pleaseEnterServiceNameAr => 'Please enter service name in Arabic';
+
+  @override
+  String get pleaseEnterDuration => 'Please enter duration in minutes';
+
+  @override
+  String get pleaseEnterDefaultPrice => 'Please enter default price';
+
+  @override
+  String get invalidEmailOrPassword => 'The email or password is incorrect.';
 }

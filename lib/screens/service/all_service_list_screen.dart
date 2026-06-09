@@ -13,6 +13,8 @@ import 'add_service_srceen.dart';
 import 'assing_doctor_screen.dart';
 import 'change_price_bottom_component.dart';
 import 'components/all_service_card.dart';
+import 'manage_service/add_service_controller.dart';
+import 'manage_service/add_service_form.dart';
 import 'manage_service/search_service_widget.dart';
 import 'all_service_list_controller.dart';
 
@@ -39,6 +41,27 @@ class AllServicesScreen extends StatelessWidget {
                 size: 28, color: Colors.white),
           ).paddingOnly(right: 8).visible(
               loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)),
+          IconButton(
+            tooltip: locale.value.createService,
+            onPressed: () {
+              if (Get.isRegistered<CreateServiceController>()) {
+                Get.delete<CreateServiceController>();
+              }
+              Get.to(
+                () => AddServiceForm(),
+                arguments: serviceListCont.clinicData.value.id.isNegative
+                    ? null
+                    : serviceListCont.clinicData.value,
+              )?.then((value) {
+                if (value == true) {
+                  serviceListCont.page(1);
+                  serviceListCont.getAllServices();
+                }
+              });
+            },
+            icon: const Icon(Icons.add_circle_outline_rounded,
+                size: 28, color: Colors.white),
+          ).paddingOnly(right: 8).visible(false),
         ],
         body: SizedBox(
           height: Get.height,

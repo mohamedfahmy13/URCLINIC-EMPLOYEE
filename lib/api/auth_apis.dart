@@ -64,6 +64,10 @@ class AuthServiceApis {
       notifications.addAll(notificationRes.notificationData);
       lastPageCallBack
           ?.call(notificationRes.notificationData.length != perPage);
+      if (notificationRes.allUnreadCount >= 0) {
+        unreadNotificationCount.value =
+            isReadAll ? 0 : notificationRes.allUnreadCount;
+      }
       return notifications;
     } else {
       return [];

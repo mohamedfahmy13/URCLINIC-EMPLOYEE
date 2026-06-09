@@ -1,0 +1,363 @@
+{
+  "info": {
+    "name": "UrClinic API",
+    "description": "Postman collection for UrClinic Laravel API. Set the `base_url` variable to your server (e.g. http://localhost/urclinic/public) and `token` to a Sanctum bearer token after login.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "urclinic-api-collection"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost/urclinic/public", "type": "string" },
+    { "key": "token", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Register", "request": { "method": "POST", "header": [{"key":"Accept","value":"application/json"}], "body": {"mode":"urlencoded","urlencoded":[{"key":"name","value":""},{"key":"email","value":""},{"key":"password","value":""},{"key":"password_confirmation","value":""},{"key":"contact_number","value":""}]}, "url": { "raw": "{{base_url}}/api/register", "host": ["{{base_url}}"], "path": ["api","register"] } } },
+        { "name": "Login", "request": { "method": "POST", "header": [{"key":"Accept","value":"application/json"}], "body": {"mode":"urlencoded","urlencoded":[{"key":"email","value":""},{"key":"password","value":""}]}, "url": { "raw": "{{base_url}}/api/login", "host": ["{{base_url}}"], "path": ["api","login"] } } },
+        { "name": "Generate QR", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/generate-qr", "host": ["{{base_url}}"], "path": ["api","generate-qr"] } } },
+        { "name": "Verify", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/verify", "host": ["{{base_url}}"], "path": ["api","verify"] } } },
+        { "name": "OTP Resend", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"contact_number","value":""}]}, "url": { "raw": "{{base_url}}/api/otp-resend", "host": ["{{base_url}}"], "path": ["api","otp-resend"] } } },
+        { "name": "OTP Verify", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"contact_number","value":""},{"key":"otp","value":""}]}, "url": { "raw": "{{base_url}}/api/otp-verify", "host": ["{{base_url}}"], "path": ["api","otp-verify"] } } },
+        { "name": "Social Login", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/social-login", "host": ["{{base_url}}"], "path": ["api","social-login"] } } },
+        { "name": "Forgot Password", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"email","value":""}]}, "url": { "raw": "{{base_url}}/api/forgot-password", "host": ["{{base_url}}"], "path": ["api","forgot-password"] } } },
+        { "name": "Logout", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/logout", "host": ["{{base_url}}"], "path": ["api","logout"] } } },
+        { "name": "Check Contact", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"contact_number","value":""}]}, "url": { "raw": "{{base_url}}/api/check-contact", "host": ["{{base_url}}"], "path": ["api","check-contact"] } } },
+        { "name": "Check Email", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"email","value":""}]}, "url": { "raw": "{{base_url}}/api/check-email", "host": ["{{base_url}}"], "path": ["api","check-email"] } } },
+        { "name": "User Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/user-detail", "host": ["{{base_url}}"], "path": ["api","user-detail"] } } },
+        { "name": "Authenticated User", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/user", "host": ["{{base_url}}"], "path": ["api","user"] } } },
+        { "name": "Store Access Token", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/store-access-token", "host": ["{{base_url}}"], "path": ["api","store-access-token"] } } },
+        { "name": "Revoke Token", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/token-revoke", "host": ["{{base_url}}"], "path": ["api","token-revoke"] } } },
+        { "name": "Update Profile", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-profile", "host": ["{{base_url}}"], "path": ["api","update-profile"] } } },
+        { "name": "Change Password", "request": { "method": "POST", "header": [], "body": {"mode":"urlencoded","urlencoded":[{"key":"current_password","value":""},{"key":"password","value":""},{"key":"password_confirmation","value":""}]}, "url": { "raw": "{{base_url}}/api/change-password", "host": ["{{base_url}}"], "path": ["api","change-password"] } } },
+        { "name": "Delete Account", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-account", "host": ["{{base_url}}"], "path": ["api","delete-account"] } } }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        { "name": "Dashboard Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/dashboard-detail", "host": ["{{base_url}}"], "path": ["api","dashboard-detail"] } } },
+        { "name": "Vendor Dashboard", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/vendor-dashboard-list", "host": ["{{base_url}}"], "path": ["api","vendor-dashboard-list"] } } },
+        { "name": "Doctor Dashboard", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/doctor-dashboard-list", "host": ["{{base_url}}"], "path": ["api","doctor-dashboard-list"] } } },
+        { "name": "Receptionist Dashboard", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/receptionist-dashboard-list", "host": ["{{base_url}}"], "path": ["api","receptionist-dashboard-list"] } } },
+        { "name": "Pharma Dashboard", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/pharma-dashboard-list", "host": ["{{base_url}}"], "path": ["api","pharma-dashboard-list"] } } },
+        { "name": "Gallery List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/gallery-list", "host": ["{{base_url}}"], "path": ["api","gallery-list"] } } },
+        { "name": "Search List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/search-list", "host": ["{{base_url}}"], "path": ["api","search-list"] } } },
+        { "name": "Advance Filter", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/advance_filter", "host": ["{{base_url}}"], "path": ["api","advance_filter"] } } },
+        { "name": "App Configuration", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/app-configuration", "host": ["{{base_url}}"], "path": ["api","app-configuration"] } } },
+        { "name": "Download JSON", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/download-json", "host": ["{{base_url}}"], "path": ["api","download-json"] } } }
+      ]
+    },
+    {
+      "name": "Settings & Backup",
+      "item": [
+        { "name": "Setting Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/setting", "host": ["{{base_url}}"], "path": ["api","setting"] } } },
+        { "name": "Setting Store", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/setting", "host": ["{{base_url}}"], "path": ["api","setting"] } } },
+        { "name": "Setting Show", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/setting/:id", "host": ["{{base_url}}"], "path": ["api","setting",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Setting Update", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/setting/:id", "host": ["{{base_url}}"], "path": ["api","setting",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Setting Destroy", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{base_url}}/api/setting/:id", "host": ["{{base_url}}"], "path": ["api","setting",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Backup Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/backup", "host": ["{{base_url}}"], "path": ["api","backup"] } } },
+        { "name": "Download Backup Files", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/download-backup-files", "host": ["{{base_url}}"], "path": ["api","download-backup-files"] } } }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        { "name": "Check New Notifications", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/check-new-notifications", "host": ["{{base_url}}"], "path": ["api","check-new-notifications"] } } },
+        { "name": "Mark As Read", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/notifications/:id/mark-as-read", "host": ["{{base_url}}"], "path": ["api","notifications",":id","mark-as-read"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Mark All As Read", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/notifications/mark-all-as-read", "host": ["{{base_url}}"], "path": ["api","notifications","mark-all-as-read"] } } },
+        { "name": "Notification Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/notification", "host": ["{{base_url}}"], "path": ["api","notification"] } } },
+        { "name": "Notification Store", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/notification", "host": ["{{base_url}}"], "path": ["api","notification"] } } },
+        { "name": "Notification Show", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/notification/:id", "host": ["{{base_url}}"], "path": ["api","notification",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Notification Update", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/notification/:id", "host": ["{{base_url}}"], "path": ["api","notification",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Notification Destroy", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{base_url}}/api/notification/:id", "host": ["{{base_url}}"], "path": ["api","notification",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Notification List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/notification-list", "host": ["{{base_url}}"], "path": ["api","notification-list"] } } }
+      ]
+    },
+    {
+      "name": "Address",
+      "item": [
+        { "name": "Add Address", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/add-address", "host": ["{{base_url}}"], "path": ["api","add-address"] } } },
+        { "name": "Address List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/address-list", "host": ["{{base_url}}"], "path": ["api","address-list"] } } },
+        { "name": "Remove Address", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/remove-address?id=", "host": ["{{base_url}}"], "path": ["api","remove-address"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Edit Address", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/edit-address", "host": ["{{base_url}}"], "path": ["api","edit-address"] } } }
+      ]
+    },
+    {
+      "name": "Incidence",
+      "item": [
+        { "name": "Incidence Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/incidence-list", "host": ["{{base_url}}"], "path": ["api","incidence-list"] } } },
+        { "name": "Incidence Store", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/incidence-list", "host": ["{{base_url}}"], "path": ["api","incidence-list"] } } },
+        { "name": "Incidence Show", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/incidence-list/:id", "host": ["{{base_url}}"], "path": ["api","incidence-list",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Incidence Update", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/incidence-list/:id", "host": ["{{base_url}}"], "path": ["api","incidence-list",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Incidence Destroy", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{base_url}}/api/incidence-list/:id", "host": ["{{base_url}}"], "path": ["api","incidence-list",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Incidence Change Status", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/incidence/change-status/:id", "host": ["{{base_url}}"], "path": ["api","incidence","change-status",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Incidence Save", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/incidence-save", "host": ["{{base_url}}"], "path": ["api","incidence-save"] } } },
+        { "name": "Update Incident Status", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-incident-status/:id", "host": ["{{base_url}}"], "path": ["api","update-incident-status",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Public",
+      "item": [
+        { "name": "Get Service List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-service-list", "host": ["{{base_url}}"], "path": ["api","get-service-list"] } } },
+        { "name": "Get Doctor List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-doctor-list", "host": ["{{base_url}}"], "path": ["api","get-doctor-list"] } } },
+        { "name": "Get Category List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-category-list", "host": ["{{base_url}}"], "path": ["api","get-category-list"] } } },
+        { "name": "Get Clinic List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinic-list", "host": ["{{base_url}}"], "path": ["api","get-clinic-list"] } } },
+        { "name": "Get Pending Clinics", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-pending-clinics", "host": ["{{base_url}}"], "path": ["api","get-pending-clinics"] } } },
+        { "name": "Get Clinic Gallery", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinic-gallery", "host": ["{{base_url}}"], "path": ["api","get-clinic-gallery"] } } },
+        { "name": "Get System Service", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-system-service", "host": ["{{base_url}}"], "path": ["api","get-system-service"] } } },
+        { "name": "Get Service Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-service-details?id=", "host": ["{{base_url}}"], "path": ["api","get-service-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Get Clinic Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinic-details?id=", "host": ["{{base_url}}"], "path": ["api","get-clinic-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Get Doctor Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-doctor-details?id=", "host": ["{{base_url}}"], "path": ["api","get-doctor-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Get Rating", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-rating", "host": ["{{base_url}}"], "path": ["api","get-rating"] } } },
+        { "name": "Get Clinics Collection", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinics-collection", "host": ["{{base_url}}"], "path": ["api","get-clinics-collection"] } } },
+        { "name": "Get Time Slots", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-time-slots", "host": ["{{base_url}}"], "path": ["api","get-time-slots"] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Categories",
+      "item": [
+        { "name": "Get Categories", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-categories", "host": ["{{base_url}}"], "path": ["api","get-categories"] } } },
+        { "name": "Save Clinic Category", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-clinic-category", "host": ["{{base_url}}"], "path": ["api","save-clinic-category"] } } },
+        { "name": "Update Clinic Category", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-clinic-category/:id", "host": ["{{base_url}}"], "path": ["api","update-clinic-category",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Clinic Category", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-clinic-category/:id", "host": ["{{base_url}}"], "path": ["api","delete-clinic-category",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Services",
+      "item": [
+        { "name": "Get Services", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-services", "host": ["{{base_url}}"], "path": ["api","get-services"] } } },
+        { "name": "Save Clinic Service", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-clinic-service", "host": ["{{base_url}}"], "path": ["api","save-clinic-service"] } } },
+        { "name": "Update Clinic Service", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-clinic-service/:id", "host": ["{{base_url}}"], "path": ["api","update-clinic-service",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Clinic Service", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-clinic-service/:id", "host": ["{{base_url}}"], "path": ["api","delete-clinic-service",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service-detail?id=", "host": ["{{base_url}}"], "path": ["api","service-detail"], "query":[{"key":"id","value":""}] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Clinics",
+      "item": [
+        { "name": "Get Clinics", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinics", "host": ["{{base_url}}"], "path": ["api","get-clinics"] } } },
+        { "name": "Save Clinic", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-clinic", "host": ["{{base_url}}"], "path": ["api","save-clinic"] } } },
+        { "name": "Update Clinic", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-clinic/:id", "host": ["{{base_url}}"], "path": ["api","update-clinic",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Clinic", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-clinic/:id", "host": ["{{base_url}}"], "path": ["api","delete-clinic",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Clinic Session", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/clinic-session", "host": ["{{base_url}}"], "path": ["api","clinic-session"] } } },
+        { "name": "Save Clinic Gallery", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-clinic-gallery", "host": ["{{base_url}}"], "path": ["api","save-clinic-gallery"] } } },
+        { "name": "Save Clinic Session", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-clinic-session", "host": ["{{base_url}}"], "path": ["api","save-clinic-session"] } } },
+        { "name": "Get Clinic Session List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-clinic-session-list", "host": ["{{base_url}}"], "path": ["api","get-clinic-session-list"] } } },
+        { "name": "Specialization List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/specialization-list", "host": ["{{base_url}}"], "path": ["api","specialization-list"] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Doctors",
+      "item": [
+        { "name": "Get Doctors", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-doctors", "host": ["{{base_url}}"], "path": ["api","get-doctors"] } } },
+        { "name": "Doctor Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/doctor-details?id=", "host": ["{{base_url}}"], "path": ["api","doctor-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Save Doctor", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-doctor", "host": ["{{base_url}}"], "path": ["api","save-doctor"] } } },
+        { "name": "Update Doctor", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-doctor/:id", "host": ["{{base_url}}"], "path": ["api","update-doctor",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Doctor", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-doctor/:id", "host": ["{{base_url}}"], "path": ["api","delete-doctor",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Get Doctors Session List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-doctors-session_list", "host": ["{{base_url}}"], "path": ["api","get-doctors-session_list"] } } },
+        { "name": "Save Doctor Session", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-doctor-session/:id", "host": ["{{base_url}}"], "path": ["api","save-doctor-session",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Doctor Commission List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/doctor-commission-list", "host": ["{{base_url}}"], "path": ["api","doctor-commission-list"] } } },
+        { "name": "Doctor Payout History", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/doctor-payout-history", "host": ["{{base_url}}"], "path": ["api","doctor-payout-history"] } } },
+        { "name": "Doctor Session", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/doctor-session", "host": ["{{base_url}}"], "path": ["api","doctor-session"] } } },
+        { "name": "Assign Doctor", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/assign-doctor", "host": ["{{base_url}}"], "path": ["api","assign-doctor"] } } },
+        { "name": "Assign Doctor Service", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/assign-doctor-service", "host": ["{{base_url}}"], "path": ["api","assign-doctor-service"] } } },
+        { "name": "Save Rating", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-rating", "host": ["{{base_url}}"], "path": ["api","save-rating"] } } },
+        { "name": "Delete Rating", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-rating", "host": ["{{base_url}}"], "path": ["api","delete-rating"] } } }
+      ]
+    },
+    {
+      "name": "Clinic - Patients & Receptionists",
+      "item": [
+        { "name": "Get Patients", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-patients", "host": ["{{base_url}}"], "path": ["api","get-patients"] } } },
+        { "name": "Get Patient Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-patient-details?id=", "host": ["{{base_url}}"], "path": ["api","get-patient-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Save Receptionist", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-receptionist", "host": ["{{base_url}}"], "path": ["api","save-receptionist"] } } },
+        { "name": "Get Receptionists", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-receptionists", "host": ["{{base_url}}"], "path": ["api","get-receptionists"] } } },
+        { "name": "Get Receptionist Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-receptionist-details?id=", "host": ["{{base_url}}"], "path": ["api","get-receptionist-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Update Receptionist", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-receptionist/:id", "host": ["{{base_url}}"], "path": ["api","update-receptionist",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Receptionist", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-receptionist/:id", "host": ["{{base_url}}"], "path": ["api","delete-receptionist",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Bookings",
+      "item": [
+        { "name": "Save Booking", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-booking", "host": ["{{base_url}}"], "path": ["api","save-booking"] } } },
+        { "name": "Update Booking", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-booking/:id", "host": ["{{base_url}}"], "path": ["api","update-booking",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Appointment List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/appointment-list", "host": ["{{base_url}}"], "path": ["api","appointment-list"] } } },
+        { "name": "Appointment Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/appointment-detail?id=", "host": ["{{base_url}}"], "path": ["api","appointment-detail"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Save Payment", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-payment", "host": ["{{base_url}}"], "path": ["api","save-payment"] } } },
+        { "name": "Update Status", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-status/:id", "host": ["{{base_url}}"], "path": ["api","update-status",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Reschedule Booking", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/reschedule-booking", "host": ["{{base_url}}"], "path": ["api","reschedule-booking"] } } },
+        { "name": "Cancel Appointment", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/cancel-appointment/:id", "host": ["{{base_url}}"], "path": ["api","cancel-appointment",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Revenue Chart Data", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-revenue-chart-data", "host": ["{{base_url}}"], "path": ["api","get-revenue-chart-data"] } } },
+        { "name": "Download Invoice", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/download_invoice", "host": ["{{base_url}}"], "path": ["api","download_invoice"] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Encounter",
+      "item": [
+        { "name": "Encounter List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/encounter-list", "host": ["{{base_url}}"], "path": ["api","encounter-list"] } } },
+        { "name": "Save Encounter", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-encounter", "host": ["{{base_url}}"], "path": ["api","save-encounter"] } } },
+        { "name": "Update Encounter", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-encounter/:id", "host": ["{{base_url}}"], "path": ["api","update-encounter",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Encounter", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-encounter/:id", "host": ["{{base_url}}"], "path": ["api","delete-encounter",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Encounter Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/encounter-details?id=", "host": ["{{base_url}}"], "path": ["api","encounter-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Download Encounter Invoice", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/download-encounter-invoice", "host": ["{{base_url}}"], "path": ["api","download-encounter-invoice"] } } },
+        { "name": "Download Prescription", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/download-prescription", "host": ["{{base_url}}"], "path": ["api","download-prescription"] } } },
+        { "name": "Encounter Dropdown List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/encounter-dropdown-list", "host": ["{{base_url}}"], "path": ["api","encounter-dropdown-list"] } } },
+        { "name": "Save Encounter Dashboard", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-encounter-dashboard", "host": ["{{base_url}}"], "path": ["api","save-encounter-dashboard"] } } },
+        { "name": "Encounter Dashboard Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/encounter-dashboard-detail", "host": ["{{base_url}}"], "path": ["api","encounter-dashboard-detail"] } } },
+        { "name": "Encounter Service Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/encounter-service-detail", "host": ["{{base_url}}"], "path": ["api","encounter-service-detail"] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Medical Report",
+      "item": [
+        { "name": "Get Medical Report", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-medical-report", "host": ["{{base_url}}"], "path": ["api","get-medical-report"] } } },
+        { "name": "Save Medical Report", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-medical-report", "host": ["{{base_url}}"], "path": ["api","save-medical-report"] } } },
+        { "name": "Update Medical Report", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-medical-report/:id", "host": ["{{base_url}}"], "path": ["api","update-medical-report",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Medical Report", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/delete-medical-report/:id", "host": ["{{base_url}}"], "path": ["api","delete-medical-report",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Prescription",
+      "item": [
+        { "name": "Get Prescription", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-prescription", "host": ["{{base_url}}"], "path": ["api","get-prescription"] } } },
+        { "name": "Save Prescription", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-prescription", "host": ["{{base_url}}"], "path": ["api","save-prescription"] } } },
+        { "name": "Update Prescription", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-prescription/:id", "host": ["{{base_url}}"], "path": ["api","update-prescription",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Prescription", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/delete-prescription/:id", "host": ["{{base_url}}"], "path": ["api","delete-prescription",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Body Chart",
+      "item": [
+        { "name": "Save Bodychart", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-bodychart", "host": ["{{base_url}}"], "path": ["api","save-bodychart"] } } },
+        { "name": "Update Bodychart", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-bodychart/:id", "host": ["{{base_url}}"], "path": ["api","update-bodychart",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Bodychart", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-bodychart/:id", "host": ["{{base_url}}"], "path": ["api","delete-bodychart",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Bodychart List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/bodychart-list", "host": ["{{base_url}}"], "path": ["api","bodychart-list"] } } }
+      ]
+    },
+    {
+      "name": "Appointment - Billing",
+      "item": [
+        { "name": "Save Billing Details", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-billing-details", "host": ["{{base_url}}"], "path": ["api","save-billing-details"] } } },
+        { "name": "Billing List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/billing-list", "host": ["{{base_url}}"], "path": ["api","billing-list"] } } },
+        { "name": "Billing Record Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/billing-record-detail?id=", "host": ["{{base_url}}"], "path": ["api","billing-record-detail"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Save Billing Items", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-billing-items", "host": ["{{base_url}}"], "path": ["api","save-billing-items"] } } },
+        { "name": "Billing Item List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/billing-item-list", "host": ["{{base_url}}"], "path": ["api","billing-item-list"] } } },
+        { "name": "Billing Item Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/billing-item-details?id=", "host": ["{{base_url}}"], "path": ["api","billing-item-details"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Edit Billing Item", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/edit-billing-item/:id", "host": ["{{base_url}}"], "path": ["api","edit-billing-item",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Delete Billing Item", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-billing-item/:id", "host": ["{{base_url}}"], "path": ["api","delete-billing-item",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Appointment - SOAP",
+      "item": [
+        { "name": "Save SOAP", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-soap/:id", "host": ["{{base_url}}"], "path": ["api","save-soap",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Get SOAP", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-soap/:id", "host": ["{{base_url}}"], "path": ["api","get-soap",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Save Appointment Patient", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/save-appointment_patient/:id", "host": ["{{base_url}}"], "path": ["api","save-appointment_patient",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Get Appointment Patient Data", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/:id/get_appointment_patient_data", "host": ["{{base_url}}"], "path": ["api",":id","get_appointment_patient_data"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        { "name": "Profile Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/profile-details", "host": ["{{base_url}}"], "path": ["api","profile-details"] } } },
+        { "name": "Add Patient Member", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/add-patient-member", "host": ["{{base_url}}"], "path": ["api","add-patient-member"] } } },
+        { "name": "Other Members List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/other-members-list", "host": ["{{base_url}}"], "path": ["api","other-members-list"] } } },
+        { "name": "Delete Other Member", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/delete-other_member/:id", "host": ["{{base_url}}"], "path": ["api","delete-other_member",":id"], "variable":[{"key":"id","value":"1"}] } } }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        { "name": "Get Product Category", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-product-category", "host": ["{{base_url}}"], "path": ["api","get-product-category"] } } },
+        { "name": "Get Product List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-product-list", "host": ["{{base_url}}"], "path": ["api","get-product-list"] } } },
+        { "name": "Product Detail", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/product_detail?id=", "host": ["{{base_url}}"], "path": ["api","product_detail"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Product Brand", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/product-brand", "host": ["{{base_url}}"], "path": ["api","product-brand"] } } },
+        { "name": "Product Unit", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/product-unit", "host": ["{{base_url}}"], "path": ["api","product-unit"] } } },
+        { "name": "Product Dashboard", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/product-dashboard", "host": ["{{base_url}}"], "path": ["api","product-dashboard"] } } },
+        { "name": "Get Review List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-review-list", "host": ["{{base_url}}"], "path": ["api","get-review-list"] } } },
+        { "name": "Get Order Status List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-order-status-list", "host": ["{{base_url}}"], "path": ["api","get-order-status-list"] } } },
+        { "name": "Add To Cart", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/add-to-cart", "host": ["{{base_url}}"], "path": ["api","add-to-cart"] } } },
+        { "name": "Get Cart List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-cart-list", "host": ["{{base_url}}"], "path": ["api","get-cart-list"] } } },
+        { "name": "Remove Cart", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/remove-cart?id=", "host": ["{{base_url}}"], "path": ["api","remove-cart"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Update Cart", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-cart", "host": ["{{base_url}}"], "path": ["api","update-cart"] } } },
+        { "name": "Add To Wishlist", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/add-to-wishlist", "host": ["{{base_url}}"], "path": ["api","add-to-wishlist"] } } },
+        { "name": "Get Wishlist", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-wishlist", "host": ["{{base_url}}"], "path": ["api","get-wishlist"] } } },
+        { "name": "Remove Wishlist", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/remove-wishlist?id=", "host": ["{{base_url}}"], "path": ["api","remove-wishlist"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Add Review", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/add-review", "host": ["{{base_url}}"], "path": ["api","add-review"] } } },
+        { "name": "Remove Review", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/remove-review?id=", "host": ["{{base_url}}"], "path": ["api","remove-review"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Update Review", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/update-review", "host": ["{{base_url}}"], "path": ["api","update-review"] } } },
+        { "name": "Place Order", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/place-order", "host": ["{{base_url}}"], "path": ["api","place-order"] } } },
+        { "name": "Get Order List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-order-list", "host": ["{{base_url}}"], "path": ["api","get-order-list"] } } },
+        { "name": "Cancel Order", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/cancle-order?id=", "host": ["{{base_url}}"], "path": ["api","cancle-order"], "query":[{"key":"id","value":""}] } } },
+        { "name": "Get Order Details", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-order-details?id=", "host": ["{{base_url}}"], "path": ["api","get-order-details"], "query":[{"key":"id","value":""}] } } }
+      ]
+    },
+    {
+      "name": "Service",
+      "item": [
+        { "name": "Service List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service-list", "host": ["{{base_url}}"], "path": ["api","service-list"] } } },
+        { "name": "Service Staff (Get)", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service/staff/:id", "host": ["{{base_url}}"], "path": ["api","service","staff",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Staff (Update)", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/service/staff/:id", "host": ["{{base_url}}"], "path": ["api","service","staff",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Provider (Get)", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service/service-provider/:id", "host": ["{{base_url}}"], "path": ["api","service","service-provider",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Provider (Update)", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/service/service-provider/:id", "host": ["{{base_url}}"], "path": ["api","service","service-provider",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Gallery", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service-gallery", "host": ["{{base_url}}"], "path": ["api","service-gallery"] } } },
+        { "name": "Upload Gallery Images", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/gallery-images/:id", "host": ["{{base_url}}"], "path": ["api","gallery-images",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service", "host": ["{{base_url}}"], "path": ["api","service"] } } },
+        { "name": "Service Store", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/service", "host": ["{{base_url}}"], "path": ["api","service"] } } },
+        { "name": "Service Show", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/service/:id", "host": ["{{base_url}}"], "path": ["api","service",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Update", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/service/:id", "host": ["{{base_url}}"], "path": ["api","service",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Destroy", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{base_url}}/api/service/:id", "host": ["{{base_url}}"], "path": ["api","service",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Package Index", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/servicePackage", "host": ["{{base_url}}"], "path": ["api","servicePackage"] } } },
+        { "name": "Service Package Store", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/servicePackage", "host": ["{{base_url}}"], "path": ["api","servicePackage"] } } },
+        { "name": "Service Package Show", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/servicePackage/:id", "host": ["{{base_url}}"], "path": ["api","servicePackage",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Package Update", "request": { "method": "PUT", "header": [], "url": { "raw": "{{base_url}}/api/servicePackage/:id", "host": ["{{base_url}}"], "path": ["api","servicePackage",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Package Destroy", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{base_url}}/api/servicePackage/:id", "host": ["{{base_url}}"], "path": ["api","servicePackage",":id"], "variable":[{"key":"id","value":"1"}] } } },
+        { "name": "Service Detail", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/service-detail", "host": ["{{base_url}}"], "path": ["api","service-detail"] } } },
+        { "name": "Search Service", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/search-service?q=", "host": ["{{base_url}}"], "path": ["api","search-service"], "query":[{"key":"q","value":""}] } } }
+      ]
+    },
+    {
+      "name": "Quick Booking",
+      "item": [
+        { "name": "Service Provider List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/service-provider-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","service-provider-list"] } } },
+        { "name": "Slot Time List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/slot-time-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","slot-time-list"] } } },
+        { "name": "Services List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/services-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","services-list"] } } },
+        { "name": "Store Booking", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/store", "host": ["{{base_url}}"], "path": ["api","quick-booking","store"] } } },
+        { "name": "System Service List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/system-service-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","system-service-list"] } } },
+        { "name": "Clinic List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/clinic-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","clinic-list"] } } },
+        { "name": "Doctor List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/doctor-list", "host": ["{{base_url}}"], "path": ["api","quick-booking","doctor-list"] } } },
+        { "name": "Verify Customer", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/quick-booking/verify_customer", "host": ["{{base_url}}"], "path": ["api","quick-booking","verify_customer"] } } }
+      ]
+    },
+    {
+      "name": "World (Country/State/City)",
+      "item": [
+        { "name": "Country List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/country-list", "host": ["{{base_url}}"], "path": ["api","country-list"] } } },
+        { "name": "State List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/state-list?country_id=", "host": ["{{base_url}}"], "path": ["api","state-list"], "query":[{"key":"country_id","value":""}] } } },
+        { "name": "City List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/city-list?state_id=", "host": ["{{base_url}}"], "path": ["api","city-list"], "query":[{"key":"state_id","value":""}] } } }
+      ]
+    },
+    {
+      "name": "Slider / Page / Custom Form / Logistic / Request Service",
+      "item": [
+        { "name": "Banners List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-banners-list", "host": ["{{base_url}}"], "path": ["api","get-banners-list"] } } },
+        { "name": "Banners Collection", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-banners-collection", "host": ["{{base_url}}"], "path": ["api","get-banners-collection"] } } },
+        { "name": "Page List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/page-list", "host": ["{{base_url}}"], "path": ["api","page-list"] } } },
+        { "name": "Custom Form List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-customform-list", "host": ["{{base_url}}"], "path": ["api","get-customform-list"] } } },
+        { "name": "Custom Form Data List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-customform-data-list", "host": ["{{base_url}}"], "path": ["api","get-customform-data-list"] } } },
+        { "name": "Logistic Zone List", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-logisticzone-list", "host": ["{{base_url}}"], "path": ["api","get-logisticzone-list"] } } },
+        { "name": "Get Request Service", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/get-request-service", "host": ["{{base_url}}"], "path": ["api","get-request-service"] } } },
+        { "name": "Save Request Service", "request": { "method": "POST", "header": [], "url": { "raw": "{{base_url}}/api/save-request-service", "host": ["{{base_url}}"], "path": ["api","save-request-service"] } } },
+        { "name": "Constants", "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/constants", "host": ["{{base_url}}"], "path": ["api","constants"] } } }
+      ]
+    }
+  ]
+}

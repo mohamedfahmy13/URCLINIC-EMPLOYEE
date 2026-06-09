@@ -21,6 +21,7 @@ class ChangePassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldNew(
+      isAuthScreen: true,
       appBartitleText: locale.value.changePassword,
       appBarVerticalSize: Get.height * 0.12,
       body: SingleChildScrollView(

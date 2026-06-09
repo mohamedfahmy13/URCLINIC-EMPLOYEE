@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../generated/assets.dart';
 import '../utils/app_common.dart';
-import '../utils/colors.dart';
 import 'cached_image_widget.dart';
 
 /// Bell icon with a live unread-count badge wired to [unreadNotificationCount].
@@ -51,7 +50,7 @@ class NotificationBellBadge extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: boxDecorationDefault(
-                    color: badgeColor ?? appColorSecondary,
+                    color: badgeColor ?? Colors.red,
                     shape: BoxShape.circle,
                   ),
                   child: Text(

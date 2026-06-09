@@ -10,8 +10,15 @@ class DoctorCard extends StatelessWidget {
 
   const DoctorCard({super.key, required this.doctor});
 
+  bool get _isEmpty =>
+      doctor.id.isNegative &&
+      doctor.doctorId.isNegative &&
+      doctor.fullName.isEmpty &&
+      doctor.profileImage.isEmpty;
+
   @override
   Widget build(BuildContext context) {
+    if (_isEmpty) return const SizedBox.shrink();
     return Container(
       decoration: boxDecorationDefault(
         color: transparentColor,

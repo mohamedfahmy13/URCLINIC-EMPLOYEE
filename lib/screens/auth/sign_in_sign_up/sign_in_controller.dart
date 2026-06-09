@@ -55,8 +55,10 @@ class SignInController extends GetxController {
       removeValueFromLocal(SharedPreferenceConst.USER_PASSWORD);
     }
 
-    isRememberMe.value =
+    final savedRememberMe =
         getValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME) ?? false;
+    isRememberMe.value = savedRememberMe;
+
     if (!appConfigs.value.isMultiVendor) {
       loginRoles
           .removeWhere((item) => item.userType == EmployeeKeyConst.vendor);
@@ -95,6 +97,20 @@ class SignInController extends GetxController {
       if (userPASSWORD.isNotEmpty) {
         passwordCont.text = userPASSWORD;
       }
+
+      // Restore selected login role for quick auto-login
+      final savedUserType = getValueFromLocal(SharedPreferenceConst.USER_TYPE);
+      if (savedUserType is String && savedUserType.isNotEmpty) {
+        try {
+          final roleIndex =
+              loginRoles.indexWhere((role) => role.userType == savedUserType);
+          if (roleIndex >= 0) {
+            selectedLoginRole(loginRoles[roleIndex]);
+          }
+        } catch (e) {
+          log('Error restoring user type: $e');
+        }
+      }
     }
     if ((!appConfigs.value.isMultiVendor) &&
         (selectedLoginRole.value.userType == EmployeeKeyConst.vendor)) {
@@ -120,7 +136,12 @@ class SignInController extends GetxController {
         await handleLoginResponse(loginResponse: value);
       }).catchError((e) {
         isLoading(false);
-        toast(e.toString(), print: true);
+        final msg = e.toString().toLowerCase();
+        if (msg.contains('credentials') || msg.contains('unauthori')) {
+          toast(locale.value.invalidEmailOrPassword, print: true);
+        } else {
+          toast(e.toString(), print: true);
+        }
       });
     } else {
       toast(locale.value.pleaseSelectRoleToLogin);
@@ -192,10 +213,13 @@ class SignInController extends GetxController {
         loginResponse.userData.userRole
             .contains(EmployeeKeyConst.receptionist) ||
         loginResponse.userData.userRole.contains(EmployeeKeyConst.pharma)) {
-      loginUserData(loginResponse.userData);
+       loginUserData(loginResponse.userData);
       loginUserData.value.isSocialLogin = isSocialLogin;
       loginUserData.value.userType = selectedLoginRole.value.userType;
       setValueToLocal(SharedPreferenceConst.USER_DATA, loginUserData.toJson());
+      setValueToLocal(SharedPreferenceConst.USER_EMAIL, emailCont.text.trim());
+      setValueToLocal(SharedPreferenceConst.USER_NAME, loginResponse.userData.userName);
+      setValueToLocal(SharedPreferenceConst.USER_TYPE, selectedLoginRole.value.userType);
       if (isSocialLogin) {
         await SecureStorageHelper.clearUserPassword();
       } else {
@@ -204,7 +228,7 @@ class SignInController extends GetxController {
       removeValueFromLocal(SharedPreferenceConst.USER_PASSWORD);
       isLoggedIn(true);
       setValueToLocal(SharedPreferenceConst.IS_LOGGED_IN, true);
-      setValueToLocal(SharedPreferenceConst.IS_REMEMBER_ME, isRememberMe.value);
+      setValueToLocal(SharedPreferenceConst.IS_REMEMBER_ME, true);
       if (loginResponse.userData.userRole.contains(EmployeeKeyConst.pharma)) {
         selectedAppClinic(loginResponse.userData.selectedClinic);
         /* selectedAppCommission(loginResponse.userData.commission);

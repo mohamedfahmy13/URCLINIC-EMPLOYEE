@@ -89,6 +89,7 @@ class SharedPreferenceConst {
   static const FIRST_TIME = 'FIRST_TIME';
   static const IS_REMEMBER_ME = 'IS_REMEMBER_ME';
   static const USER_NAME = 'USER_NAME';
+  static const USER_TYPE = 'USER_TYPE';
   static const SELECTED_CLINIC = 'SELECTED_CLINIC';
   static const COMMISSION = 'COMMISSION';
 }

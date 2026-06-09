@@ -1,47 +1,77 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_clinic_admin/screens/service/model/service_list_model.dart';
 import 'package:kivicare_clinic_admin/utils/colors.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:stream_transform/stream_transform.dart';
+
+import '../../../api/clinic_api.dart';
 import '../../../main.dart';
+import '../../../utils/app_common.dart';
 import '../../../utils/common_base.dart';
+import '../../../utils/constants.dart';
 import '../../category/model/all_category_model.dart';
+import '../../clinic/model/clinics_res_model.dart';
 import 'service_apis.dart';
 
-class AddServiceController extends GetxController {
+class CreateServiceController extends GetxController {
   TextEditingController serviceCont = TextEditingController();
+  TextEditingController serviceArCont = TextEditingController();
   TextEditingController durationCont = TextEditingController();
   TextEditingController priceCont = TextEditingController();
   TextEditingController categoryCont = TextEditingController();
+  TextEditingController clinicCont = TextEditingController();
+  TextEditingController typeCont = TextEditingController();
   TextEditingController searchCont = TextEditingController();
+  TextEditingController clinicSearchCont = TextEditingController();
   TextEditingController descriptionCont = TextEditingController();
+  TextEditingController descriptionArCont = TextEditingController();
 
   FocusNode serviceNameFocus = FocusNode();
+  FocusNode serviceNameArFocus = FocusNode();
   FocusNode serviceDurationFocus = FocusNode();
   FocusNode defaultPriceFocus = FocusNode();
   FocusNode descriptionFocus = FocusNode();
+  FocusNode descriptionArFocus = FocusNode();
 
   Rx<ServiceElement> serviceData = ServiceElement(status: false.obs).obs;
 
   RxBool isLoading = false.obs;
+  RxBool isClinicLoading = false.obs;
   RxBool hasErrorFetchingCategory = false.obs;
+  RxBool hasErrorFetchingClinic = false.obs;
   RxBool isEdit = false.obs;
+  RxBool status = true.obs;
 
   RxString errorMessageCategory = "".obs;
+  RxString errorMessageClinic = "".obs;
   RxString serviceImage = "".obs;
 
   RxList<PlatformFile> serviceFiles = RxList();
 
-  //Category
+  // Category
   Rx<CategoryElement> selectedCategoryType = CategoryElement().obs;
   RxList<CategoryElement> categoryList = RxList();
   RxList<CategoryElement> categoryFilterList = RxList();
 
-  // RxList<XFile> pickedFile = RxList();
+  // Clinic
+  Rx<ClinicData> selectedClinic = ClinicData().obs;
+  RxList<ClinicData> clinicList = RxList();
+  StreamController<String> clinicSearchStream = StreamController<String>.broadcast();
+
+  // Type
+  final List<Map<String, String>> typeOptions = [
+    {'key': ServiceTypes.inClinic, 'label': 'In Clinic'},
+    {'key': ServiceTypes.online, 'label': 'Online'},
+  ];
+  RxString selectedType = ''.obs;
+  RxString selectedTypeLabel = ''.obs;
+
   Rx<File> imageFile = File("").obs;
   XFile? pickedFile;
 
@@ -51,20 +81,41 @@ class AddServiceController extends GetxController {
 
   @override
   void onInit() {
-    if (Get.arguments is ServiceElement) {
-      serviceData(Get.arguments as ServiceElement);
+    final dynamic args = Get.arguments;
+
+    if (args is ServiceElement) {
+      serviceData(args);
       isEdit(true);
-      serviceCont.text = serviceData.value.name;
-      durationCont.text = serviceData.value.duration.toString();
-      priceCont.text = serviceData.value.charges.toString();
-      descriptionCont.text = serviceData.value.description;
-      categoryCont.text = serviceData.value.name;
-      // selectedCategoryType.value.categoryImage = serviceData.value.serviceImage;
-      selectedCategoryType.value.id = serviceData.value.categoryId;
-      serviceImage(serviceData.value.serviceImage);
+      _populateFromService(args);
+    } else if (args is ClinicData) {
+      // Pre-select clinic from clinic detail screen
+      selectedClinic(args);
+      clinicCont.text = args.name;
     }
 
+    clinicSearchStream.stream.debounce(const Duration(milliseconds: 500)).listen((s) {
+      getClinics();
+    });
+
     super.onInit();
+  }
+
+  void _populateFromService(ServiceElement svc) {
+    serviceCont.text = svc.name;
+    durationCont.text = svc.duration > 0 ? svc.duration.toString() : '';
+    priceCont.text = svc.charges > 0 ? svc.charges.toString() : '';
+    descriptionCont.text = svc.description;
+    typeCont.text = _typeLabelFromKey(svc.type);
+    selectedType.value = svc.type;
+    selectedTypeLabel.value = _typeLabelFromKey(svc.type);
+    status(svc.status.value);
+    serviceImage(svc.serviceImage);
+  }
+
+  String _typeLabelFromKey(String key) {
+    if (key == ServiceTypes.inClinic) return locale.value.inClinic;
+    if (key == ServiceTypes.online) return locale.value.online;
+    return key;
   }
 
   Future<void> handleFilesPickerClick() async {
@@ -77,7 +128,7 @@ class AddServiceController extends GetxController {
     }
   }
 
-  //Get Category List
+  // Get Category List
   void getCategory() {
     isLoading(true);
     ServiceFormApis.getCategory().then((value) {
@@ -88,8 +139,28 @@ class AddServiceController extends GetxController {
       hasErrorFetchingCategory(true);
       errorMessageCategory(error.toString());
       isLoading(false);
-      // toast(error.toString());
     });
+  }
+
+  // Get Clinic List
+  Future<void> getClinics() async {
+    isClinicLoading(true);
+    hasErrorFetchingClinic(false);
+    final List<ClinicData> tmp = [];
+    try {
+      await ClinicApis.getClinicList(
+        page: 1,
+        perPage: 50,
+        clinicList: tmp,
+        search: clinicSearchCont.text.trim(),
+      );
+      clinicList(tmp);
+    } catch (e) {
+      hasErrorFetchingClinic(true);
+      errorMessageClinic(e.toString());
+    } finally {
+      isClinicLoading(false);
+    }
   }
 
   void searchCategoryFunc({
@@ -98,7 +169,6 @@ class AddServiceController extends GetxController {
     required RxList<CategoryElement> categorySList,
   }) {
     categoryFilterList.value = List.from(categorySList.where((element) => element.name.toLowerCase().contains(searchtext.toLowerCase())));
-    for (var i = 0; i < categoryFilterList.length; i++) {}
   }
 
   void onCategorySearchChange(String searchtext) {
@@ -111,18 +181,16 @@ class AddServiceController extends GetxController {
 
   bool get isShowFullList => categoryFilterList.isEmpty && searchCont.text.trim().isEmpty;
 
-  /*String serviceRole({loginUserData}) {
-     if (loginUserData.value.userRole.contains(EmployeeKeyConst.veterinary)) {
-      return ServicesKeyConst.veterinary;
-    } else if (loginUserData.value.userRole.contains(EmployeeKeyConst.grooming)) {
-      return ServicesKeyConst.grooming;
-    } else if (loginUserData.value.userRole.contains(EmployeeKeyConst.training)) {
-      return ServicesKeyConst.training;
-    } else {
-      return "";
-    }
-    return "";
-  }*/
+  void selectClinic(ClinicData clinic) {
+    selectedClinic(clinic);
+    clinicCont.text = clinic.name;
+  }
+
+  void selectType(Map<String, String> type) {
+    selectedType.value = type['key'] ?? '';
+    selectedTypeLabel.value = type['label'] ?? '';
+    typeCont.text = type['label'] ?? '';
+  }
 
   Future<void> updateServicesStatus({required int id, required int status}) async {
     isLoading(true);
@@ -137,9 +205,95 @@ class AddServiceController extends GetxController {
     });
   }
 
+  bool _validate() {
+    if (selectedClinic.value.id.isNegative) {
+      toast(locale.value.pleaseSelectClinic);
+      return false;
+    }
+    if (serviceCont.text.trim().isEmpty) {
+      toast(locale.value.pleaseEnterServiceName);
+      return false;
+    }
+    if (serviceArCont.text.trim().isEmpty) {
+      toast(locale.value.pleaseEnterServiceNameAr);
+      return false;
+    }
+    if (durationCont.text.trim().isEmpty || (int.tryParse(durationCont.text.trim()) ?? 0) <= 0) {
+      toast(locale.value.pleaseEnterDuration);
+      return false;
+    }
+    if (priceCont.text.trim().isEmpty || (num.tryParse(priceCont.text.trim()) ?? -1) < 0) {
+      toast(locale.value.pleaseEnterDefaultPrice);
+      return false;
+    }
+    if (selectedType.value.isEmpty) {
+      toast(locale.value.pleaseSelectType);
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> saveService() async {
+    if (!_validate()) return;
+    if (isLoading.value) return;
+
+    // Scope the service to the clinic owner's vendor so it shows up in
+    // get-services (which filters by vendor_id). For receptionists, the
+    // logged-in user id is NOT the vendor — the clinic's createdBy is.
+    final int clinicVendorId = !selectedClinic.value.createdBy.isNegative
+        ? selectedClinic.value.createdBy
+        : loginUserData.value.id;
+
+    final Map<String, dynamic> request = {
+      'name': serviceCont.text.trim(),
+      'name_ar': serviceArCont.text.trim(),
+      'duration_min': durationCont.text.trim(),
+      'duration': durationCont.text.trim(),
+      'time_slot': durationCont.text.trim(),
+      'clinic_id': selectedClinic.value.id,
+      'vendor_id': clinicVendorId,
+      'charges': priceCont.text.trim(),
+      'price': priceCont.text.trim(),
+      'type': selectedType.value,
+      'description': descriptionCont.text.trim(),
+      'description_ar': descriptionArCont.text.trim(),
+      'status': status.value.getIntBool(),
+    };
+
+    File? uploadFile;
+    if (imageFile.value.path.isNotEmpty) {
+      if (await imageFile.value.exists()) {
+        uploadFile = imageFile.value;
+      } else {
+        // Cache file was evicted by the OS between picking and submitting.
+        imageFile(File(""));
+        toast(locale.value.pleaseSelectAServiceImage);
+        return;
+      }
+    }
+
+    isLoading(true);
+    try {
+      await ServiceFormApis.saveService(
+        request: request,
+        imageFile: uploadFile,
+        isEdit: isEdit.value,
+        serviceId: isEdit.value && !serviceData.value.id.isNegative ? serviceData.value.id : null,
+        onSuccess: (_) {
+          toast(isEdit.value ? locale.value.serviceUpdatedSuccessfully : locale.value.serviceCreatedSuccessfully);
+        },
+      );
+      Get.back(result: true);
+    } catch (e) {
+      toast(e.toString());
+    } finally {
+      isLoading(false);
+    }
+  }
+
   Future<void> _handleGalleryClick() async {
     Get.back();
-    pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
+    pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
     if (pickedFile != null) {
       serviceImage('');
       imageFile(File(pickedFile!.path));
@@ -148,7 +302,7 @@ class AddServiceController extends GetxController {
 
   Future<void> _handleCameraClick() async {
     Get.back();
-    pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
+    pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 80);
     if (pickedFile != null) {
       serviceImage('');
       imageFile(File(pickedFile!.path));
@@ -185,5 +339,11 @@ class AddServiceController extends GetxController {
         ).paddingAll(16.0);
       },
     );
+  }
+
+  @override
+  void onClose() {
+    clinicSearchStream.close();
+    super.onClose();
   }
 }

@@ -127,17 +127,21 @@ class AllServicesController extends GetxController {
     if (showloader) {
       isLoading(true);
     }
+    final bool isDoctor =
+        loginUserData.value.userRole.contains(EmployeeKeyConst.doctor);
     await serviceListFuture(
       CoreServiceApis.getServiceList(
         page: page.value,
         serviceList: serviceList,
-        clinicId: clinicData.value.id.isNegative &&
-                loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)
+        // Non-doctors (vendor/receptionist) need unassigned services too,
+        // otherwise newly-created services don't appear until a doctor is
+        // assigned.
+        isAllSer: isDoctor ? 0 : 1,
+        clinicId: clinicData.value.id.isNegative && isDoctor
             ? selectedAppClinic.value.id
             : clinicData.value.id,
-        doctorId: loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)
-            ? loginUserData.value.id
-            : doctorData.value.doctorId,
+        doctorId:
+            isDoctor ? loginUserData.value.id : doctorData.value.doctorId,
         search: searchServiceCont.text.trim(),
         lastPageCallBack: (p0) {
           isLastPage(p0);

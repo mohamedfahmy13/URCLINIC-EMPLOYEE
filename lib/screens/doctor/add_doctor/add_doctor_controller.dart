@@ -547,26 +547,12 @@ class AddDoctorController extends GetxController {
       selectedCommissionIds = [commissionList.first.id];
     }
 
-    if (selectedCommissionIds.isEmpty) {
-      await getCommission();
-      selectedCommissionIds = commissionList
-          .where((item) => item.isSelected.value)
-          .map((item) => item.id)
-          .toList();
-      if (selectedCommissionIds.isEmpty && commissionList.isNotEmpty) {
-        selectedCommissionIds = [commissionList.first.id];
+    if (selectedCommissionIds.isNotEmpty) {
+      doctorRequest['commission_id'] = selectedCommissionIds;
+      for (int i = 0; i < selectedCommissionIds.length; i++) {
+        doctorRequest['commission_id[$i]'] =
+            selectedCommissionIds[i].toString();
       }
-    }
-
-    if (selectedCommissionIds.isEmpty) {
-      isLoading(false);
-      toast(locale.value.noCommissionFound);
-      return;
-    }
-
-    doctorRequest['commission_id'] = selectedCommissionIds;
-    for (int i = 0; i < selectedCommissionIds.length; i++) {
-      doctorRequest['commission_id[$i]'] = selectedCommissionIds[i].toString();
     }
     if (!isEdit.value) {
       doctorRequest['password'] = Constants.DEFAULT_PASS;
