@@ -10,6 +10,14 @@ analyzer:
     always_declare_return_types: warning
     unnecessary_new: warning
     camel_case_types: warning
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 include: package:flutter_lints/flutter.yaml
 
