@@ -41,10 +41,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -53,8 +49,8 @@ android {
         applicationId "com.urclinic.employee"
         minSdkVersion 25
         targetSdkVersion 36
-        versionCode 25
-        versionName "1.9.0"
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
         multiDexEnabled true
     }
 
@@ -75,6 +71,12 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
     }
 }
 

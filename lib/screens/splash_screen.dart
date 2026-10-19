@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       hideAppBar: true,
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: splashVideoBackgroundColor,
       body: Stack(
         alignment: Alignment.center,
         children: [

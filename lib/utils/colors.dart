@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const appColorPrimary = Color(0xFF0074AD);
+/// First-frame colour of the splash video; must match the native launch screens.
+const splashVideoBackgroundColor = Color(0xFF0069B1);
 const appColorSecondary = Color(0xff003C5A);
 const lightPrimaryColor = Color(0xFFEBEDFF);
 const extraLightPrimaryColor = Color(0xFFF5F6FA);
