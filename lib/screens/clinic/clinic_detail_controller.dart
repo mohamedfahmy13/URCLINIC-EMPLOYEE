@@ -30,7 +30,7 @@ class ClinicDetailController extends GetxController {
 
   @override
   void onInit() {
-    if (Get.arguments is ClinicData) {
+    if (Get.arguments is ClinicData && (Get.arguments as ClinicData).id > 0) {
       clinicData(Get.arguments);
       getClinicDetail();
       getServiceList();

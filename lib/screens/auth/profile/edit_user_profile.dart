@@ -277,7 +277,7 @@ class EditUserProfileScreen extends StatelessWidget {
               ),
             ).paddingSymmetric(horizontal: 16),
           )),
-          Obx(() => const LoaderWidget().visible(editUserProfileController.isLoading.value)),
+          Obx(() => const LoaderWidget(isBlurBackground: true).visible(editUserProfileController.isLoading.value)),
         ],
       ),
     );

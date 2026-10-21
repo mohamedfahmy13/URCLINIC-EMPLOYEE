@@ -173,7 +173,7 @@ class FilterClinicComponent extends StatelessWidget {
                           return filterCont.getClinicsList();
                         },
                       ),
-                      if (filterCont.isClinicLoading.isTrue) const LoaderWidget(),
+                      if (filterCont.isClinicLoading.isTrue) const LoaderWidget(isBlurBackground: true),
                     ],
                   ),
                 );

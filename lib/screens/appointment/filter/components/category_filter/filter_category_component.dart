@@ -141,7 +141,7 @@ class FilterCategoryComponent extends StatelessWidget {
                           return filterCont.getCategoryList();
                         },
                       ),
-                      if (filterCont.isCategoryLoading.isTrue) const LoaderWidget(),
+                      if (filterCont.isCategoryLoading.isTrue) const LoaderWidget(isBlurBackground: true),
                     ],
                   ),
                 );

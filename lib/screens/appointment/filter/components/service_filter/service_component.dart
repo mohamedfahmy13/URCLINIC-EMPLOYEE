@@ -162,7 +162,7 @@ class FilterServiceComponent extends StatelessWidget {
                           return filterCont.getServicesList(showloader: false);
                         },
                       ),
-                      if (filterCont.isServiceLoading.isTrue) const LoaderWidget(),
+                      if (filterCont.isServiceLoading.isTrue) const LoaderWidget(isBlurBackground: true),
                     ],
                   ),
                 );

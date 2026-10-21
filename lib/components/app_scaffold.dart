@@ -9,7 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../utils/colors.dart';
 import '../utils/common_base.dart';
 import 'body_widget.dart';
-import 'shimmer_widget.dart';
+import 'loader_widget.dart';
 
 class AppScaffold extends StatelessWidget {
   final bool hideAppBar;
@@ -260,7 +260,7 @@ class AppScaffoldNew extends StatelessWidget {
                   ),
                   child: Container(
                     color: scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
-                    child: const ShimmerLoader(),
+                    child: const LoaderWidget(),
                   ),
                 ),
               ),

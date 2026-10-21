@@ -93,10 +93,8 @@ class DoctorsListScreen extends StatelessWidget {
                               (index) {
                                 return Obx(() {
                                   final doctor = doctorsListCont.doctors[index];
-                                  if (doctor.id.isNegative &&
-                                      doctor.doctorId.isNegative &&
-                                      doctor.fullName.isEmpty &&
-                                      doctor.profileImage.isEmpty) {
+                                  // Orphaned rows (deleted user) come back with no doctor_id.
+                                  if (doctor.doctorId <= 0) {
                                     return const SizedBox.shrink();
                                   }
                                   return Stack(

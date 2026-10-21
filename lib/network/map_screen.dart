@@ -268,7 +268,7 @@ class MapScreenState extends State<MapScreen> {
                 ],
               ).paddingAll(16),
             ),
-            Obx(() => const LoaderWidget().center().visible(isLoading.value)),
+            Obx(() => const LoaderWidget(isBlurBackground: true).visible(isLoading.value)),
           ],
         ),
       ),

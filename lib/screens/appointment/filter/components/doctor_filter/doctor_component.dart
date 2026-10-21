@@ -152,7 +152,7 @@ class FilterDoctorComponent extends StatelessWidget {
                           return filterCont.getDoctorsList(showloader: false);
                         },
                       ),
-                      if (filterCont.isDoctorLoading.isTrue) const LoaderWidget(),
+                      if (filterCont.isDoctorLoading.isTrue) const LoaderWidget(isBlurBackground: true),
                     ],
                   ),
                 );

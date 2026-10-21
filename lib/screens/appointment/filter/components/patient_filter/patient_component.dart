@@ -161,7 +161,7 @@ class PatientComponent extends StatelessWidget {
                           return filterCont.getPatientList(showloader: false);
                         },
                       ),
-                      if (filterCont.isLoading.isTrue) const LoaderWidget(),
+                      if (filterCont.isLoading.isTrue) const LoaderWidget(isBlurBackground: true),
                     ],
                   ),
                 );

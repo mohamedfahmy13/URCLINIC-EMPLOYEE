@@ -181,7 +181,7 @@ class BottomSelectionSheet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Obx(() => const LoaderWidget().center().visible(isLoading == null ? false : isLoading!.value)),
+                  Obx(() => const LoaderWidget(isBlurBackground: true).visible(isLoading == null ? false : isLoading!.value)),
                 ],
               ),
             ),
