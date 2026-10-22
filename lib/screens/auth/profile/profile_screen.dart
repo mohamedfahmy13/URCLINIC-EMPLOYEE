@@ -22,6 +22,7 @@ import 'common_horizontal_profile_widget.dart';
 import 'edit_user_profile.dart';
 import 'edit_user_profile_controller.dart';
 import 'profile_controller.dart';
+import '../../clinic_subscription/clinic_subscription_screen.dart';
 import '../../../utils/app_common.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/common_base.dart';
@@ -117,6 +118,21 @@ class ProfileScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
                 ).paddingTop(16),
+                if (loginUserData.value.userRole
+                    .contains(EmployeeKeyConst.receptionist))
+                  SettingItemWidget(
+                    decoration: boxDecorationDefault(color: context.cardColor),
+                    title: locale.value.clinicPackages,
+                    subTitle: locale.value.manageClinicPackages,
+                    onTap: () => Get.to(() => const ClinicSubscriptionScreen()),
+                    titleTextStyle: boldTextStyle(size: 14),
+                    leading: const Icon(Icons.workspace_premium_outlined,
+                            color: appColorPrimary)
+                        .circularLightPrimaryBg(),
+                    trailing: trailing,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 16),
+                  ).paddingTop(16),
                 SettingItemWidget(
                   decoration: boxDecorationDefault(color: context.cardColor),
                   title: locale.value.clinics,

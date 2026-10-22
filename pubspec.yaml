@@ -77,6 +77,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   percent_indicator: ^4.2.5
+  webview_flutter: ^4.14.1
 
 dev_dependencies:
   flutter_test:

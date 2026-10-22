@@ -32,6 +32,7 @@ import 'components/home_component.dart';
 import 'components/clinics_home_component.dart';
 import 'components/service_home_component.dart';
 import 'home_controller.dart';
+import '../clinic_subscription/clinic_subscription_screen.dart';
 import 'components/medicine_usage_chart_comp.dart';
 import 'components/pharma_analytics_component.dart';
 import 'components/today_prescriptions_home_component.dart';
@@ -167,6 +168,23 @@ class HomeScreen extends StatelessWidget {
                           loginUserData.value.userRole
                               .contains(EmployeeKeyConst.receptionist)),
                     ),
+                    if (loginUserData.value.userRole
+                        .contains(EmployeeKeyConst.receptionist))
+                      Card(
+                        margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          leading: const Icon(Icons.workspace_premium_outlined,
+                              color: appColorPrimary, size: 32),
+                          title: Text(locale.value.clinicPackages,
+                              style: boldTextStyle()),
+                          subtitle: Text(locale.value.manageClinicPackages),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () =>
+                              Get.to(() => const ClinicSubscriptionScreen()),
+                        ),
+                      ),
                     HomeComponent(
                       title: locale.value.analytics,
                       child: loginUserData.value.userRole

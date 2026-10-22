@@ -2832,4 +2832,67 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get useExistingPatient => 'استخدام هذا المريض';
+
+  @override
+  String get clinicPackages => 'باقات العيادة';
+  @override
+  String get manageClinicPackages => 'إدارة اشتراك العيادة والمدفوعات';
+  @override
+  String get clinicPackagesIntro => 'اختر الباقة المناسبة لعيادتك';
+  @override
+  String get clinicPackagesHint => 'ادفع بأمان باستخدام كي نت أو البطاقات عبر ماي فاتورة.';
+  @override
+  String get currentClinicSubscription => 'الاشتراك الحالي';
+  @override
+  String get upcomingClinicSubscription => 'التجديد القادم';
+  @override
+  String get noClinicSubscription => 'لا يوجد اشتراك نشط لعيادتك';
+  @override
+  String get availableClinicPackages => 'الباقات المتاحة';
+  @override
+  String get clinicPaymentHistory => 'سجل المدفوعات';
+  @override
+  String get noClinicPayments => 'ستظهر مدفوعات العيادة هنا';
+  @override
+  String get noClinicPackages => 'لا توجد باقات متاحة حاليًا';
+  @override
+  String get subscribeClinicPackage => 'اشترك الآن';
+  @override
+  String get renewClinicPackage => 'تجديد الاشتراك';
+  @override
+  String get clinicRenewalHint => 'تبدأ الباقة الجديدة بعد انتهاء اشتراكك الحالي.';
+  @override
+  String get clinicRenewalScheduled => 'يوجد تجديد مجدول بالفعل لعيادتك.';
+  @override
+  String get clinicPriceUnavailable => 'السعر غير متاح';
+  @override
+  String get clinicSecureCheckout => 'الدفع الآمن';
+  @override
+  String get clinicConfirmPayment => 'المتابعة للدفع';
+  @override
+  String get clinicPaymentSuccess => 'تم تأكيد الدفع وتحديث اشتراك العيادة بنجاح.';
+  @override
+  String get clinicPaymentFailed => 'لم تكتمل عملية الدفع. يمكنك المحاولة من سجل المدفوعات.';
+  @override
+  String get clinicPaymentPending => 'الدفع في انتظار التأكيد. يمكنك التحقق من حالته من سجل المدفوعات.';
+  @override
+  String get clinicPaymentCheckFailed => 'تعذّر التحقق من الدفع. راجع حالته قبل المحاولة مرة أخرى.';
+  @override
+  String get checkClinicPayment => 'التحقق من الدفع';
+  @override
+  String get resumeClinicPayment => 'استكمال الدفع';
+  @override
+  String get clinicCheckoutError => 'تعذّر تحميل صفحة الدفع. أغلقها وتحقق من حالة العملية.';
+  @override
+  String get clinicReceptionistOnly => 'موظف استقبال العيادة هو المسؤول عن إدارة الباقات.';
+  @override
+  String get clinicBannerPerk => 'إعلان بانر للعيادة';
+  @override
+  String get clinicSearchPerk => 'أولوية الظهور في نتائج البحث';
+  @override
+  String clinicPackageMonths(int months) => '$months أشهر';
+  @override
+  String clinicPackageDays(int days) => '$days يوم';
+  @override
+  String clinicDaysRemaining(int days) => 'متبقي $days يوم';
 }

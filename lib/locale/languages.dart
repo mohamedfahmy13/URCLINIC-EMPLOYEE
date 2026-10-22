@@ -1825,4 +1825,36 @@ abstract class BaseLanguage {
   String get bookingFailed;
 
   String get useExistingPatient;
+
+  String get clinicPackages => 'Clinic packages';
+  String get manageClinicPackages => 'Manage your clinic subscription and payments';
+  String get clinicPackagesIntro => 'Choose a package for your clinic';
+  String get clinicPackagesHint => 'Pay securely with KNET or cards through MyFatoorah.';
+  String get currentClinicSubscription => 'Current subscription';
+  String get upcomingClinicSubscription => 'Scheduled renewal';
+  String get noClinicSubscription => 'Your clinic has no active subscription';
+  String get availableClinicPackages => 'Available packages';
+  String get clinicPaymentHistory => 'Payment history';
+  String get noClinicPayments => 'Your payments will appear here';
+  String get noClinicPackages => 'No packages are available at the moment';
+  String get subscribeClinicPackage => 'Subscribe';
+  String get renewClinicPackage => 'Renew subscription';
+  String get clinicRenewalHint => 'Your new package starts after your current subscription ends.';
+  String get clinicRenewalScheduled => 'Your next subscription is already scheduled.';
+  String get clinicPriceUnavailable => 'Price unavailable';
+  String get clinicSecureCheckout => 'Secure payment';
+  String get clinicConfirmPayment => 'Continue to payment';
+  String get clinicPaymentSuccess => 'Payment confirmed. Your clinic subscription has been updated.';
+  String get clinicPaymentFailed => 'Payment was not completed. You can retry from payment history.';
+  String get clinicPaymentPending => 'Payment is awaiting confirmation. Check its status from payment history.';
+  String get clinicPaymentCheckFailed => 'We could not verify your payment. Check its status before trying again.';
+  String get checkClinicPayment => 'Check payment';
+  String get resumeClinicPayment => 'Continue payment';
+  String get clinicCheckoutError => 'The payment page could not load. Close it and check the payment status.';
+  String get clinicReceptionistOnly => 'Clinic packages are managed by the clinic receptionist.';
+  String get clinicBannerPerk => 'Banner advertisement';
+  String get clinicSearchPerk => 'Priority in search results';
+  String clinicPackageMonths(int months) => '$months months';
+  String clinicPackageDays(int days) => '$days days';
+  String clinicDaysRemaining(int days) => '$days days remaining';
 }
