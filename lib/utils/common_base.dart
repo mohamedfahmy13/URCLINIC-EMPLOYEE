@@ -1023,7 +1023,7 @@ Color getEncounterStatusLightColor({required String encounterStatus}) {
   } else if (encounterStatus.toLowerCase().contains(EncounterStatus.CLOSED)) {
     return isDarkMode.value ? const Color(0xFF442A30) : lightSecondaryColor;
   } else {
-    return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
+    return isDarkMode.value ? appDarkSurface : extraLightPrimaryColor;
   }
 }
 
@@ -1121,14 +1121,14 @@ class ClinicStatus {
 Color getClinicStatusLightColor({required String clinicStatus}) {
   if (clinicStatus.toLowerCase().contains(ClinicStatus.open)) {
     return isDarkMode.value
-        ? lightGreenColor.withValues(alpha: 0.1)
+        ? const Color(0xFF163A35)
         : lightGreenColor;
   } else if (clinicStatus.toLowerCase().contains(ClinicStatus.close)) {
     return isDarkMode.value
-        ? lightSecondaryColor.withValues(alpha: 0.1)
+        ? const Color(0xFF442A30)
         : lightSecondaryColor;
   } else {
-    return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
+    return isDarkMode.value ? appDarkSurface : extraLightPrimaryColor;
   }
 }
 

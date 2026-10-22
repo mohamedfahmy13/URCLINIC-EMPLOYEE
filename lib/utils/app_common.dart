@@ -125,19 +125,19 @@ Color getBookingStatusColor({required String status}) {
   } else if (status.toLowerCase().contains(StatusConst.upcoming)) {
     return upcomingStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.confirmed)) {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.check_in)) {
     return inprogressStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.completed)) {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.cancel)) {
-    return cancelStatusColor;
+    return isDarkMode.value ? const Color(0xFFFFB4AB) : cancelStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.reject)) {
-    return cancelStatusColor;
+    return isDarkMode.value ? const Color(0xFFFFB4AB) : cancelStatusColor;
   } else if (status.toLowerCase().contains(StatusConst.checkout)) {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   } else {
-    return defaultStatusColor;
+    return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
   }
 }
 
@@ -189,7 +189,7 @@ Color getPrescriptionStatusColor({required String status}) {
   } else if (status.toLowerCase().contains(StatusConst.completed)) {
     return completedStatusColor;
   } else {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   }
 }
 
@@ -213,7 +213,7 @@ Color getPrescriptionPaymentStatusColor({required String paymentStatus}) {
       paymentStatus.toLowerCase().contains(PaymentStatus.PAID)) {
     return completedStatusColor;
   } else {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   }
 }
 
@@ -227,11 +227,11 @@ Color getPriceStatusColor({required String paymentStatus}) {
   } else if (paymentStatus
       .toLowerCase()
       .contains(PaymentStatus.ADVANCE_REFUNDED)) {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   } else if (paymentStatus.toLowerCase().contains(PaymentStatus.REFUNDED)) {
-    return confirmedStatusColor;
+    return isDarkMode.value ? appColorPrimaryOnDark : confirmedStatusColor;
   } else {
-    return defaultStatusColor;
+    return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
   }
 }
 
@@ -240,7 +240,7 @@ Color getNewPriceStatusColor({required String paymentStatus}) {
     case "1":
       return completedStatusColor;
     case "2":
-      return defaultStatusColor;
+      return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
     case "0":
     default:
       return pendingStatusColor;
@@ -267,9 +267,9 @@ Color getRequestStatusColor({required String requestStatus}) {
       requestStatus.toLowerCase().contains(RequestStatus.accept)) {
     return completedStatusColor;
   } else if (requestStatus.toLowerCase().contains(RequestStatus.rejected)) {
-    return cancelStatusColor;
+    return isDarkMode.value ? const Color(0xFFFFB4AB) : cancelStatusColor;
   } else {
-    return defaultStatusColor;
+    return isDarkMode.value ? appDarkTextSecondary : defaultStatusColor;
   }
 }
 
@@ -289,7 +289,7 @@ Color getOrderStatusColor({required String orderStatus}) {
   } else if (orderStatus.toLowerCase().contains(StatusConst.delivered)) {
     return completedStatusColor;
   } else {
-    return cancelStatusColor;
+    return isDarkMode.value ? const Color(0xFFFFB4AB) : cancelStatusColor;
   }
 }
 

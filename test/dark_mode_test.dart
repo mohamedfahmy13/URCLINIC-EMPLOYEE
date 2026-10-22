@@ -1,3 +1,6 @@
+import 'package:kivicare_clinic_admin/main.dart';
+import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_boost_card.dart';
+import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscription_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -174,5 +177,46 @@ void main() {
     final style = jsonDecode(darkMapStyle) as List;
     expect(style, isNotEmpty);
     expect(style.first['stylers'].first['color'], '#1b2431');
+  });
+  testWidgets(
+      'banner moderation labels remain readable in both brightness modes',
+      (tester) async {
+    addTearDown(() => themeModeController.setMode(ThemeMode.light));
+    for (final brightness in Brightness.values) {
+      themeModeController.setMode(
+          brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light);
+      final theme = AppTheme.create(brightness, fontFamily: 'Test');
+      for (final status in [
+        'missing',
+        'pending_review',
+        'approved',
+        'rejected'
+      ]) {
+        final label = status == 'missing'
+            ? locale.value.clinicBannerMissing
+            : status == 'pending_review'
+                ? locale.value.clinicBannerReview
+                : status == 'approved'
+                    ? locale.value.clinicBenefitLive
+                    : locale.value.clinicBannerRejected;
+        await tester.pumpWidget(MaterialApp(
+            theme: theme,
+            home: Scaffold(
+                body: ClinicBoostCard(
+              boost: ClinicBoost.fromJson({
+                'type': 'banner_ad',
+                'banner_status': status,
+                'is_live': status == 'approved',
+                'days_remaining': 7
+              }),
+              busy: false,
+              onUpload: () {},
+            ))));
+        await tester.pumpAndSettle();
+        final text = tester.widget<Text>(find.text(label));
+        expect(contrast(text.style!.color!, theme.cardColor),
+            greaterThanOrEqualTo(4.5));
+      }
+    }
   });
 }

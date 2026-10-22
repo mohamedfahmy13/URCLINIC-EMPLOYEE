@@ -150,6 +150,7 @@ class SocialMediaElement extends StatelessWidget {
         decoration: boxDecorationDefault(color: context.themeSoftPrimary, shape: BoxShape.circle),
         child: CachedImageWidget(
           url: iconPath,
+          color: context.themePrimary,
           height: 16,
           fit: BoxFit.fitHeight,
         ),

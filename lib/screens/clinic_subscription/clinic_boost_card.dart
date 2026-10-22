@@ -33,7 +33,7 @@ class ClinicBoostCard extends StatelessWidget {
             ? context.themeSuccess
             : boost.bannerStatus == 'pending_review'
                 ? context.themeWarning
-                : appColorPrimary;
+                : context.themePrimary;
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 12),
