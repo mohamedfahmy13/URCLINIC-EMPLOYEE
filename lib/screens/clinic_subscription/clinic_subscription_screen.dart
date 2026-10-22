@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import '../../configs.dart';
@@ -9,6 +11,7 @@ import 'clinic_checkout_navigation.dart';
 import 'clinic_checkout_screen.dart';
 import 'clinic_subscription_controller.dart';
 import 'clinic_subscription_models.dart';
+import 'clinic_boost_card.dart';
 
 class ClinicSubscriptionScreen extends StatefulWidget {
   final ClinicSubscriptionController? controller;
@@ -59,6 +62,64 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
     } catch (_) {
       _message(locale.value.clinicPaymentCheckFailed);
     }
+  }
+
+  Future<void> _uploadBanner(ClinicBoost boost) async {
+    await _controller.withPayment(() async {
+      try {
+        final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (file == null || !mounted) return;
+        final bytes = await file.readAsBytes();
+        if (!RegExp(r'\.(jpe?g|png|webp)$', caseSensitive: false)
+                .hasMatch(file.name) ||
+            bytes.length > 4 * 1024 * 1024) {
+          _message(locale.value.clinicBannerInvalidImage);
+          return;
+        }
+        final codec = await ui.instantiateImageCodec(bytes);
+        final frame = await codec.getNextFrame();
+        final valid = frame.image.width >= 600 && frame.image.height >= 200;
+        frame.image.dispose();
+        codec.dispose();
+        if (!valid) {
+          _message(locale.value.clinicBannerInvalidImage);
+          return;
+        }
+        if (!mounted) return;
+        final confirmed = await showDialog<bool>(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text(locale.value.clinicUploadBanner),
+                  content: SingleChildScrollView(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    AspectRatio(
+                        aspectRatio: 3,
+                        child: Image.memory(bytes, fit: BoxFit.cover)),
+                    const SizedBox(height: 16),
+                    Text(boost.bannerStatus == 'approved'
+                        ? locale.value.clinicBannerReplaceHint
+                        : locale.value.clinicBannerTimeHint),
+                    const SizedBox(height: 8),
+                    Text(locale.value.clinicBannerUploadHint),
+                  ])),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text(locale.value.cancel)),
+                    FilledButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: Text(locale.value.clinicSubmitBanner)),
+                  ],
+                ));
+        if (confirmed != true || !mounted) return;
+        await _controller.api.uploadBanner(boost.id, bytes, file.name);
+        await _controller.load();
+        _message(locale.value.clinicBannerUploaded);
+      } catch (error) {
+        _message(
+            error is String ? error : locale.value.clinicBannerUploadFailed);
+      }
+    });
   }
 
   Future<void> _checkout(ClinicPaymentIntent intent) async {
@@ -161,6 +222,15 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                               upcoming: true),
                         ],
                         const SizedBox(height: 24),
+                        if (_controller.state.boosts.isNotEmpty) ...[
+                          _heading(locale.value.clinicBenefits),
+                          for (final boost in _controller.state.boosts)
+                            ClinicBoostCard(
+                                boost: boost,
+                                busy: _controller.busy || _controller.loading,
+                                onUpload: () => _uploadBanner(boost)),
+                          const SizedBox(height: 12),
+                        ],
                         _heading(locale.value.availableClinicPackages),
                         if (_controller.plans.isEmpty && !_controller.loading)
                           Padding(

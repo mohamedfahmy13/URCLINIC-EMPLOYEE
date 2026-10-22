@@ -11,6 +11,7 @@ import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscri
 import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscription_controller.dart';
 import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscription_models.dart';
 import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscription_screen.dart';
+import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_boost_card.dart';
 import 'package:kivicare_clinic_admin/utils/app_common.dart';
 
 class FakeSubscriptionApi extends ClinicSubscriptionApi {
@@ -48,6 +49,96 @@ class FakeSubscriptionApi extends ClinicSubscriptionApi {
 }
 
 void main() {
+  test(
+      'benefits preserve pending days, moderation feedback and scheduled dates',
+      () {
+    final state = ClinicSubscriptionState.fromJson({
+      'boosts': [
+        {
+          'id': 7,
+          'type': 'banner_ad',
+          'status': 'pending',
+          'start_date': null,
+          'end_date': null,
+          'duration_days': 14,
+          'days_remaining': 11,
+          'banner_status': 'rejected',
+          'is_live': false,
+          'can_upload': true,
+          'meta': {
+            'banner_media_url': null,
+            'rejected_reason': 'Use a clearer image'
+          }
+        },
+        {
+          'id': 8,
+          'type': 'top_search',
+          'status': 'active',
+          'is_live': true,
+          'start_date': '2026-10-22',
+          'end_date': '2026-10-24',
+          'days_remaining': 3
+        },
+      ],
+    });
+    expect(state.boosts.first.isBanner, isTrue);
+    expect(state.boosts.first.startDate, isEmpty);
+    expect(state.boosts.first.daysRemaining, 11);
+    expect(state.boosts.first.canUpload, isTrue);
+    expect(state.boosts.first.rejectedReason, 'Use a clearer image');
+    expect(state.boosts.last.isLive, isTrue);
+    expect(state.boosts.last.canUpload, isFalse);
+  });
+
+  testWidgets('rejected banner shows Arabic feedback and allows resubmission',
+      (tester) async {
+    locale.value = LanguageAr();
+    addTearDown(() => locale.value = LanguageEn());
+    var uploads = 0;
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: SingleChildScrollView(
+      child: ClinicBoostCard(
+        boost: ClinicBoost.fromJson({
+          'id': 7,
+          'type': 'banner_ad',
+          'status': 'pending',
+          'banner_status': 'rejected',
+          'days_remaining': 14,
+          'can_upload': true,
+          'meta': {'rejected_reason': 'الصورة غير واضحة'}
+        }),
+        busy: false,
+        onUpload: () => uploads++,
+      ),
+    ))));
+    expect(find.text('مطلوب تعديل البانر'), findsOneWidget);
+    expect(find.text('الصورة غير واضحة'), findsOneWidget);
+    expect(find.text('متبقي 14 يوم'), findsOneWidget);
+    await tester.tap(find.text('رفع صورة البانر'));
+    expect(uploads, 1);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('upload button is disabled during another operation',
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: ClinicBoostCard(
+      boost: ClinicBoost.fromJson({
+        'type': 'banner_ad',
+        'status': 'pending',
+        'banner_status': 'pending_review',
+        'days_remaining': 7,
+        'can_upload': true
+      }),
+      busy: true,
+      onUpload: () => fail('Busy uploads must be disabled'),
+    ))));
+    expect(tester.widget<OutlinedButton>(find.byType(OutlinedButton)).onPressed,
+        isNull);
+  });
+
   test('only the exact return origin, path and invoice trigger verification',
       () {
     const returnUrl = 'https://clinic.test/payment/return';

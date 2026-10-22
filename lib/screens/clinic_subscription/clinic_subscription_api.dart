@@ -1,9 +1,38 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 import '../../network/network_utils.dart';
 import '../../main.dart';
 import 'clinic_subscription_models.dart';
 
 class ClinicSubscriptionApi {
+  Future<void> uploadBanner(
+      int boostId, Uint8List bytes, String filename) async {
+    Future<http.MultipartRequest> makeRequest() async {
+      final request = await getMultiPartRequest('subscription/banner-creative');
+      request.fields['boost_id'] = '$boostId';
+      request.files.add(
+          http.MultipartFile.fromBytes('image', bytes, filename: filename));
+      request.headers.addAll(buildHeaderTokens()..remove('content-type'));
+      return request;
+    }
+
+    await sendMultiPartRequest(
+      await makeRequest(),
+      requestFactory: makeRequest,
+      toastValidationError: false,
+      onSuccess: (raw) {
+        final body = jsonDecode(raw as String);
+        if (body['status'] != true) {
+          throw body['message'] ?? locale.value.somethingWentWrong;
+        }
+      },
+      onError: (error) => throw error ?? locale.value.somethingWentWrong,
+    ).timeout(const Duration(seconds: 60),
+        onTimeout: () => throw locale.value.serviceUnavailable);
+  }
+
   Future<dynamic> _request(String path, {Map<String, dynamic>? body}) async {
     final response = await handleResponse(await buildHttpResponse(
       'subscription/$path',

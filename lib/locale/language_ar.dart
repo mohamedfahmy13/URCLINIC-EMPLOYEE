@@ -2888,6 +2888,36 @@ class LanguageAr extends BaseLanguage {
   @override
   String get clinicBannerPerk => 'إعلان بانر للعيادة';
   @override
+  String get clinicBenefits => 'مزايا عيادتك';
+  @override
+  String get clinicBannerMissing => 'ارفع صورة بانر العيادة';
+  @override
+  String get clinicBannerReview => 'بانتظار مراجعة الإدارة';
+  @override
+  String get clinicBannerRejected => 'مطلوب تعديل البانر';
+  @override
+  String get clinicBenefitLive => 'ظاهر الآن';
+  @override
+  String get clinicBenefitScheduled => 'مجدول';
+  @override
+  String get clinicUploadBanner => 'رفع صورة البانر';
+  @override
+  String get clinicReplaceBanner => 'تغيير الصورة';
+  @override
+  String get clinicSubmitBanner => 'إرسال للمراجعة';
+  @override
+  String get clinicBannerUploadHint => 'JPG أو PNG أو WebP · الأبعاد 600 × 200 بكسل على الأقل · الحجم حتى 4 ميجابايت';
+  @override
+  String get clinicBannerTimeHint => 'تبدأ أيام الإعلان بعد الموافقة والنشر، ولا تُخصم أيام أثناء انتظار المراجعة.';
+  @override
+  String get clinicBannerReplaceHint => 'تغيير الصورة يوقف البانر الحالي حتى توافق الإدارة على الصورة الجديدة، مع حفظ الأيام غير المستخدمة.';
+  @override
+  String get clinicBannerUploaded => 'تم إرسال صورة البانر لمراجعة الإدارة.';
+  @override
+  String get clinicBannerInvalidImage => 'اختر صورة JPG أو PNG أو WebP بأبعاد 600 × 200 بكسل على الأقل وحجم لا يزيد عن 4 ميجابايت.';
+  @override
+  String get clinicBannerUploadFailed => 'تعذّر رفع صورة البانر. يرجى المحاولة مرة أخرى.';
+  @override
   String get clinicSearchPerk => 'أولوية الظهور في نتائج البحث';
   @override
   String clinicPackageMonths(int months) => '$months أشهر';

@@ -59,11 +59,16 @@ class ClinicSubscription {
 class ClinicSubscriptionState {
   final ClinicSubscription? current;
   final ClinicSubscription? upcoming;
+  final List<ClinicBoost> boosts;
 
-  const ClinicSubscriptionState({this.current, this.upcoming});
+  const ClinicSubscriptionState(
+      {this.current, this.upcoming, this.boosts = const []});
 
   factory ClinicSubscriptionState.fromJson(Map<String, dynamic> json) {
     return ClinicSubscriptionState(
+      boosts: (json['boosts'] as List? ?? [])
+          .map((item) => ClinicBoost.fromJson(Map<String, dynamic>.from(item)))
+          .toList(),
       current: json['subscription'] is Map
           ? ClinicSubscription.fromJson(
               Map<String, dynamic>.from(json['subscription']))
@@ -74,6 +79,37 @@ class ClinicSubscriptionState {
           : null,
     );
   }
+}
+
+class ClinicBoost {
+  final int id;
+  final String type;
+  final String status;
+  final String bannerStatus;
+  final String startDate;
+  final String endDate;
+  final int daysRemaining;
+  final int durationDays;
+  final bool isLive;
+  final bool canUpload;
+  final String imageUrl;
+  final String rejectedReason;
+
+  ClinicBoost.fromJson(Map<String, dynamic> json)
+      : id = _integer(json['id']),
+        type = json['type']?.toString() ?? '',
+        status = json['status']?.toString() ?? '',
+        bannerStatus = json['banner_status']?.toString() ?? '',
+        startDate = json['start_date']?.toString() ?? '',
+        endDate = json['end_date']?.toString() ?? '',
+        daysRemaining = _integer(json['days_remaining']),
+        durationDays = _integer(json['duration_days']),
+        isLive = json['is_live'] == true,
+        canUpload = json['can_upload'] == true,
+        imageUrl = json['meta']?['banner_media_url']?.toString() ?? '',
+        rejectedReason = json['meta']?['rejected_reason']?.toString() ?? '';
+
+  bool get isBanner => type == 'banner_ad';
 }
 
 class ClinicPayment {

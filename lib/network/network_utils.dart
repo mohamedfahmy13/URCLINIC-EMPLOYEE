@@ -178,7 +178,7 @@ Future<Response> buildHttpResponse(
         throw locale.value.forbidden;
       }
 
-      return buildHttpResponse(
+      return await buildHttpResponse(
         endPoint,
         method: method,
         request: request,
@@ -356,6 +356,7 @@ Future<void> sendMultiPartRequest(
   int retryCount = 0,
   // Callers that show the error themselves pass false to avoid a second toast.
   bool toastValidationError = true,
+  Future<MultipartRequest> Function()? requestFactory,
 }) async {
   final http.Response response =
       await http.Response.fromStream(await multiPartRequest.send());
@@ -377,7 +378,9 @@ Future<void> sendMultiPartRequest(
     String errorMsg = _multipartErrorMessage(response);
     try {
       final errorJson = jsonDecode(response.body);
-      if (errorJson is Map && errorJson['message'] == null && errorJson['errors'] is Map) {
+      if (errorJson is Map &&
+          errorJson['message'] == null &&
+          errorJson['errors'] is Map) {
         errorMsg = (errorJson['errors'] as Map).values.first[0].toString();
       }
     } catch (_) {}
@@ -400,6 +403,20 @@ Future<void> sendMultiPartRequest(
       final bool canRetry = await _ensureFreshToken();
       if (!canRetry) {
         onError?.call(locale.value.forbidden);
+        return;
+      }
+
+      if (requestFactory != null) {
+        // Multipart streams are finalized after sending. Rebuild the upload
+        // with the refreshed token rather than sending the same stream twice.
+        await sendMultiPartRequest(
+          await requestFactory(),
+          onSuccess: onSuccess,
+          onError: onError,
+          retryCount: retryCount + 1,
+          toastValidationError: toastValidationError,
+          requestFactory: requestFactory,
+        );
         return;
       }
 
@@ -429,7 +446,9 @@ Future<void> sendMultiPartRequest(
 String? _responseMessage(http.Response response) {
   try {
     final body = jsonDecode(response.body.trim());
-    if (body is Map && body['message'] is String && (body['message'] as String).trim().isNotEmpty) {
+    if (body is Map &&
+        body['message'] is String &&
+        (body['message'] as String).trim().isNotEmpty) {
       return (body['message'] as String).trim();
     }
   } catch (_) {}
