@@ -28,6 +28,18 @@ class PatientListModel {
   }
 }
 
+/// Thrown when a new patient's mobile number already belongs to a registered patient,
+/// so the staff can book that patient instead of creating a duplicate.
+class ExistingPatientException implements Exception {
+  final String message;
+  final PatientModel patient;
+
+  ExistingPatientException({required this.message, required this.patient});
+
+  @override
+  String toString() => message;
+}
+
 class PatientModel {
   int id;
   String firstName;
@@ -47,6 +59,7 @@ class PatientModel {
   String dribbbleLink;
   String profileImage;
   int totalAppointments;
+  String address;
 
   PatientModel({
     this.id = -1,
@@ -67,6 +80,7 @@ class PatientModel {
     this.dribbbleLink = "",
     this.profileImage = "",
     this.totalAppointments = 0,
+    this.address = "",
   });
 
   factory PatientModel.fromJson(Map<String, dynamic> json) {
@@ -89,6 +103,7 @@ class PatientModel {
       dribbbleLink: json['dribbble_link'] is String ? json['dribbble_link'] : "",
       profileImage: json['profile_image'] is String ? json['profile_image'] : "",
       totalAppointments: json['total_appointments'] is int ? json['total_appointments'] : 0,
+      address: json['address'] is String ? json['address'] : "",
     );
   }
 
@@ -112,6 +127,7 @@ class PatientModel {
       'dribbble_link': dribbbleLink,
       'profile_image': profileImage,
       'total_appointments': totalAppointments,
+      'address': address,
     };
   }
 }

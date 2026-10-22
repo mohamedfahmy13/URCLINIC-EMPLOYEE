@@ -2678,4 +2678,55 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get invalidEmailOrPassword => 'The email or password is incorrect.';
+
+  @override
+  String get onlyJpegJpgPngAllowed => 'Only .jpeg, .jpg, .png files are allowed.';
+
+  @override
+  String get addPatient => 'Add Patient';
+
+  @override
+  String get editPatient => 'Edit Patient';
+
+  @override
+  String get addNewPatient => 'Add new patient';
+
+  @override
+  String get patientAddedSuccessfully => 'Patient added successfully';
+
+  @override
+  String get patientUpdatedSuccessfully => 'Patient updated successfully';
+
+  @override
+  String get pleaseSelectGender => 'Please select gender';
+
+  @override
+  String get mobileNumber => 'Mobile Number';
+
+  @override
+  String get pleaseEnterValidMobileNumber => 'Please enter a valid mobile number';
+
+  @override
+  String get searchByNameOrPhone => 'Search by name or phone';
+
+  @override
+  String get newBooking => 'New Booking';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTimeSlot => 'Please select a time slot';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get paymentCollectedAtCheckout => 'Payment is collected at the clinic at checkout';
+
+  @override
+  String get bookingFailed => 'The booking could not be saved. Please try again.';
+
+  @override
+  String get useExistingPatient => 'Use this patient';
 }

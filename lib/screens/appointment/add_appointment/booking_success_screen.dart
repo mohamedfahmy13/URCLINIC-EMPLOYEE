@@ -50,8 +50,16 @@ class BookingSuccessScreen extends StatelessWidget {
                     children: List.generate(Get.width ~/ 14, (index) => Container(width: 8, height: 2, decoration: boxDecorationDefault(color: context.dividerColor.withValues(alpha: 0.3)))),
                   ),
                   32.height,
+                  // Clinic • date • time, without English-only connecting words.
                   Text(
-                    "To ${saveBookingRes.value.saveBookingResData.clinicName} On ${saveBookingRes.value.saveBookingResData.appointmentDate.dateInDMMMMyyyyFormat} At ${saveBookingRes.value.saveBookingResData.appointmentTime.format24HourtoAMPM} ${saveBookingRes.value.saveBookingResData.endTime.isNotEmpty ? "-" : ""} ${saveBookingRes.value.saveBookingResData.endTime.isNotEmpty ? saveBookingRes.value.saveBookingResData.endTime.format24HourtoAMPM : ""}",
+                    [
+                      saveBookingRes.value.saveBookingResData.clinicName,
+                      saveBookingRes.value.saveBookingResData.appointmentDate.dateInDMMMMyyyyFormat,
+                      [
+                        saveBookingRes.value.saveBookingResData.appointmentTime.format24HourtoAMPM,
+                        if (saveBookingRes.value.saveBookingResData.endTime.isNotEmpty) saveBookingRes.value.saveBookingResData.endTime.format24HourtoAMPM,
+                      ].join(' - '),
+                    ].where((part) => part.trim().isNotEmpty).join('  •  '),
                     textAlign: TextAlign.center,
                     style: secondaryTextStyle(),
                   ).paddingSymmetric(horizontal: 16),

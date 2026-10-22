@@ -93,6 +93,11 @@ class CreateServiceController extends GetxController {
       clinicCont.text = args.name;
     }
 
+    // A receptionist always manages the services of their own clinic.
+    if (isReceptionist && !selectedAppClinic.value.id.isNegative) {
+      selectClinic(selectedAppClinic.value);
+    }
+
     clinicSearchStream.stream.debounce(const Duration(milliseconds: 500)).listen((s) {
       getClinics();
     });
@@ -100,11 +105,15 @@ class CreateServiceController extends GetxController {
     super.onInit();
   }
 
+  bool get isReceptionist => loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist);
+
   void _populateFromService(ServiceElement svc) {
     serviceCont.text = svc.name;
+    serviceArCont.text = svc.nameAr;
     durationCont.text = svc.duration > 0 ? svc.duration.toString() : '';
     priceCont.text = svc.charges > 0 ? svc.charges.toString() : '';
     descriptionCont.text = svc.description;
+    descriptionArCont.text = svc.descriptionAr;
     typeCont.text = _typeLabelFromKey(svc.type);
     selectedType.value = svc.type;
     selectedTypeLabel.value = _typeLabelFromKey(svc.type);
@@ -237,23 +246,14 @@ class CreateServiceController extends GetxController {
     if (!_validate()) return;
     if (isLoading.value) return;
 
-    // Scope the service to the clinic owner's vendor so it shows up in
-    // get-services (which filters by vendor_id). For receptionists, the
-    // logged-in user id is NOT the vendor — the clinic's createdBy is.
-    final int clinicVendorId = !selectedClinic.value.createdBy.isNegative
-        ? selectedClinic.value.createdBy
-        : loginUserData.value.id;
-
+    // The backend takes the owner (vendor_id) from the clinic, so it is not sent.
     final Map<String, dynamic> request = {
       'name': serviceCont.text.trim(),
       'name_ar': serviceArCont.text.trim(),
       'duration_min': durationCont.text.trim(),
-      'duration': durationCont.text.trim(),
       'time_slot': durationCont.text.trim(),
       'clinic_id': selectedClinic.value.id,
-      'vendor_id': clinicVendorId,
       'charges': priceCont.text.trim(),
-      'price': priceCont.text.trim(),
       'type': selectedType.value,
       'description': descriptionCont.text.trim(),
       'description_ar': descriptionArCont.text.trim(),

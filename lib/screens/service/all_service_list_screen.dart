@@ -61,7 +61,7 @@ class AllServicesScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.add_circle_outline_rounded,
                 size: 28, color: Colors.white),
-          ).paddingOnly(right: 8).visible(false),
+          ).paddingOnly(right: 8).visible(_canManageServices),
         ],
         body: SizedBox(
           height: Get.height,
@@ -126,6 +126,9 @@ class AllServicesScreen extends StatelessWidget {
                           return AllServiceCard(
                             serviceElement: service,
                             showActionButton: false,
+                            trailing: _canManageServices
+                                ? _serviceActions(service)
+                                : null,
                             onClickAssignDoctor: () {
                               if (loginUserData.value.userRole
                                   .contains(EmployeeKeyConst.doctor)) {
@@ -173,6 +176,39 @@ class AllServicesScreen extends StatelessWidget {
           ).paddingTop(16),
         ),
       ),
+    );
+  }
+
+  /// Receptionists (and clinic admins) manage their clinic's services from this list.
+  bool get _canManageServices =>
+      loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist) ||
+      loginUserData.value.userRole.contains(EmployeeKeyConst.vendor);
+
+  void _reloadServices(dynamic value) {
+    if (value == true) {
+      serviceListCont.page(1);
+      serviceListCont.getAllServices();
+    }
+  }
+
+  Widget _serviceActions(ServiceElement service) {
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.more_vert_rounded, size: 20, color: appColorSecondary),
+      padding: EdgeInsets.zero,
+      onSelected: (action) {
+        if (action == 'edit') {
+          if (Get.isRegistered<CreateServiceController>()) {
+            Get.delete<CreateServiceController>();
+          }
+          Get.to(() => AddServiceForm(), arguments: service)?.then(_reloadServices);
+        } else if (action == 'assign') {
+          Get.to(() => AssingDoctorScreen(), arguments: service)?.then(_reloadServices);
+        }
+      },
+      itemBuilder: (_) => [
+        PopupMenuItem(value: 'edit', child: Text(locale.value.editService, style: primaryTextStyle(size: 14))),
+        PopupMenuItem(value: 'assign', child: Text(locale.value.assignDoctor, style: primaryTextStyle(size: 14))),
+      ],
     );
   }
 

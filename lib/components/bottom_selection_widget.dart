@@ -57,6 +57,9 @@ class BottomSelectionSheet extends StatelessWidget {
   final bool hideSearchBar;
   final double heightRatio;
   final Function(String)? searchApiCall;
+  // Optional action under the search bar (e.g. "Add new patient"); gets the typed search text.
+  final String? actionLabel;
+  final void Function(String searchText)? onAction;
 
   const BottomSelectionSheet({
     super.key,
@@ -75,6 +78,8 @@ class BottomSelectionSheet extends StatelessWidget {
     this.hideSearchBar = false,
     this.heightRatio = 0.80,
     this.searchApiCall,
+    this.actionLabel,
+    this.onAction,
   });
 
   @override
@@ -135,6 +140,12 @@ class BottomSelectionSheet extends StatelessWidget {
                         ),
                       ).paddingTop(16).visible(!hideSearchBar),
                       16.height.visible(!hideSearchBar),
+                      if (onAction != null && actionLabel != null)
+                        TextButton.icon(
+                          onPressed: () => onAction!(getxBSSCont.searchCont.text.trim()),
+                          icon: const Icon(Icons.person_add_alt_1_outlined, size: 20),
+                          label: Text(actionLabel!, style: boldTextStyle(size: 14)),
+                        ).paddingBottom(8),
                       if (hasError) Obx(
                               () => NoDataWidget(
                                 title: errorText ?? locale.value.somethingWentWrong,

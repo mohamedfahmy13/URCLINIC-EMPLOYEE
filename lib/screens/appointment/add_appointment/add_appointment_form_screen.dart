@@ -17,9 +17,12 @@ import '../../../utils/constants.dart';
 import '../../../utils/empty_error_state_widget.dart';
 import '../../../utils/price_widget.dart';
 import '../../../utils/view_all_label_component.dart';
-import '../../Encounter/generate_invoice/components/billing_item_service_list_screen.dart';
 import 'package:kivicare_clinic_admin/screens/appointment/components/applied_tax_list_bottom_sheet.dart';
+import '../../Encounter/add_encounter/model/patient_model.dart';
 import '../../auth/model/login_response.dart';
+import '../../doctor/model/doctor_list_res.dart';
+import '../../patient/add_patient/add_patient_controller.dart';
+import '../../patient/add_patient/add_patient_screen.dart';
 import 'add_appointment_controller.dart';
 import 'patient_list_widget_add_appointment.dart';
 
@@ -64,10 +67,20 @@ class AddAppointmentFormScreen extends StatelessWidget {
                             searchApiCall: (p0) {
                               log("Search  ==> $p0");
                               addAppointmentCont.searchPatient(p0);
+                              addAppointmentCont.patientPage(1);
                               addAppointmentCont.getPatientList();
                             },
                             onRetry: () {
                               addAppointmentCont.getPatientList();
+                            },
+                            // Walk-in not registered yet: add them and book right away.
+                            actionLabel: locale.value.addNewPatient,
+                            onAction: (searchText) {
+                              Get.back();
+                              if (Get.isRegistered<AddPatientController>()) Get.delete<AddPatientController>();
+                              Get.to(() => AddPatientScreen(), arguments: searchText)?.then((value) {
+                                if (value is PatientModel) addAppointmentCont.choosePatient(value);
+                              });
                             },
                             listWidget: PatientListWidgetAddAppointment(patientList: addAppointmentCont.patientList).expand(),
                           ),
@@ -95,6 +108,42 @@ class AddAppointmentFormScreen extends StatelessWidget {
                     ),
                   ).paddingTop(16),
                 ),
+                if (!addAppointmentCont.isDoctorUser)
+                  AppTextField(
+                    textStyle: primaryTextStyle(size: 12),
+                    controller: addAppointmentCont.doctorCont,
+                    textFieldType: TextFieldType.NAME,
+                    readOnly: true,
+                    isValidationRequired: false,
+                    onTap: () {
+                      hideKeyboard(context);
+                      if (addAppointmentCont.doctorList.isEmpty && !addAppointmentCont.isDoctorLoading.value) {
+                        addAppointmentCont.getDoctorList();
+                      }
+                      serviceCommonBottomSheet(
+                        context,
+                        child: Obx(
+                          () => BottomSelectionSheet(
+                            title: locale.value.chooseDoctor,
+                            hideSearchBar: true,
+                            hasError: false,
+                            isEmpty: !addAppointmentCont.isDoctorLoading.value && addAppointmentCont.doctorList.isEmpty,
+                            noDataTitle: locale.value.noDoctorsFound,
+                            isLoading: addAppointmentCont.isDoctorLoading,
+                            onRetry: addAppointmentCont.getDoctorList,
+                            listWidget: _DoctorPickerList(controller: addAppointmentCont).expand(),
+                          ),
+                        ),
+                      );
+                    },
+                    decoration: inputDecoration(
+                      context,
+                      hintText: locale.value.selectDoctor,
+                      fillColor: context.cardColor,
+                      filled: true,
+                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded, size: 24, color: darkGray.withValues(alpha: 0.5)),
+                    ),
+                  ).paddingTop(16),
                 AppTextField(
                   textStyle: primaryTextStyle(size: 12),
                   controller: addAppointmentCont.servicesCont,
@@ -103,14 +152,27 @@ class AddAppointmentFormScreen extends StatelessWidget {
                   minLines: 1,
                   readOnly: true,
                   onTap: () {
-                    Get.to(() => BillingServicesListScreen(), arguments: [addAppointmentCont.selectedService.value, 'is_enable_advance_payment=0'])?.then((value) {
-                      log('VALUE: ${value.runtimeType}');
-                      if (value is ServiceElement) {
-                        addAppointmentCont.selectedService(value);
-                        addAppointmentCont.servicesCont.text = addAppointmentCont.selectedService.value.name;
-                        addAppointmentCont.getTimeSlot();
-                      }
-                    });
+                    hideKeyboard(context);
+                    if (addAppointmentCont.doctorData.value.doctorId.isNegative) {
+                      toast(locale.value.pleaseSelectDoctor);
+                      return;
+                    }
+                    // Only the services the chosen doctor offers at this clinic.
+                    serviceCommonBottomSheet(
+                      context,
+                      child: Obx(
+                        () => BottomSelectionSheet(
+                          title: locale.value.selectService,
+                          hideSearchBar: true,
+                          hasError: false,
+                          isEmpty: !addAppointmentCont.isServiceLoading.value && addAppointmentCont.doctorServices.isEmpty,
+                          noDataTitle: locale.value.noServiceFound,
+                          isLoading: addAppointmentCont.isServiceLoading,
+                          onRetry: addAppointmentCont.getDoctorServices,
+                          listWidget: _ServicePickerList(controller: addAppointmentCont).expand(),
+                        ),
+                      ),
+                    );
                   },
                   decoration: inputDecoration(
                     context,
@@ -539,14 +601,9 @@ class AddAppointmentFormScreen extends StatelessWidget {
                         }
                       }
                     },
+                    // Always shown: saveBooking() says what is still missing.
                     child: Text(locale.value.save, style: primaryTextStyle(color: white)),
-                  ).visible(
-                    addAppointmentCont.saveBtnVisible.value &&
-                        (!addAppointmentCont.selectedService.value.id.isNegative) &&
-                        (!addAppointmentCont.selectPatient.value.id.isNegative) &&
-                        (!addAppointmentCont.getClinicId.isNegative) &&
-                        (!addAppointmentCont.doctorData.value.doctorId.isNegative),
-                  ),
+                  ).visible(!addAppointmentCont.getClinicId.isNegative),
                 ),
               ],
             ),
@@ -570,5 +627,125 @@ class AddAppointmentFormScreen extends StatelessWidget {
             ),
       ],
     ).paddingBottom(paddingBottom ?? 10);
+  }
+}
+
+/// The clinic's doctors, for picking who sees the walk-in patient.
+class _DoctorPickerList extends StatelessWidget {
+  final AddAppointmentController controller;
+
+  const _DoctorPickerList({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => controller.isDoctorLoading.value
+          ? const LoaderWidget()
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.doctorList.length,
+              itemBuilder: (_, index) {
+                final Doctor doctor = controller.doctorList[index];
+                final bool isSelected = controller.doctorData.value.doctorId == doctor.doctorId;
+                return _PickerTile(
+                  imageUrl: doctor.profileImage,
+                  title: doctor.fullName,
+                  subtitle: doctor.expert,
+                  isSelected: isSelected,
+                  onTap: () {
+                    if (!isSelected) controller.selectDoctor(doctor);
+                    Get.back();
+                  },
+                );
+              },
+            ),
+    );
+  }
+}
+
+/// The services the chosen doctor offers at this clinic, with the doctor's price.
+class _ServicePickerList extends StatelessWidget {
+  final AddAppointmentController controller;
+
+  const _ServicePickerList({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => controller.isServiceLoading.value
+          ? const LoaderWidget()
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.doctorServices.length,
+              itemBuilder: (_, index) {
+                final ServiceElement service = controller.doctorServices[index];
+                final AssignDoctor doctorPrice = service.assignDoctor.firstWhere(
+                  (a) => a.doctorId == controller.doctorData.value.doctorId && a.clinicId == controller.getClinicId,
+                  orElse: () => AssignDoctor(priceDetail: PriceDetail(totalAmount: service.payableAmount)),
+                );
+                return _PickerTile(
+                  imageUrl: service.serviceImage,
+                  title: service.name,
+                  subtitle: "${locale.value.duration}: ${doctorPrice.priceDetail.duration > 0 ? doctorPrice.priceDetail.duration : service.duration}",
+                  trailing: PriceWidget(price: doctorPrice.priceDetail.totalAmount, size: 14, color: appColorPrimary),
+                  isSelected: controller.selectedService.value.id == service.id,
+                  onTap: () {
+                    controller.selectService(service);
+                    Get.back();
+                  },
+                );
+              },
+            ),
+    );
+  }
+}
+
+class _PickerTile extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final String subtitle;
+  final Widget? trailing;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _PickerTile({
+    required this.imageUrl,
+    required this.title,
+    required this.subtitle,
+    required this.isSelected,
+    required this.onTap,
+    this.trailing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: boxDecorationDefault(
+          borderRadius: BorderRadius.circular(6),
+          color: isSelected ? lightPrimaryColor : (isDarkMode.value ? appScreenBackgroundDark : appScreenBackground),
+        ),
+        child: Row(
+          children: [
+            CachedImageWidget(url: imageUrl, width: 40, height: 40, radius: 6, fit: BoxFit.cover, firstName: title),
+            12.width,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: boldTextStyle(size: 15), maxLines: 1, overflow: TextOverflow.ellipsis),
+                if (subtitle.trim().isNotEmpty) ...[
+                  2.height,
+                  Text(subtitle, style: secondaryTextStyle(size: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                ],
+              ],
+            ).expand(),
+            if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -10,6 +10,9 @@ import '../../main.dart';
 import '../../utils/colors.dart';
 import '../Encounter/add_encounter/model/patient_model.dart';
 import '../appointment/appointments_controller.dart';
+import 'add_patient/add_patient_controller.dart';
+import 'add_patient/add_patient_screen.dart';
+import 'all_patient_list_controller.dart';
 import 'components/patient_info_card.dart';
 import 'model/patient_argument_model.dart';
 import 'patient_detail_controller.dart';
@@ -24,7 +27,15 @@ class PatientDetailScreen extends StatelessWidget {
     return AppScaffoldNew(
       appBartitleText: locale.value.patientDetail,
       appBarVerticalSize: Get.height * 0.12,
-      body: AnimatedScrollView(
+      actions: [
+        IconButton(
+          tooltip: locale.value.editPatient,
+          onPressed: _editPatient,
+          icon: const Icon(Icons.edit_outlined, size: 22, color: Colors.white),
+        ).paddingOnly(right: 8),
+      ],
+      // Rebuilt after an edit so the new details show without reopening the screen.
+      body: Obx(() => AnimatedScrollView(
         children: [
           Column(
             children: [
@@ -85,8 +96,24 @@ class PatientDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingSymmetric(horizontal: 24),
         ],
-      ),
+      )),
     );
+  }
+
+  void _editPatient() {
+    if (Get.isRegistered<AddPatientController>()) Get.delete<AddPatientController>();
+    Get.to(() => AddPatientScreen(), arguments: patientDetailCont.patientModel.value)?.then((value) {
+      if (value is PatientModel) {
+        // The save response has no appointment count; keep the one already shown.
+        value.totalAppointments = patientDetailCont.patientModel.value.totalAppointments;
+        patientDetailCont.patientModel(value);
+        try {
+          Get.find<AllPatientListcontroller>().refreshList();
+        } catch (e) {
+          log('AllPatientListcontroller not found: $e');
+        }
+      }
+    });
   }
 
   double get sizeOfInfoCard => Get.height * 0.13;

@@ -42,7 +42,7 @@ class AddServiceForm extends StatelessWidget {
                   Text(locale.value.serviceImage, style: boldTextStyle(size: 16)),
                   6.height,
                   Text(
-                    'Only .jpeg, .jpg, .png files are allowed.',
+                    locale.value.onlyJpegJpgPngAllowed,
                     style: secondaryTextStyle(size: 11, color: secondaryTextColor),
                   ),
                   12.height,
@@ -112,17 +112,20 @@ class AddServiceForm extends StatelessWidget {
                     controller: c.clinicCont,
                     textFieldType: TextFieldType.NAME,
                     readOnly: true,
-                    onTap: () {
-                      hideKeyboard(context);
-                      c.getClinics();
-                      _openClinicSheet(context);
-                    },
+                    // A receptionist's services always belong to their own clinic.
+                    onTap: c.isReceptionist
+                        ? null
+                        : () {
+                            hideKeyboard(context);
+                            c.getClinics();
+                            _openClinicSheet(context);
+                          },
                     decoration: inputDecoration(
                       context,
                       hintText: locale.value.selectClinic,
                       fillColor: context.cardColor,
                       filled: true,
-                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded, size: 24, color: darkGray.withValues(alpha: 0.5)),
+                      suffixIcon: c.isReceptionist ? null : Icon(Icons.keyboard_arrow_down_rounded, size: 24, color: darkGray.withValues(alpha: 0.5)),
                     ),
                   ),
                   16.height,

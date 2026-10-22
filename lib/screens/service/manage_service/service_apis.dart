@@ -11,7 +11,7 @@ import '../../category/model/all_category_model.dart';
 
 class ServiceFormApis {
   static Future<BaseResponseModel> removeService({required int serviceId}) async {
-    return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.deleteService}?id=$serviceId')));
+    return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.deleteService}/$serviceId', method: HttpMethodType.POST)));
   }
 
   static Future<CategoryListRes> getCategory() async {
@@ -40,14 +40,16 @@ class ServiceFormApis {
     final MultipartRequest multiPartRequest = await getMultiPartRequest(endpoint);
     multiPartRequest.fields.addAll(await getMultipartFields(val: request));
 
+    // The backend reads the service image from `file_url` (store/update in ClinicsServiceController).
     if (imageFile != null && imageFile.path.isNotEmpty) {
-      multiPartRequest.files.add(await MultipartFile.fromPath('service_image', imageFile.path));
+      multiPartRequest.files.add(await MultipartFile.fromPath('file_url', imageFile.path));
     }
 
     multiPartRequest.headers.addAll(buildHeaderTokens());
 
     await sendMultiPartRequest(
       multiPartRequest,
+      toastValidationError: false,
       onSuccess: (data) async {
         onSuccess?.call(data);
       },

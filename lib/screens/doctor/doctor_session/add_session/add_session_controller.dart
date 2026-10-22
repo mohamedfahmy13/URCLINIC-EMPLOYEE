@@ -44,7 +44,7 @@ class AddSessionController extends GetxController {
       //   weeklyList.add(WeekListModel(day: element.day, startTime: element.startTime, endTime: element.endTime, isHoliday: element.isHoliday, breaks: element.breaks));
       // }
     }).catchError((e) {
-      toast("Error: $e");
+      toast(e.toString());
       log("getClinicSession err: $e");
     }).whenComplete(() => isLoading(false));
   }

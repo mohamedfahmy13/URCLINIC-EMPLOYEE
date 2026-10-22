@@ -8,6 +8,8 @@ import 'package:kivicare_clinic_admin/screens/doctor/doctor_session/add_session/
 import '../../../../../components/app_scaffold.dart';
 import '../../../../../components/loader_widget.dart';
 import '../../../../../main.dart';
+import '../../../../../utils/app_common.dart';
+import '../../../../../utils/constants.dart';
 import '../../../../../utils/empty_error_state_widget.dart';
 import '../add_session_controller.dart';
 import 'select_doctor_controller.dart';
@@ -30,7 +32,13 @@ class SelectDoctorScreen extends StatelessWidget {
             if (doctorsController.selectDoctorData.value.fullName.isNotEmpty) {
               addSessionController.selectDoctorData(doctorsController.selectDoctorData.value);
               doctorsController.selectClinicData(ClinicData());
-              addSessionController.selectClinicName(ClinicData());
+              // Receptionists always work in their own clinic: keep it and load the new doctor's schedule.
+              if (loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist)) {
+                addSessionController.selectClinicName(selectedAppClinic.value);
+                addSessionController.getDoctorSessionList();
+              } else {
+                addSessionController.selectClinicName(ClinicData());
+              }
             }
             Get.back();
           },

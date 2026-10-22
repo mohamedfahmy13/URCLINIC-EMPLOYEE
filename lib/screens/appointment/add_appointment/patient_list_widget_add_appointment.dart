@@ -24,12 +24,8 @@ class PatientListWidgetAddAppointment extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             hideKeyboard(context);
-            addAppointmentCont.selectPatient(patientList[index]);
-            addAppointmentCont.patientCont.text = addAppointmentCont.selectPatient.value.fullName;
-
-            /// Get Other Patient Api Call
-            addAppointmentCont.getOtherPatientList(patientId: addAppointmentCont.selectPatient.value.id.toString());
-
+            // Also resets the family member picked for the previous patient.
+            addAppointmentCont.choosePatient(patientList[index]);
             Get.back();
           },
           child: Container(
@@ -57,8 +53,9 @@ class PatientListWidgetAddAppointment extends StatelessWidget {
                     2.height,
                     Text(patientList[index].fullName, style: boldTextStyle(size: 16, color: isDarkMode.value ? null : darkGrayTextColor)),
                     2.height,
+                    // Walk-ins are found by phone more often than by email.
                     Text(
-                      patientList[index].email,
+                      [patientList[index].mobile, patientList[index].email].where((v) => v.trim().isNotEmpty).join(' • '),
                       style: secondaryTextStyle(
                         size: 12,
                         color: dividerColor,

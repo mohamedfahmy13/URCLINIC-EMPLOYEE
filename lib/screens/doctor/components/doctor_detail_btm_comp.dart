@@ -72,7 +72,7 @@ class DoctorDetailBtmComp extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16),
           SettingItemWidget(
-            title: locale.value.sessions,
+            title: locale.value.services,
             decoration: boxDecorationDefault(color: context.cardColor),
             subTitle: doctorDetailCont.doctorDetails.value.services.isEmpty ? locale.value.noServicesTillNow : "${locale.value.total} ${doctorDetailCont.doctorDetails.value.services.length} ${locale.value.serviceAvaliable}",
             splashColor: transparentColor,

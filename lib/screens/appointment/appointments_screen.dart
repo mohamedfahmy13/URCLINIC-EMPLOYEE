@@ -9,8 +9,11 @@ import '../../components/cached_image_widget.dart';
 import '../../components/loader_widget.dart';
 import '../../generated/assets.dart';
 import '../../main.dart';
+import '../../utils/app_common.dart';
 import '../../utils/empty_error_state_widget.dart';
 import '../Encounter/encounter_dashboard/encounter_dashboard.dart';
+import 'add_appointment/add_appointment_controller.dart';
+import 'add_appointment/add_appointment_form_screen.dart';
 import 'appointments_controller.dart';
 import 'components/appointment_card.dart';
 import 'filter/filter_screen.dart';
@@ -32,7 +35,24 @@ class AppointmentsScreen extends StatelessWidget {
         appBarVerticalSize: Get.height * 0.12,
         resizeToAvoidBottomPadding: true,
         isLoading: appointmentsCont.isLoading,
-        actions: null,
+        actions: [
+          // Walk-in booking by the clinic's staff.
+          IconButton(
+            tooltip: locale.value.newBooking,
+            onPressed: () {
+              if (Get.isRegistered<AddAppointmentController>()) Get.delete<AddAppointmentController>();
+              final patient = appointmentsCont.patientDetailArgument.value.patientModel;
+              Get.to(() => AddAppointmentFormScreen(), arguments: patient.id.isNegative ? null : patient)?.then((_) {
+                appointmentsCont.page(1);
+                appointmentsCont.getAppointmentList();
+              });
+            },
+            icon: const Icon(Icons.add_circle_outline_rounded, size: 28, color: Colors.white),
+          ).paddingOnly(right: 8).visible(
+                loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist) ||
+                    loginUserData.value.userRole.contains(EmployeeKeyConst.vendor),
+              ),
+        ],
         body: Obx(
           () => SnapHelperWidget(
             future: appointmentsCont.getAppointments.value,

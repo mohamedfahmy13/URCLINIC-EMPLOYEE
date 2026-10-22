@@ -6,6 +6,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:stream_transform/stream_transform.dart';
 import '../../../../../api/clinic_api.dart';
 import '../../../../../api/core_apis.dart';
+import '../../../../../utils/app_common.dart';
+import '../../../../../utils/constants.dart';
 import '../../../../clinic/model/clinics_res_model.dart';
 import '../../../model/doctor_list_res.dart';
 
@@ -81,6 +83,8 @@ class SelectDoctorController extends GetxController {
         page: doctorsPage.value,
         doctors: doctors,
         search: searchCont.text.trim(),
+        // A receptionist can only schedule doctors who work in their clinic.
+        clinicId: loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist) ? selectedAppClinic.value.id : null,
         lastPageCallBack: (p0) {
           isDoctorsLastPage(p0);
         },

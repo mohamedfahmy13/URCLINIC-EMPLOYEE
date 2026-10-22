@@ -1791,4 +1791,38 @@ abstract class BaseLanguage {
   String get pleaseEnterDefaultPrice;
 
   String get invalidEmailOrPassword;
+
+  String get onlyJpegJpgPngAllowed;
+
+  String get addPatient;
+
+  String get editPatient;
+
+  String get addNewPatient;
+
+  String get patientAddedSuccessfully;
+
+  String get patientUpdatedSuccessfully;
+
+  String get pleaseSelectGender;
+
+  String get mobileNumber;
+
+  String get pleaseEnterValidMobileNumber;
+
+  String get searchByNameOrPhone;
+
+  String get newBooking;
+
+  String get pleaseSelectService;
+
+  String get pleaseSelectTimeSlot;
+
+  String get cash;
+
+  String get paymentCollectedAtCheckout;
+
+  String get bookingFailed;
+
+  String get useExistingPatient;
 }

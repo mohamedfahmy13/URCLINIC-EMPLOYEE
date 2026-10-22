@@ -6,8 +6,11 @@ import 'package:kivicare_clinic_admin/main.dart';
 import '../../components/app_scaffold.dart';
 import '../../components/loader_widget.dart';
 import '../../utils/empty_error_state_widget.dart';
+import '../Encounter/add_encounter/model/patient_model.dart';
+import 'add_patient/add_patient_screen.dart';
 import 'all_patient_list_controller.dart';
 import 'components/patient_card.dart';
+import 'patient_detail_screen.dart';
 
 class AllPatientList extends StatelessWidget {
   AllPatientList({super.key});
@@ -20,6 +23,17 @@ class AllPatientList extends StatelessWidget {
       appBartitleText: locale.value.patients,
       appBarVerticalSize: Get.height * 0.12,
       isLoading: allPatientsCont.isLoading,
+      actions: [
+        IconButton(
+          tooltip: locale.value.addPatient,
+          onPressed: () {
+            Get.to(() => AddPatientScreen())?.then((value) {
+              if (value is PatientModel) allPatientsCont.refreshList();
+            });
+          },
+          icon: const Icon(Icons.add_circle_outline_rounded, size: 28, color: Colors.white),
+        ).paddingOnly(right: 8),
+      ],
       body: SnapHelperWidget(
         future: allPatientsCont.patientFuture.value,
         loadingWidget: allPatientsCont.isLoading.value ? const Offstage() : const LoaderWidget(),
@@ -59,7 +73,9 @@ class AllPatientList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 return GestureDetector(
                   onTap: () {
-                    // Get.to(() => PatientDetailScreen(), arguments: allPatientsCont.patientList[index]);
+                    Get.to(() => PatientDetailScreen(), arguments: allPatientsCont.patientList[index])?.then((value) {
+                      if (value == true) allPatientsCont.refreshList();
+                    });
                   },
                   child: PatientCardWid(patient: allPatientsCont.patientList[index]).paddingBottom(16),
                 );

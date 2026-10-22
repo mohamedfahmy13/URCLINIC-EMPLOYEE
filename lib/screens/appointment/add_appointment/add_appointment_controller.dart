@@ -23,7 +23,14 @@ import 'booking_success_screen.dart';
 class AddAppointmentController extends GetxController {
   TextEditingController clinicCenterCont = TextEditingController();
   TextEditingController servicesCont = TextEditingController();
+  TextEditingController doctorCont = TextEditingController();
   TextEditingController medicalReportCont = TextEditingController();
+
+  // Doctors of the receptionist's clinic, and the services the chosen doctor offers there.
+  RxList<Doctor> doctorList = RxList();
+  RxBool isDoctorLoading = false.obs;
+  RxList<ServiceElement> doctorServices = RxList();
+  RxBool isServiceLoading = false.obs;
 
   FocusNode clinicCenterFocus = FocusNode();
   FocusNode servicesFocus = FocusNode();
@@ -76,57 +83,145 @@ class AddAppointmentController extends GetxController {
   RxBool isLastPage = false.obs;
   Rx<UserData> selectedMember = UserData().obs;
 
+  bool get isDoctorUser => loginUserData.value.userRole.contains(EmployeeKeyConst.doctor);
+
   @override
   Future<void> onInit() async {
     if (Get.arguments is Doctor) {
       doctorData(Get.arguments as Doctor);
+      doctorCont.text = doctorData.value.fullName;
+    } else if (Get.arguments is PatientModel) {
+      choosePatient(Get.arguments as PatientModel);
     }
     getPatientList();
+    if (!isDoctorUser) getDoctorList();
+    if (!doctorData.value.doctorId.isNegative) getDoctorServices();
     super.onInit();
   }
 
+  /// Select the patient to book for and load their family members.
+  void choosePatient(PatientModel patient) {
+    selectPatient(patient);
+    patientCont.text = patient.fullName;
+    selectedMember(UserData());
+    otherPatientList.clear();
+    getOtherPatientList(patientId: patient.id.toString());
+  }
+
+  Future<void> getDoctorList() async {
+    isDoctorLoading(true);
+    try {
+      final List<Doctor> doctors = [];
+      await CoreServiceApis.getDoctors(page: 1, perPage: 100, doctors: doctors, clinicId: getClinicId);
+      doctorList(doctors.where((doctor) => doctor.doctorId > 0).toList());
+    } catch (e) {
+      log('getDoctorList err: $e');
+      toast(e.toString());
+    } finally {
+      isDoctorLoading(false);
+    }
+  }
+
+  /// A new doctor means a new service list and new slots.
+  void selectDoctor(Doctor doctor) {
+    doctorData(doctor);
+    doctorCont.text = doctor.fullName;
+    selectedService(ServiceElement(status: false.obs));
+    servicesCont.clear();
+    slots.clear();
+    selectedSlot('');
+    saveBtnVisible(false);
+    getDoctorServices();
+  }
+
+  /// Only services this doctor offers at this clinic can be booked (the backend checks it too).
+  Future<void> getDoctorServices() async {
+    isServiceLoading(true);
+    try {
+      final List<ServiceElement> services = [];
+      await CoreServiceApis.getServiceList(perPage: 100, serviceList: services, clinicId: getClinicId, doctorId: doctorData.value.doctorId);
+      doctorServices(services
+          .where((service) => service.status.value && service.assignDoctor.any((a) => a.doctorId == doctorData.value.doctorId && a.clinicId == getClinicId))
+          .toList());
+    } catch (e) {
+      doctorServices.clear();
+      log('getDoctorServices err: $e');
+      toast(e.toString());
+    } finally {
+      isServiceLoading(false);
+    }
+  }
+
+  void selectService(ServiceElement service) {
+    selectedService(service);
+    servicesCont.text = service.name;
+    selectedSlot('');
+    saveBtnVisible(false);
+    getTimeSlot();
+  }
+
+  bool _validateBooking() {
+    if (selectPatient.value.id.isNegative) {
+      toast(locale.value.pleaseSelectPatient);
+      return false;
+    }
+    if (doctorData.value.doctorId.isNegative) {
+      toast(locale.value.pleaseSelectDoctor);
+      return false;
+    }
+    if (selectedService.value.id.isNegative) {
+      toast(locale.value.pleaseSelectService);
+      return false;
+    }
+    if (selectedSlot.value.isEmpty) {
+      toast(locale.value.pleaseSelectTimeSlot);
+      return false;
+    }
+    return true;
+  }
+
   Future<void> saveBooking() async {
-    isLoading(true);
+    if (isLoading.value || !_validateBooking()) return;
     hideKeyBoardWithoutContext();
+    isLoading(true);
+
     final Map<String, dynamic> request = {
-      "clinic_id": selectedAppClinic.value.id.toString(),
+      "clinic_id": getClinicId.toString(),
       "service_id": selectedService.value.id.toString(),
-      "appointment_date": selectedDate.value.trim(),
-      "user_id": selectPatient.value.id.toString(),
-      "status": appointment.value.status,
       "doctor_id": doctorData.value.doctorId.toString(),
+      "user_id": selectPatient.value.id.toString(),
+      "appointment_date": selectedDate.value.trim(),
       "appointment_time": selectedSlot.value,
-      "description": clinicData.value.description,
-      "medical_history" : medicalReportCont.text,
-      "file_url" : medicalReportFiles,
+      "appointment_extra_info": medicalReportCont.text.trim(),
+      if (selectedMember.value.id > 0) "otherpatient_id": selectedMember.value.id.toString(),
     };
 
-    if (selectedMember.value.id > 0) {
-      request.putIfAbsent('otherpatient_id', () => selectedMember.value.id.toString());
-    }
+    try {
+      final int appointmentId = await CoreServiceApis.bookAppointment(request: request, files: medicalReportFiles);
 
-    log("request----------------$request");
-    await CoreServiceApis.saveBookApi(request: request, onSuccess: () {  }, loaderOff: () {  },files: medicalReportFiles).then(
-      (value) {
-        CoreServiceApis.savePayment(
+      // Walk-ins pay cash at checkout: record the unpaid cash transaction billing expects.
+      try {
+        await CoreServiceApis.savePayment(
           request: SavePaymentReq(
-            id: saveBookingRes.value.saveBookingResData.id,
+            id: appointmentId,
             transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
             taxPercentage: appConfigs.value.exclusiveTaxList,
             paymentStatus: 0,
             advancePaymentAmount: appointment.value.advancePaymentAmount,
             advancePaymentStatus: appointment.value.advancePaymentStatus,
           ).toJson(),
-        ).then((value) async {
-          isLoading(false);
-        }).catchError((e) {
-          isLoading(false);
-          toast(e.toString(), print: true);
-        }).whenComplete(() {
-          onSuccess();
-        });
-      },
-    );
+        );
+      } catch (e) {
+        log('savePayment after booking err: $e');
+      }
+
+      await onSuccess();
+    } catch (e) {
+      isLoading(false);
+      toast(e.toString(), print: true);
+      // The slot may have just been taken: reload so the receptionist can pick another one.
+      getTimeSlot(showLoader: false);
+    }
   }
 
   Future<void> onSuccess() async {
@@ -176,13 +271,19 @@ class AddAppointmentController extends GetxController {
       ),
     ).then((value) {
       log('value.length ==> ${value.length}');
+      // Drop a selection that is no longer offered (e.g. booked meanwhile).
+      if (selectedSlot.value.isNotEmpty && !slots.contains(selectedSlot.value)) {
+        selectedSlot('');
+        onDateTimeChange();
+      }
     }).catchError((e) {
       isLoading(false);
       log("getTimeSlots error $e");
     }).whenComplete(() => isLoading(false));
   }
 
-  int get getClinicId => loginUserData.value.userRole.contains(EmployeeKeyConst.doctor) ? selectedAppClinic.value.id : selectedClinic.value.id;
+  /// Staff always book into their own (selected) clinic.
+  int get getClinicId => selectedAppClinic.value.id;
 
   void onDateTimeChange() {
     final appointmentDateTime = "${selectedDate.value} ${selectedSlot.value}";
@@ -197,11 +298,11 @@ class AddAppointmentController extends GetxController {
     if (showloader) {
       isLoading(true);
     }
+    // Patients of this clinic only (the backend scopes the list to the receptionist's clinic).
     await CoreServiceApis.getPatientsList(
       patientsList: patientList,
       page: patientPage.value,
       search: searchPatient.value,
-      filter: "all",
       lastPageCallBack: (p0) {
         isPatientLastPage(p0);
       },
@@ -210,7 +311,6 @@ class AddAppointmentController extends GetxController {
     }).catchError((e) {
       hasErrorFetchingPatient(true);
       errorMessagePatient(e.toString());
-      toast("Error: $e");
       log("getPatientsList err: $e");
     }).whenComplete(() => isLoading(false));
   }
@@ -242,7 +342,7 @@ class AddAppointmentController extends GetxController {
 
   //----------------------------------------Price Calculation-----------------------------------
   AssignDoctor get finalAssignDoctor => selectedService.value.assignDoctor.firstWhere(
-        (element) => element.doctorId == doctorData.value.doctorId,
+        (element) => element.doctorId == doctorData.value.doctorId && element.clinicId == getClinicId,
         orElse: () => AssignDoctor(
           priceDetail: PriceDetail(
             servicePrice: selectedService.value.charges,
@@ -278,7 +378,8 @@ class AddAppointmentController extends GetxController {
     try {
       final pickedFiles = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'doc', 'docx', 'pdf'],
+        // Same types the backend accepts for booking attachments.
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
         allowMultiple: true,
       );
 

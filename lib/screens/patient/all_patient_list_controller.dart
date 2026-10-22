@@ -36,8 +36,14 @@ class AllPatientListcontroller extends GetxController {
         },
       ),
     ).then((value) {}).catchError((e) {
-      toast("Error: $e");
+      toast(e.toString());
       log("getPatientsList err: $e");
     }).whenComplete(() => isLoading(false));
+  }
+
+  /// Reload from the first page, e.g. after a patient was added or edited.
+  void refreshList() {
+    patientPage(1);
+    getPatientList();
   }
 }

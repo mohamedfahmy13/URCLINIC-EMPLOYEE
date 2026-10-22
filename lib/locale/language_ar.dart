@@ -2781,4 +2781,55 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get invalidEmailOrPassword => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get onlyJpegJpgPngAllowed => 'مسموح فقط بملفات ‎.jpeg و ‎.jpg و ‎.png';
+
+  @override
+  String get addPatient => 'إضافة مريض';
+
+  @override
+  String get editPatient => 'تعديل بيانات المريض';
+
+  @override
+  String get addNewPatient => 'إضافة مريض جديد';
+
+  @override
+  String get patientAddedSuccessfully => 'تمت إضافة المريض بنجاح';
+
+  @override
+  String get patientUpdatedSuccessfully => 'تم تحديث بيانات المريض بنجاح';
+
+  @override
+  String get pleaseSelectGender => 'يرجى اختيار الجنس';
+
+  @override
+  String get mobileNumber => 'رقم الجوال';
+
+  @override
+  String get pleaseEnterValidMobileNumber => 'يرجى إدخال رقم جوال صحيح';
+
+  @override
+  String get searchByNameOrPhone => 'ابحث بالاسم أو رقم الجوال';
+
+  @override
+  String get newBooking => 'حجز جديد';
+
+  @override
+  String get pleaseSelectService => 'يرجى اختيار الخدمة';
+
+  @override
+  String get pleaseSelectTimeSlot => 'يرجى اختيار موعد';
+
+  @override
+  String get cash => 'نقدًا';
+
+  @override
+  String get paymentCollectedAtCheckout => 'يتم تحصيل المبلغ في العيادة عند إنهاء الزيارة';
+
+  @override
+  String get bookingFailed => 'تعذّر حفظ الحجز. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get useExistingPatient => 'استخدام هذا المريض';
 }

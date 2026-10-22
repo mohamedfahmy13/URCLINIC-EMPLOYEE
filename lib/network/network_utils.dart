@@ -295,29 +295,16 @@ Future handleResponse(Response response,
       throw errorSomethingWentWrong;
     }
   } else if (response.statusCode == 400) {
-    try {
-      final Map body = jsonDecode(response.body.trim());
-      final dynamic msg = body['message'];
-      if (msg is String && msg.isNotEmpty) throw msg;
-    } catch (_) {
-      throw locale.value.badRequest;
-    }
-    throw locale.value.badRequest;
+    throw _responseMessage(response) ?? locale.value.badRequest;
   } else if (response.statusCode == 403) {
     log('Forbidden error');
-    throw locale.value.forbidden;
+    // Show why it was refused (e.g. "other clinics also offer this service").
+    throw _responseMessage(response) ?? locale.value.forbidden;
   } else if (response.statusCode == 404) {
     log('Page not found error');
     throw locale.value.pageNotFound;
   } else if (response.statusCode == 429) {
-    try {
-      final Map body = jsonDecode(response.body.trim());
-      final dynamic msg = body['message'];
-      if (msg is String && msg.isNotEmpty) throw msg;
-    } catch (_) {
-      throw locale.value.tooManyRequests;
-    }
-    throw locale.value.tooManyRequests;
+    throw _responseMessage(response) ?? locale.value.tooManyRequests;
   } else if (response.statusCode == 500) {
     log('Internal server error');
     throw locale.value.internalServerError;
@@ -367,6 +354,8 @@ Future<void> sendMultiPartRequest(
   Function(dynamic)? onSuccess,
   Function(dynamic)? onError,
   int retryCount = 0,
+  // Callers that show the error themselves pass false to avoid a second toast.
+  bool toastValidationError = true,
 }) async {
   final http.Response response =
       await http.Response.fromStream(await multiPartRequest.send());
@@ -385,13 +374,15 @@ Future<void> sendMultiPartRequest(
     onSuccess?.call(response.body.trim());
   } else if (response.statusCode == 422) {
     // ✅ Validation error (like duplicate email)
-    final errorJson = jsonDecode(response.body);
-    final errorMsg = errorJson['message'] ??
-        (errorJson['errors'] != null
-            ? (errorJson['errors'] as Map).values.first[0]
-            : "Validation error occurred");
+    String errorMsg = _multipartErrorMessage(response);
+    try {
+      final errorJson = jsonDecode(response.body);
+      if (errorJson is Map && errorJson['message'] == null && errorJson['errors'] is Map) {
+        errorMsg = (errorJson['errors'] as Map).values.first[0].toString();
+      }
+    } catch (_) {}
 
-    toast(errorMsg);
+    if (toastValidationError) toast(errorMsg);
     onError?.call(errorMsg); // Pass message back to the caller
   } else {
     if (isLoggedIn.value && response.statusCode == 401) {
@@ -427,11 +418,27 @@ Future<void> sendMultiPartRequest(
         onError?.call(response.reasonPhrase);
       }
     } else {
-      AuthServiceApis.clearData(isFromDeleteAcc: true);
-      doIfLoggedIn(() {});
-      onError?.call(response.reasonPhrase);
+      // 403, 404, 5xx... are not session problems: report the server's message instead of
+      // wiping local data and logging the user out.
+      onError?.call(_multipartErrorMessage(response));
     }
   }
+}
+
+/// The server's non-empty `message` from a JSON error body, if there is one.
+String? _responseMessage(http.Response response) {
+  try {
+    final body = jsonDecode(response.body.trim());
+    if (body is Map && body['message'] is String && (body['message'] as String).trim().isNotEmpty) {
+      return (body['message'] as String).trim();
+    }
+  } catch (_) {}
+  return null;
+}
+
+/// The server's `message` for a failed multipart upload, or a generic localized error.
+String _multipartErrorMessage(http.Response response) {
+  return _responseMessage(response) ?? locale.value.somethingWentWrong;
 }
 
 Future<List<MultipartFile>> getMultipartImages(

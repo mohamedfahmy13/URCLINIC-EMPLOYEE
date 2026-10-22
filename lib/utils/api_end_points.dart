@@ -48,7 +48,7 @@ class APIEndPoints {
 
   //Vendor
   static const String updateClinicService = 'update-clinic-service';
-  static const String deleteService = 'delete-service';
+  static const String deleteService = 'delete-clinic-service';
   static const String getCategoryList = 'get-category-list';
   static const String doctorCommissionList = 'doctor-commission-list';
   static const String pharmaCommissionList = 'pharma/pharma-commission-list';
@@ -73,6 +73,8 @@ class APIEndPoints {
 
   //Patient
   static const String getPatientsList = 'get-patients';
+  static const String savePatient = 'save-patient';
+  static const String updatePatient = 'update-patient';
 
   //Medicine
   static const String getMedicineList = 'medicine/list';

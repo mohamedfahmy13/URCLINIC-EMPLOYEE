@@ -11,6 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_clinic_admin/screens/Encounter/add_encounter/model/encounter_resp_model.dart';
 import 'package:kivicare_clinic_admin/screens/service/model/service_list_model.dart';
 
+import '../main.dart';
 import '../models/base_response_model.dart';
 import '../network/network_utils.dart';
 import '../screens/Encounter/add_encounter/model/patient_model.dart';
@@ -676,7 +677,7 @@ class CoreServiceApis {
     required List<PatientModel> patientsList,
     Function(bool)? lastPageCallBack,
   }) async {
-    final String searchPatient = search.isNotEmpty ? '&search=$search' : '';
+    final String searchPatient = search.isNotEmpty ? '&search=${Uri.encodeQueryComponent(search)}' : '';
     final String filterPatient = filter.isNotEmpty ? '&filter=$filter' : '';
     final String dId =
         doctorId != null && !doctorId.isNegative ? '&doctor_id=$doctorId' : '';
@@ -689,6 +690,30 @@ class CoreServiceApis {
     patientsList.addAll(res.data.validate());
     lastPageCallBack?.call(res.data.validate().length != perPage);
     return patientsList.obs;
+  }
+
+  /// Add a walk-in patient, or update one when [patientId] is given (receptionist only).
+  /// Throws the server message (e.g. duplicate mobile) on failure.
+  static Future<PatientModel> savePatient({required Map request, int? patientId}) async {
+    final String endPoint = patientId == null ? APIEndPoints.savePatient : '${APIEndPoints.updatePatient}/$patientId';
+    final http.Response response = await buildHttpResponse(endPoint, request: request, method: HttpMethodType.POST);
+
+    // Same mobile as a registered patient: the server names that patient so it can be reused.
+    if (response.statusCode == 422) {
+      Map? body;
+      try {
+        body = jsonDecode(response.body) as Map?;
+      } catch (_) {}
+      if (body != null && body['existing_patient'] is Map) {
+        throw ExistingPatientException(
+          message: body['message'] is String ? body['message'] : '',
+          patient: PatientModel.fromJson(Map<String, dynamic>.from(body['existing_patient'])),
+        );
+      }
+    }
+
+    final res = await handleResponse(response);
+    return PatientModel.fromJson(res['data'] is Map ? Map<String, dynamic>.from(res['data']) : <String, dynamic>{});
   }
 
   //Get Payout List
@@ -1047,6 +1072,41 @@ class CoreServiceApis {
         loaderOff.call();
       },
     );
+  }
+
+  /// Create a booking (staff app) and return the new appointment id.
+  /// Throws the server's message when the booking is rejected (slot taken, invalid data...).
+  static Future<int> bookAppointment({
+    required Map<String, dynamic> request,
+    List<PlatformFile>? files,
+  }) async {
+    final multiPartRequest = await getMultiPartRequest(APIEndPoints.saveBooking);
+    multiPartRequest.fields.addAll(await getMultipartFields(val: request));
+
+    if (files.validate().isNotEmpty) {
+      multiPartRequest.files.addAll(await getMultipartImages(files: files.validate(), name: 'file_url'));
+    }
+    multiPartRequest.headers.addAll(buildHeaderTokens());
+
+    int appointmentId = -1;
+    String? errorMessage;
+    await sendMultiPartRequest(
+      multiPartRequest,
+      toastValidationError: false,
+      onSuccess: (temp) {
+        try {
+          saveBookingRes(SaveBookingRes.fromJson(jsonDecode(temp)));
+          appointmentId = saveBookingRes.value.saveBookingResData.id;
+        } catch (e) {
+          log('SaveBookingRes.fromJson E: $e');
+        }
+      },
+      onError: (error) => errorMessage = error.toString(),
+    );
+
+    if (errorMessage != null) throw errorMessage!;
+    if (appointmentId <= 0) throw locale.value.bookingFailed;
+    return appointmentId;
   }
 
 //Payment

@@ -51,7 +51,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
             leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: appColorSecondary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-          ).paddingTop(16).visible(!loginUserData.value.userRole.contains(EmployeeKeyConst.receptionist)),
+          ).paddingTop(16),
           SettingItemWidget(
             title: locale.value.createService,
             decoration: boxDecorationDefault(color: context.cardColor),

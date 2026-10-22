@@ -34,9 +34,11 @@ class ServiceListRes {
 class ServiceElement {
   int id;
   String name;
+  String nameAr;
   int systemServiceId;
   String slug;
   String description;
+  String descriptionAr;
   num charges;
   num doctorCharges;
   RxBool status;
@@ -81,9 +83,11 @@ class ServiceElement {
   ServiceElement({
     this.id = -1,
     this.name = "",
+    this.nameAr = "",
     this.systemServiceId = -1,
     this.slug = "",
     this.description = "",
+    this.descriptionAr = "",
     this.charges = 0,
     this.doctorCharges = 0,
     required this.status,
@@ -116,9 +120,11 @@ class ServiceElement {
     return ServiceElement(
       id: json['id'] is int ? json['id'] : -1,
       name: json['name'] is String ? json['name'] : "",
+      nameAr: json['name_ar'] is String ? json['name_ar'] : "",
       systemServiceId: json['system_service_id'] is int ? json['system_service_id'] : -1,
       slug: json['slug'] is String ? json['slug'] : "",
       description: json['description'] is String ? json['description'] : "",
+      descriptionAr: json['description_ar'] is String ? json['description_ar'] : "",
       charges: json['charges'] is num ? json['charges'] : 0,
       doctorCharges: json['doctor_charges'] is num ? json['doctor_charges'] : 0,
       status: ((json['status'] is bool ? json['status'] : json['status'] == 1) as bool).obs,
@@ -151,9 +157,11 @@ class ServiceElement {
     return {
       'id': id,
       'name': name,
+      'name_ar': nameAr,
       'system_service_id': systemServiceId,
       'slug': slug,
       'description': description,
+      'description_ar': descriptionAr,
       'charges': charges,
       'doctor_charges': doctorCharges,
       'status': status.value.getIntBool(),
