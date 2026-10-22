@@ -28,7 +28,6 @@ class SignUpController extends GetxController {
   TextEditingController fisrtNameCont = TextEditingController();
   TextEditingController lastNameCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
-  TextEditingController userTypeCont = TextEditingController();
   TextEditingController clinicCenterCont = TextEditingController();
 
   FocusNode emailFocus = FocusNode();
@@ -37,13 +36,12 @@ class SignUpController extends GetxController {
   FocusNode fisrtNameFocus = FocusNode();
   FocusNode lastNameFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
-  FocusNode userTypeFocus = FocusNode();
   FocusNode clinicCenterFocus = FocusNode();
 
   Rx<Country> pickedPhoneCode = defaultCountry.obs;
   Rx<CMNModel> selectedGender = CMNModel().obs;
 
-  Rx<LoginRoleData> selectedLoginRole = LoginRoleData().obs;
+  Rx<LoginRoleData> selectedLoginRole = receptionistLoginRole.obs;
 
   Rx<ClinicData> selectedClinic = ClinicData().obs;
   RxString emailError = ''.obs;
@@ -64,11 +62,6 @@ class SignUpController extends GetxController {
 
   @override
   void onInit() {
-    if (!appConfigs.value.isMultiVendor) {
-      loginRoles.removeWhere((item) => item.userType == EmployeeKeyConst.vendor);
-    } else if (loginRoles.indexWhere((item) => item.userType == EmployeeKeyConst.vendor) == -1) {
-      loginRoles.add(vendorLoginRole);
-    }
     // Listen for email field focus change
     emailFocus.addListener(() {
       if (!emailFocus.hasFocus) {

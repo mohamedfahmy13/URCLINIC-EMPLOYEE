@@ -328,34 +328,17 @@ String postStatus({required String status}) {
 }
 //endregion
 
-//Dynamic Login Roles
-LoginRoleData vendorLoginRole = LoginRoleData(
-    id: 1,
-    userType: EmployeeKeyConst.vendor,
-    roleName: 'Clinic Admin',
-    icon: Assets.iconsIcVendor,
-    email: "vendor@kivicare.com",
-    password: "12345678");
-LoginRoleData pharmaLoginRole = LoginRoleData(
-    id: 4,
-    userType: EmployeeKeyConst.pharma,
-    roleName: 'Pharma',
-    icon: Assets.iconsIcVendor,
-    email: "pharma@kivicare.com",
+//region Login Roles
+/// The app is for receptionists only: sign-in and sign-up always use this role.
+LoginRoleData receptionistLoginRole = LoginRoleData(
+    id: 3,
+    userType: EmployeeKeyConst.receptionist,
+    roleName: 'Receptionist',
+    icon: Assets.iconsIcReceptionist,
+    email: "receptionist@kivicare.com",
     password: "12345678");
 
-//region Login Roles
-RxList<LoginRoleData> loginRoles = [
-  vendorLoginRole,
-  LoginRoleData(
-      id: 3,
-      userType: EmployeeKeyConst.receptionist,
-      roleName: 'Receptionist',
-      icon: Assets.iconsIcReceptionist,
-      email: "receptionist@kivicare.com",
-      password: "12345678"),
-  pharmaLoginRole
-].obs;
+RxList<LoginRoleData> loginRoles = [receptionistLoginRole].obs;
 //endregion
 
 //region Status

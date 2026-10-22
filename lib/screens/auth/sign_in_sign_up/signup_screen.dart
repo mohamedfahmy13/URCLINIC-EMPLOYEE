@@ -19,7 +19,6 @@ import '../../clinic/model/clinics_res_model.dart';
 import '../../doctor/clinic_center/clinic_center_screen.dart';
 import '../model/clinic_center_argument_model.dart';
 import 'sign_up_controller.dart';
-import 'signin_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -267,47 +266,6 @@ class SignUpScreen extends StatelessWidget {
                             ),
                           ],
                         ).visible(signUpController.passContHasFocus.value),
-                      ),
-                      // User Role selection
-                      Obx(
-                        () => AppTextField(
-                          textStyle: primaryTextStyle(size: 12),
-                          controller: signUpController.userTypeCont,
-                          focus: signUpController.userTypeFocus,
-                          textFieldType: TextFieldType.NAME,
-                          readOnly: true,
-                          onTap: () async {
-                            chooseEmployeeType(
-                              context,
-                              isLoading: signUpController.isLoading,
-                              onChange: (p0) {
-                                signUpController.selectedLoginRole(p0);
-                                signUpController.userTypeCont.text = p0.roleName;
-                              },
-                            );
-                          },
-                          decoration: inputDecoration(
-                            context,
-                            fillColor: context.cardColor,
-                            filled: true,
-                            prefixIconConstraints: BoxConstraints.loose(const Size.square(60)),
-                            prefixIcon: signUpController.selectedLoginRole.value.icon.isEmpty && signUpController.selectedLoginRole.value.id.isNegative
-                                ? null
-                                : CachedImageWidget(
-                                    url: signUpController.selectedLoginRole.value.icon,
-                                    color: appColorPrimary,
-                                    height: 22,
-                                    fit: BoxFit.cover,
-                                    width: 22,
-                                  ).paddingOnly(left: 12, top: 8, bottom: 8, right: 12),
-                            hintText: locale.value.selectUserRole,
-                            suffixIcon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 24,
-                              color: darkGray.withValues(alpha: 0.5),
-                            ),
-                          ),
-                        ).paddingTop(16),
                       ),
                       Obx(
                         () => AppTextField(

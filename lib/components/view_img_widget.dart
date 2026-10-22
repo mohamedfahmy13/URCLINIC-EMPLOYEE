@@ -67,8 +67,8 @@ class DisplyFullScreenImgWidget extends StatelessWidget {
                           ),
               ),
             ),
-            Positioned(
-              left: 16,
+            PositionedDirectional(
+              start: 16,
               top: 50,
               child: const Icon(Icons.arrow_back_ios).onTap(() async {
                 Get.back();

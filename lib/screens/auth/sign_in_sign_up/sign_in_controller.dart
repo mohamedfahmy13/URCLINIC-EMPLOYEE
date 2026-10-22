@@ -33,7 +33,7 @@ class SignInController extends GetxController {
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
 
-  Rx<LoginRoleData> selectedLoginRole = LoginRoleData().obs;
+  Rx<LoginRoleData> selectedLoginRole = receptionistLoginRole.obs;
 
   void toggleSwitch() {
     isRememberMe.value = !isRememberMe.value;
@@ -59,24 +59,9 @@ class SignInController extends GetxController {
         getValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME) ?? false;
     isRememberMe.value = savedRememberMe;
 
-    if (!appConfigs.value.isMultiVendor) {
-      loginRoles
-          .removeWhere((item) => item.userType == EmployeeKeyConst.vendor);
-      if (getValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME) ?? false) {
-        removeValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME);
-      }
-    } else if (loginRoles
-            .indexWhere((item) => item.userType == EmployeeKeyConst.vendor) ==
-        -1) {
-      loginRoles.add(vendorLoginRole);
-    }
-    if (!appConfigs.value.isPharma.getBoolInt()) {
-      loginRoles
-          .removeWhere((item) => item.userType == EmployeeKeyConst.pharma);
-    } else if (loginRoles
-            .indexWhere((item) => item.userType == EmployeeKeyConst.pharma) ==
-        -1) {
-      loginRoles.add(pharmaLoginRole);
+    if (!appConfigs.value.isMultiVendor &&
+        (getValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME) ?? false)) {
+      removeValueFromLocal(SharedPreferenceConst.IS_REMEMBER_ME);
     }
     if (Get.arguments is bool) {
       isNavigateToDashboard(Get.arguments == true);
@@ -97,26 +82,6 @@ class SignInController extends GetxController {
       if (userPASSWORD.isNotEmpty) {
         passwordCont.text = userPASSWORD;
       }
-
-      // Restore selected login role for quick auto-login
-      final savedUserType = getValueFromLocal(SharedPreferenceConst.USER_TYPE);
-      if (savedUserType is String && savedUserType.isNotEmpty) {
-        try {
-          final roleIndex =
-              loginRoles.indexWhere((role) => role.userType == savedUserType);
-          if (roleIndex >= 0) {
-            selectedLoginRole(loginRoles[roleIndex]);
-          }
-        } catch (e) {
-          log('Error restoring user type: $e');
-        }
-      }
-    }
-    if ((!appConfigs.value.isMultiVendor) &&
-        (selectedLoginRole.value.userType == EmployeeKeyConst.vendor)) {
-      emailCont.text = "";
-      passwordCont.text = "";
-      selectedLoginRole(LoginRoleData());
     }
 
     super.onInit();

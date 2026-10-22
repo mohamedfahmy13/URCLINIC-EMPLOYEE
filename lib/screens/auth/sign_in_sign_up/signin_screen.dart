@@ -35,7 +35,7 @@ class SignInScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                locale.value.chooseYourRole,
+                locale.value.signIn,
                 style: boldTextStyle(size: 22),
               ),
               8.height,
@@ -226,30 +226,6 @@ class SignInScreen extends StatelessWidget {
                   16.height,
                 ],
               ).paddingSymmetric(horizontal: 16),
-              SizedBox(height: Get.height * 0.01),
-              Wrap(
-                runSpacing: 12,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 16,
-                alignment: WrapAlignment.center,
-                children: loginRoles
-                    .map(
-                      (e) => GestureDetector(
-                        onTap: () {
-                          signInController.selectedLoginRole(e);
-                        },
-                        child: Obx(
-                          () => RoleComponent(
-                            loginUserRole: e,
-                            isSelected:
-                                signInController.selectedLoginRole.value.id ==
-                                    e.id,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
               SizedBox(height: Get.height * 0.03),
             ],
           ).paddingOnly(top: Get.height * 0.11),
@@ -257,42 +233,6 @@ class SignInScreen extends StatelessWidget {
             width: Get.width,
             top: -Constants.appLogoSize / 2,
             child: const AppLogoWidget(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RoleComponent extends StatelessWidget {
-  final LoginRoleData loginUserRole;
-  final bool isSelected;
-
-  const RoleComponent(
-      {super.key, required this.loginUserRole, this.isSelected = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      decoration: boxDecorationDefault(
-          color: isSelected ? appColorPrimary : context.cardColor,
-          shape: BoxShape.rectangle,
-          borderRadius: radius(100)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CachedImageWidget(
-            url: loginUserRole.icon,
-            height: 15,
-            fit: BoxFit.fitHeight,
-            color: isSelected ? white : textSecondaryColorGlobal,
-          ),
-          8.width,
-          Text(
-            loginUserRole.roleName,
-            style: boldTextStyle(
-                size: 14, color: isSelected ? white : textSecondaryColorGlobal),
           ),
         ],
       ),
