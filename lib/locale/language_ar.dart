@@ -2836,6 +2836,55 @@ class LanguageAr extends BaseLanguage {
   @override
   String get clinicPackages => 'باقات العيادة';
   @override
+  String get clinicOverview => 'نظرة عامة';
+  @override
+  String get clinicPlansTab => 'الباقات';
+  @override
+  String get clinicPaymentsTab => 'المدفوعات';
+  @override
+  String get clinicBrowsePlans => 'استعرض الباقات';
+  @override
+  String get clinicActive => 'اشتراك فعّال';
+  @override
+  String get clinicExpires => 'ساري حتى';
+  @override
+  String get clinicStarts => 'يبدأ في';
+  @override
+  String get clinicChoosePlan => 'اختر الباقة المناسبة لعيادتك';
+  @override
+  String get clinicBenefitsHint => 'إدارة إعلانات العيادة وأولوية ظهورها';
+  @override
+  String get clinicNoBenefits => 'ستظهر مزايا باقتك هنا.';
+  @override
+  String get clinicPendingPaymentHint => 'توجد عملية دفع تنتظر التأكيد. راجع حالتها قبل بدء شراء جديد.';
+  @override
+  String get clinicViewPayment => 'مراجعة الدفع';
+  @override
+  String get scheduleHint => 'حدد أيام عمل الدكتور وساعات الحضور والاستراحات في هذه العيادة.';
+  @override
+  String get scheduleTitle => 'مواعيد الدكتور';
+  @override
+  String get scheduleManage => 'إدارة مواعيد الدكتور';
+  @override
+  String get scheduleSave => 'حفظ المواعيد';
+  @override
+  String get scheduleStart => 'من';
+  @override
+  String get scheduleEnd => 'إلى';
+  @override
+  String get scheduleInvalidHours => 'وقت النهاية يجب أن يكون بعد البداية في نفس اليوم.';
+  @override
+  String get scheduleInvalidBreaks => 'الاستراحات يجب أن تكون داخل ساعات العمل وألا تتداخل.';
+  @override
+  String get scheduleUnsaved => 'تجاهل تغييرات المواعيد غير المحفوظة؟';
+  @override
+  String get scheduleDiscard => 'تجاهل التغييرات';
+  @override
+  String scheduleDay(String day) => const {
+    'monday': 'الاثنين', 'tuesday': 'الثلاثاء', 'wednesday': 'الأربعاء',
+    'thursday': 'الخميس', 'friday': 'الجمعة', 'saturday': 'السبت', 'sunday': 'الأحد',
+  }[day] ?? day;
+  @override
   String get manageClinicPackages => 'إدارة اشتراك العيادة والمدفوعات';
   @override
   String get clinicPackagesIntro => 'اختر الباقة المناسبة لعيادتك';

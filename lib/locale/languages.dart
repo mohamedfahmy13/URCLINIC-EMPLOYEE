@@ -1827,6 +1827,32 @@ abstract class BaseLanguage {
   String get useExistingPatient;
 
   String get clinicPackages => 'Clinic packages';
+  String get clinicOverview => 'Overview';
+  String get clinicPlansTab => 'Packages';
+  String get clinicPaymentsTab => 'Payments';
+  String get clinicBrowsePlans => 'Explore packages';
+  String get clinicActive => 'Active subscription';
+  String get clinicExpires => 'Valid until';
+  String get clinicStarts => 'Starts on';
+  String get clinicChoosePlan => 'Choose the package that suits your clinic';
+  String get clinicBenefitsHint => 'Manage your advertising and search visibility';
+  String get clinicNoBenefits => 'Your package benefits will appear here.';
+  String get clinicPendingPaymentHint => 'You have a payment awaiting confirmation. Review it before starting another purchase.';
+  String get clinicViewPayment => 'View payment';
+  String get scheduleHint => 'Set weekly working hours, days off and breaks for this doctor at this clinic.';
+  String get scheduleTitle => 'Doctor schedule';
+  String get scheduleManage => 'Manage doctor schedule';
+  String get scheduleSave => 'Save schedule';
+  String get scheduleStart => 'From';
+  String get scheduleEnd => 'Until';
+  String get scheduleInvalidHours => 'The end time must be after the start time on the same day.';
+  String get scheduleInvalidBreaks => 'Breaks must be within working hours and must not overlap.';
+  String get scheduleUnsaved => 'Discard your unsaved schedule changes?';
+  String get scheduleDiscard => 'Discard changes';
+  String scheduleDay(String day) => const {
+    'monday': 'Monday', 'tuesday': 'Tuesday', 'wednesday': 'Wednesday',
+    'thursday': 'Thursday', 'friday': 'Friday', 'saturday': 'Saturday', 'sunday': 'Sunday',
+  }[day] ?? day;
   String get manageClinicPackages => 'Manage your clinic subscription and payments';
   String get clinicPackagesIntro => 'Choose a package for your clinic';
   String get clinicPackagesHint => 'Pay securely with KNET or cards through MyFatoorah.';

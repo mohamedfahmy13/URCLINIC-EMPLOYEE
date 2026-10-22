@@ -17,13 +17,17 @@ import 'doctor_detail_controller.dart';
 class DoctorDetailScreen extends StatelessWidget {
   DoctorDetailScreen({super.key});
 
-  final DoctorDetailController doctorDetailCont = Get.put(DoctorDetailController());
+  final DoctorDetailController doctorDetailCont =
+      Get.put(DoctorDetailController());
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => AppScaffoldNew(
-        appBartitleText: doctorDetailCont.doctorDetails.value.doctorId == loginUserData.value.id ? locale.value.myProfile : locale.value.doctorDetail,
+        appBartitleText: doctorDetailCont.doctorDetails.value.doctorId ==
+                loginUserData.value.id
+            ? locale.value.myProfile
+            : locale.value.doctorDetail,
         appBarVerticalSize: Get.height * 0.12,
         body: Obx(
           () => SnapHelperWidget(
@@ -47,7 +51,8 @@ class DoctorDetailScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         CachedImageWidget(
-                          url: doctorDetailCont.doctorDetails.value.profileImage,
+                          url:
+                              doctorDetailCont.doctorDetails.value.profileImage,
                           fit: BoxFit.cover,
                           width: Get.width,
                           height: Get.height * 0.3,
@@ -63,48 +68,45 @@ class DoctorDetailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
                                             Text(
-                                              doctorDetailCont.doctorDetails.value.fullName,
+                                              doctorDetailCont
+                                                  .doctorDetails.value.fullName,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: boldTextStyle(size: 18),
-                                            ),
-                                            const CachedImageWidget(url: Assets.iconsIcVerified, width: 14, height: 14).paddingLeft(8).visible(doctorDetailCont.doctorDetails.value.emailVerifiedAt.isNotEmpty),
+                                            ).flexible(),
+                                            const CachedImageWidget(
+                                                    url: Assets.iconsIcVerified,
+                                                    width: 14,
+                                                    height: 14)
+                                                .paddingLeft(8)
+                                                .visible(doctorDetailCont
+                                                    .doctorDetails
+                                                    .value
+                                                    .emailVerifiedAt
+                                                    .isNotEmpty),
                                           ],
                                         ).flexible(),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                                          decoration: boxDecorationDefault(
-                                            color: isDarkMode.value ? Colors.grey.withValues(alpha: 0.1) : extraLightPrimaryColor,
-                                            borderRadius: radius(22),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const CachedImageWidget(
-                                                url: Assets.iconsIcStarFilled,
-                                                color: upcomingStatusColor,
-                                                height: 14,
-                                              ),
-                                              8.width,
-                                              Text(doctorDetailCont.doctorDetails.value.averageRating.toString(), maxLines: 1, overflow: TextOverflow.ellipsis, style: boldTextStyle(size: 12)),
-                                            ],
-                                          ),
-                                        ).visible(doctorDetailCont.doctorDetails.value.averageRating.toString().isNotEmpty),
                                       ],
                                     ),
                                     8.height,
                                     Row(
                                       children: [
                                         Text(
-                                          doctorDetailCont.doctorDetails.value.expert.isNotEmpty ? doctorDetailCont.doctorDetails.value.expert : "Orthocare Expert",
+                                          doctorDetailCont.doctorDetails.value
+                                                  .expert.isNotEmpty
+                                              ? doctorDetailCont
+                                                  .doctorDetails.value.expert
+                                              : "Orthocare Expert",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: primaryTextStyle(color: secondaryTextColor),
+                                          style: primaryTextStyle(
+                                              color: secondaryTextColor),
                                         ).flexible(),
                                       ],
                                     ),
@@ -124,27 +126,47 @@ class DoctorDetailScreen extends StatelessWidget {
                                 SocialMediaElement(
                                   iconPath: Assets.socialMediaIcX,
                                   onPressed: () {
-                                    commonLaunchUrl(doctorDetailCont.doctorDetails.value.twitterLink);
+                                    commonLaunchUrl(doctorDetailCont
+                                        .doctorDetails.value.twitterLink);
                                   },
-                                ).paddingLeft(8).visible(doctorDetailCont.doctorDetails.value.twitterLink.isNotEmpty),
+                                ).paddingLeft(8).visible(doctorDetailCont
+                                    .doctorDetails
+                                    .value
+                                    .twitterLink
+                                    .isNotEmpty),
                                 SocialMediaElement(
                                   iconPath: Assets.socialMediaIcDribble,
                                   onPressed: () {
-                                    commonLaunchUrl(doctorDetailCont.doctorDetails.value.dribbbleLink);
+                                    commonLaunchUrl(doctorDetailCont
+                                        .doctorDetails.value.dribbbleLink);
                                   },
-                                ).paddingLeft(8).visible(doctorDetailCont.doctorDetails.value.dribbbleLink.isNotEmpty),
+                                ).paddingLeft(8).visible(doctorDetailCont
+                                    .doctorDetails
+                                    .value
+                                    .dribbbleLink
+                                    .isNotEmpty),
                                 SocialMediaElement(
                                   iconPath: Assets.socialMediaIcFb,
                                   onPressed: () {
-                                    commonLaunchUrl(doctorDetailCont.doctorDetails.value.facebookLink);
+                                    commonLaunchUrl(doctorDetailCont
+                                        .doctorDetails.value.facebookLink);
                                   },
-                                ).paddingLeft(8).visible(doctorDetailCont.doctorDetails.value.facebookLink.isNotEmpty),
+                                ).paddingLeft(8).visible(doctorDetailCont
+                                    .doctorDetails
+                                    .value
+                                    .facebookLink
+                                    .isNotEmpty),
                                 SocialMediaElement(
                                   iconPath: Assets.socialMediaIcInsta,
                                   onPressed: () {
-                                    commonLaunchUrl(doctorDetailCont.doctorDetails.value.instagramLink);
+                                    commonLaunchUrl(doctorDetailCont
+                                        .doctorDetails.value.instagramLink);
                                   },
-                                ).paddingLeft(8).visible(doctorDetailCont.doctorDetails.value.instagramLink.isNotEmpty),
+                                ).paddingLeft(8).visible(doctorDetailCont
+                                    .doctorDetails
+                                    .value
+                                    .instagramLink
+                                    .isNotEmpty),
                               ],
                             ).paddingTop(16).visible(!showSocial),
                           ],
@@ -173,5 +195,8 @@ class DoctorDetailScreen extends StatelessWidget {
   }
 
   bool get showSocial =>
-      doctorDetailCont.doctorDetails.value.twitterLink.isEmpty && doctorDetailCont.doctorDetails.value.dribbbleLink.isEmpty && doctorDetailCont.doctorDetails.value.facebookLink.isEmpty && doctorDetailCont.doctorDetails.value.instagramLink.isEmpty;
+      doctorDetailCont.doctorDetails.value.twitterLink.isEmpty &&
+      doctorDetailCont.doctorDetails.value.dribbbleLink.isEmpty &&
+      doctorDetailCont.doctorDetails.value.facebookLink.isEmpty &&
+      doctorDetailCont.doctorDetails.value.instagramLink.isEmpty;
 }

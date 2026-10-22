@@ -17,9 +17,14 @@ import 'package:kivicare_clinic_admin/utils/app_common.dart';
 class FakeSubscriptionApi extends ClinicSubscriptionApi {
   String status = 'pending';
   bool unavailable = false;
+  List<ClinicPlan>? catalog;
+  List<Map<String, dynamic>> benefits = [];
+  List<ClinicPayment> payments = [];
 
   @override
-  Future<List<ClinicPlan>> plans() async => [
+  Future<List<ClinicPlan>> plans() async =>
+      catalog ??
+      [
         ClinicPlan.fromJson({
           'id': 1,
           'name': 'Quarterly',
@@ -34,12 +39,21 @@ class FakeSubscriptionApi extends ClinicSubscriptionApi {
   @override
   Future<ClinicSubscriptionState> current() async =>
       ClinicSubscriptionState.fromJson({
-        'subscription':
-            status == 'paid' ? {'plan_id': 1, 'plan_name': 'Quarterly'} : null,
+        'subscription': status == 'paid'
+            ? {
+                'plan_id': 1,
+                'plan_name': 'Quarterly',
+                'plan_name_ar': 'ربع سنوية',
+                'start_date': '2026-10-01',
+                'end_date': '2027-01-01',
+                'days_remaining': 70
+              }
+            : null,
+        'boosts': benefits,
       });
 
   @override
-  Future<List<ClinicPayment>> history() async => [];
+  Future<List<ClinicPayment>> history() async => payments;
 
   @override
   Future<String> paymentStatus(String chargeId) async {
@@ -259,13 +273,13 @@ void main() {
     ));
     await tester.pumpAndSettle();
     expect(find.text('باقات العيادة'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('اشترك الآن'), 250);
-    await tester.ensureVisible(find.text('اشترك الآن'));
+    await tester.tap(find.text('الباقات'));
     await tester.pumpAndSettle();
     expect(find.text('اشترك الآن'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.tap(find.text('اشترك الآن'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('المتابعة للدفع'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.tap(find.text(locale.value.cancel));
@@ -282,5 +296,128 @@ void main() {
         throwsException);
     expect(controller.state.current, isNull);
     expect(controller.busy, isFalse);
+  });
+
+  testWidgets(
+      'overview and payment history stay separate and pending payments block a new purchase',
+      (tester) async {
+    final api = FakeSubscriptionApi()
+      ..status = 'paid'
+      ..payments = [
+        ClinicPayment.fromJson({
+          'id': 12,
+          'title': 'Renewal payment',
+          'amount': 150.001,
+          'currency_code': 'KWD',
+          'reference': '123',
+          'payment_status': 'pending',
+          'created_at': '2026-10-22T12:00:00Z'
+        }),
+      ];
+    loginUserData.value = UserData(userRole: ['receptionist']);
+    addTearDown(() => loginUserData.value = UserData());
+    final controller = ClinicSubscriptionController(api: api);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+        MaterialApp(home: ClinicSubscriptionScreen(controller: controller)));
+    await tester.pumpAndSettle();
+    expect(find.text(locale.value.currentClinicSubscription), findsOneWidget);
+    expect(find.text('Renewal payment'), findsNothing);
+    await tester.tap(find.text(locale.value.clinicPlansTab));
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(find.byType(FilledButton)).onPressed,
+        isNull);
+    await tester.tap(find.text(locale.value.clinicViewPayment));
+    await tester.pumpAndSettle();
+    expect(find.text('Renewal payment'), findsOneWidget);
+    expect(find.text(locale.value.checkClinicPayment), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+      'choosing a package updates the fixed checkout bar and payment confirmation',
+      (tester) async {
+    final api = FakeSubscriptionApi()
+      ..catalog = [
+        ClinicPlan.fromJson(
+            {'id': 1, 'name': 'Quarterly', 'price': 150, 'duration_months': 3}),
+        ClinicPlan.fromJson(
+            {'id': 2, 'name': 'Annual', 'price': 550, 'duration_months': 12}),
+      ];
+    loginUserData.value = UserData(userRole: ['receptionist']);
+    addTearDown(() => loginUserData.value = UserData());
+    final controller = ClinicSubscriptionController(api: api);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+        MaterialApp(home: ClinicSubscriptionScreen(controller: controller)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(locale.value.clinicPlansTab));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Annual'));
+    await tester.tap(find.text('Annual'));
+    await tester.pumpAndSettle();
+    expect(find.text('Annual'), findsNWidgets(2));
+    await tester.tap(find.text(locale.value.subscribeClinicPackage));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(
+        find.descendant(
+            of: find.byType(AlertDialog), matching: find.text('550.000 KWD')),
+        findsOneWidget);
+    await tester.tap(find.text(locale.value.cancel));
+    await tester.pumpAndSettle();
+    expect(controller.busy, isFalse);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+      'active Arabic benefits and the checkout footer fit large text in dark mode',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 720);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    locale.value = LanguageAr();
+    selectedLanguageCode.value = 'ar';
+    loginUserData.value = UserData(userRole: ['receptionist']);
+    addTearDown(() {
+      locale.value = LanguageEn();
+      selectedLanguageCode.value = 'en';
+      loginUserData.value = UserData();
+    });
+    final api = FakeSubscriptionApi()
+      ..status = 'paid'
+      ..benefits = [
+        {
+          'id': 7,
+          'type': 'banner_ad',
+          'status': 'pending',
+          'banner_status': 'missing',
+          'days_remaining': 14,
+          'can_upload': true
+        },
+      ];
+    final controller = ClinicSubscriptionController(api: api);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(brightness: Brightness.dark),
+      locale: const Locale('ar'),
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.4)),
+          child: child!),
+      home: ClinicSubscriptionScreen(controller: controller),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text(locale.value.clinicActive), findsOneWidget);
+    await tester.scrollUntilVisible(
+        find.text(locale.value.clinicUploadBanner), 200);
+    expect(tester.takeException(), isNull);
+    await tester.tap(find.text(locale.value.clinicPlansTab));
+    await tester.pumpAndSettle();
+    expect(find.text(locale.value.renewClinicPackage), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }
