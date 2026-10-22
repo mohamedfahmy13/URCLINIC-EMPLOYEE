@@ -41,7 +41,7 @@ class FilterTypeListComponent extends StatelessWidget {
                     : context.cardColor,
                 child: Text(
                   "${filterCont.filterList[index]}",
-                  style: filterCont.filterType.value == filterCont.filterList[index] ? boldTextStyle(size: 12, color: appColorPrimary) : primaryTextStyle(size: 12),
+                  style: filterCont.filterType.value == filterCont.filterList[index] ? boldTextStyle(size: 12, color: context.themePrimary) : primaryTextStyle(size: 12),
                 ).paddingSymmetric(horizontal: 16),
               ),
             ),

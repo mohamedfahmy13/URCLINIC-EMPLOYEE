@@ -62,7 +62,7 @@ class FinalAmountWidget extends StatelessWidget {
             Text(locale.value.totalPayableAmountWithTax, style: primaryTextStyle(size: 12, color: isDarkMode.value ? null : darkGrayTextColor)).expand(),
             PriceWidget(
               price: serviceDetails.servicePriceData.totalAmount,
-              color: appColorPrimary,
+              color: context.themePrimary,
               size: 14,
             ),
           ],

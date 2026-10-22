@@ -33,7 +33,7 @@ class RequestCardComponent extends StatelessWidget {
                 ),
                 child: Text(
                   requestTypeList.firstWhere((element) => element.type == request.type, orElse: () => RequestType.fromJson(request.toJson())).name,
-                  style: boldTextStyle(size: 10, fontFamily: fontFamilyWeight700, color: appColorSecondary),
+                  style: boldTextStyle(size: 10, fontFamily: fontFamilyWeight700, color: context.themePrimary),
                 ),
               ),
               const Spacer(),

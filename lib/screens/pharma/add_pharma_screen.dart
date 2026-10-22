@@ -78,7 +78,7 @@ class AddPharmaScreen extends StatelessWidget {
               width: Get.width,
               constraints: BoxConstraints(minHeight: Get.height * 0.18),
               backgroundColor: context.cardColor,
-              border: Border.all(color: borderColor, width: 0.8),
+              border: Border.all(color: context.themeBorder, width: 0.8),
               borderRadius: defaultRadius,
               onTap: () => controller.showImagePicker(context),
               child: Column(
@@ -92,7 +92,7 @@ class AddPharmaScreen extends StatelessWidget {
                   16.height,
                   Text(
                     locale.value.chooseImageToUpload,
-                    style: secondaryTextStyle(color: secondaryTextColor, size: 14),
+                    style: secondaryTextStyle(color: context.themeMuted, size: 14),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -148,7 +148,7 @@ class AddPharmaScreen extends StatelessWidget {
           isValidationRequired: true,
           errorThisFieldRequired: locale.value.thisFieldIsRequired,
           decoration: inputDecoration(context, hintText: locale.value.firstName, fillColor: context.cardColor, filled: true),
-          suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+          suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
         ).paddingTop(16),
         AppTextField(
           textStyle: primaryTextStyle(size: 12),
@@ -159,7 +159,7 @@ class AddPharmaScreen extends StatelessWidget {
           isValidationRequired: true,
           errorThisFieldRequired: locale.value.thisFieldIsRequired,
           decoration: inputDecoration(context, hintText: locale.value.lastName, fillColor: context.cardColor, filled: true),
-          suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+          suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
         ).paddingTop(16),
         AppTextField(
           textStyle: primaryTextStyle(size: 12),
@@ -181,7 +181,7 @@ class AddPharmaScreen extends StatelessWidget {
             hintText: locale.value.dateOfBirth,
             fillColor: context.cardColor,
             filled: true,
-            suffixIcon: const Icon(Icons.date_range, color: secondaryTextColor),
+            suffixIcon: Icon(Icons.date_range, color: context.themeMuted),
           ),
         ).paddingTop(16),
         Column(
@@ -271,7 +271,7 @@ class AddPharmaScreen extends StatelessWidget {
                 isValidationRequired: true,
                 errorThisFieldRequired: locale.value.thisFieldIsRequired,
                 decoration: inputDecoration(context, hintText: locale.value.contactNumber, fillColor: context.cardColor, filled: true),
-                suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: secondaryTextColor, size: 12).paddingAll(16),
+                suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: context.themeMuted, size: 12).paddingAll(16),
               ).paddingTop(16),
             ),
           ],
@@ -288,7 +288,7 @@ class AddPharmaScreen extends StatelessWidget {
           isValidationRequired: true,
           errorThisFieldRequired: locale.value.thisFieldIsRequired,
           decoration: inputDecoration(context, hintText: locale.value.email, fillColor: context.cardColor, filled: true),
-          suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: secondaryTextColor, size: 12).paddingAll(16),
+          suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: context.themeMuted, size: 12).paddingAll(16),
         ).paddingTop(16),
         AppTextField(
           textStyle: primaryTextStyle(size: 12),
@@ -421,10 +421,10 @@ class AddPharmaScreen extends StatelessWidget {
                         circle: true,
                       ).paddingOnly(left: 12, top: 8, bottom: 8, right: 12),
 
-                suffixIcon: const Icon(
+                suffixIcon: Icon(
                   Icons.keyboard_arrow_down_rounded,
                   size: 24,
-                  color: Colors.grey,
+                  color: context.themeMuted,
                 ),
               ),
             ).paddingTop(16);
@@ -490,9 +490,9 @@ class AddPharmaScreen extends StatelessWidget {
             title: "${list[index].title}  (${list[index].commissionValue} ${list[index].commissionType.toLowerCase().trim().contains(TaxType.PERCENT) ? "%" : appCurrency.value.currencyName})",
             titleTextStyle: primaryTextStyle(size: 14),
             leading: list[index].isSelected.value
-                ? const Icon(
+                ? Icon(
                     Icons.check_rounded,
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                   )
                 : null,
             subTitleTextStyle: secondaryTextStyle(),

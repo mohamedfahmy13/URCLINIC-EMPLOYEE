@@ -373,11 +373,11 @@ class AddInventoryInfoForm extends StatelessWidget {
                 hintText: locale.value.stockValue,
                 fillColor: context.cardColor,
                 filled: true,
-                hintStyle: secondaryTextStyle(size: 12, color: secondaryTextColor.withValues(alpha: 0.6)),
+                hintStyle: secondaryTextStyle(size: 12, color: context.themeMuted.withValues(alpha: 0.6)),
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: borderColor.withValues(alpha: 0.5), width: 1),
+                  borderSide: BorderSide(color: context.themeBorder.withValues(alpha: 0.5), width: 1),
                 )),
             suffix: commonLeadingWid(imgPath: Assets.iconsIcStock, color: iconColor.withValues(alpha: 0.6), size: 12).paddingAll(16),
           ),

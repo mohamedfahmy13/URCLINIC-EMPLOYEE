@@ -110,7 +110,7 @@ class AddDoctorForm extends StatelessWidget {
                                   BoxConstraints(minHeight: Get.height * 0.18),
                               backgroundColor: context.cardColor,
                               border:
-                                  Border.all(color: borderColor, width: 0.8),
+                                  Border.all(color: context.themeBorder, width: 0.8),
                               borderRadius: defaultRadius,
                               onTap: () {
                                 hideKeyboard(context);
@@ -128,7 +128,7 @@ class AddDoctorForm extends StatelessWidget {
                                   Text(
                                     locale.value.chooseImageToUpload,
                                     style: secondaryTextStyle(
-                                        color: secondaryTextColor, size: 14),
+                                        color: context.themeMuted, size: 14),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -153,7 +153,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.navigationIcUserOutlined,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),
@@ -171,7 +171,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.navigationIcUserOutlined,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),
@@ -189,7 +189,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.iconsIcMail,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),
@@ -261,7 +261,7 @@ class AddDoctorForm extends StatelessWidget {
                       ),
                       suffix: commonLeadingWid(
                               imgPath: Assets.iconsIcCall,
-                              color: secondaryTextColor,
+                              color: context.themeMuted,
                               size: 12)
                           .paddingAll(16),
                     ).expand(flex: 8),
@@ -569,7 +569,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.iconsIcEditReview,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),
@@ -587,7 +587,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.iconsIcExperience,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),
@@ -658,7 +658,7 @@ class AddDoctorForm extends StatelessWidget {
                   ),
                   suffix: commonLeadingWid(
                           imgPath: Assets.iconsIcExperience,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12)
                       .paddingAll(16),
                 ).paddingTop(16),

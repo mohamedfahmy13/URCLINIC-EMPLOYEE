@@ -78,8 +78,8 @@ class AllBedScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
                       hintText: locale.value.searchHint,
-                      prefixIcon: const Icon(Icons.search,
-                          color: appColorPrimary, size: 20),
+                      prefixIcon: Icon(Icons.search,
+                          color: context.themePrimary, size: 20),
                       filled: true,
                       fillColor: context.cardColor,
                       border: OutlineInputBorder(

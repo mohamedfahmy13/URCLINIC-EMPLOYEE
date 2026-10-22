@@ -52,7 +52,7 @@ class _BookingCancelledDialogState extends State<BookingCancelledDialog> {
                         ),
                         child: Text(
                           locale.value.noteCheckYourAppointmentHistoryForRefundDetailsIfApplicable,
-                          style: boldTextStyle(color: appColorSecondary, size: 12),
+                          style: boldTextStyle(color: context.themePrimary, size: 12),
                         ),
                       ),
                       24.height,

@@ -48,7 +48,7 @@ class ServiceInfoCardWidget extends StatelessWidget {
                           ),
                           child: Text(
                             appointmentDet.categoryName,
-                            style: boldTextStyle(size: 10, fontFamily: fontFamilyWeight700, color: appColorSecondary),
+                            style: boldTextStyle(size: 10, fontFamily: fontFamilyWeight700, color: context.themePrimary),
                           ),
                         ).visible(appointmentDet.categoryName.isNotEmpty),
                         8.height,
@@ -79,7 +79,7 @@ class ServiceInfoCardWidget extends StatelessWidget {
                                   Text(
                                     locale.value.includesInclusiveTax,
                                     style: secondaryTextStyle(
-                                      color: appColorSecondary,
+                                      color: context.themePrimary,
                                       size: 10,
                                       fontStyle: FontStyle.italic,
                                     ),
@@ -168,14 +168,14 @@ class ServiceInfoCardWidget extends StatelessWidget {
                                     ],
                                     PriceWidget(
                                       price: appointmentDet.billingItems[index].totalAmount,
-                                      color: appColorPrimary,
+                                      color: context.themePrimary,
                                       size: 14,
                                     ),
                                     if (appointmentDet.billingItems[index].isIncludesInclusiveTaxAvailable)
                                       Text(
                                         " ${locale.value.includesInclusiveTax}",
                                         style: secondaryTextStyle(
-                                          color: appColorSecondary,
+                                          color: context.themePrimary,
                                           size: 10,
                                           fontStyle: FontStyle.italic,
                                         ),

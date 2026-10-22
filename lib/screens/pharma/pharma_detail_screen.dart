@@ -69,13 +69,13 @@ class PharmaDetailScreen extends StatelessWidget {
                 10.height,
 
                 /// --- Contact Info ---
-                buildInfoTile(icon: Icons.email_outlined, label: 'Email', value: pharma.email),
-                buildInfoTile(icon: Icons.phone_outlined, label: 'Phone', value: pharma.contactNumber),
-                buildInfoTile(icon: Icons.location_on_outlined, label: 'Address', value: pharma.address),
+                buildInfoTile(context, icon: Icons.email_outlined, label: 'Email', value: pharma.email),
+                buildInfoTile(context, icon: Icons.phone_outlined, label: 'Phone', value: pharma.contactNumber),
+                buildInfoTile(context, icon: Icons.location_on_outlined, label: 'Address', value: pharma.address),
 
-                if (pharma.dateOfBirth.validate().isNotEmpty) buildInfoTile(icon: Icons.calendar_month_outlined, label: 'Date of Birth', value: pharma.dateOfBirth),
+                if (pharma.dateOfBirth.validate().isNotEmpty) buildInfoTile(context, icon: Icons.calendar_month_outlined, label: 'Date of Birth', value: pharma.dateOfBirth),
 
-                if (pharma.gender.validate().isNotEmpty) buildInfoTile(icon: Icons.person_outline, label: 'Gender', value: pharma.gender),
+                if (pharma.gender.validate().isNotEmpty) buildInfoTile(context, icon: Icons.person_outline, label: 'Gender', value: pharma.gender),
 
                 20.height,
 
@@ -161,14 +161,14 @@ class PharmaDetailScreen extends StatelessWidget {
   }
 
   /// Helper Widget for info items
-  Widget buildInfoTile({required IconData icon, required String label, String? value}) {
+  Widget buildInfoTile(BuildContext context, {required IconData icon, required String label, String? value}) {
     if (value.validate().isEmpty) return const SizedBox();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: secondaryTextColor, size: 18),
+          Icon(icon, color: context.themeMuted, size: 18),
           12.width,
           Expanded(
             child: Column(

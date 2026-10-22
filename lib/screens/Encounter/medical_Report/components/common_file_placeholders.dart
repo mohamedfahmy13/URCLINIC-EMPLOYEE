@@ -46,7 +46,7 @@ class CommonPdfPlaceHolder extends StatelessWidget {
                       : fileExt.isAudio
                           ? Icons.audio_file_outlined
                           : Icons.file_copy_rounded,
-              color: appColorPrimary,
+              color: context.themePrimary,
               size: 32,
             ),
             15.height,

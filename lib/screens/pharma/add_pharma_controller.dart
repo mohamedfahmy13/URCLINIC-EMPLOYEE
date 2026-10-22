@@ -237,12 +237,12 @@ class AddPharmaController extends GetxController {
         children: [
           SettingItemWidget(
             title: locale.value.gallery,
-            leading: const Icon(Icons.image, color: appColorPrimary),
+            leading: Icon(Icons.image, color: context.themePrimary),
             onTap: _handleGalleryClick,
           ),
           SettingItemWidget(
             title: locale.value.camera,
-            leading: const Icon(Icons.camera, color: appColorPrimary),
+            leading: Icon(Icons.camera, color: context.themePrimary),
             onTap: _handleCameraClick,
           ),
         ],

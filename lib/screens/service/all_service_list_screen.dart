@@ -127,7 +127,7 @@ class AllServicesScreen extends StatelessWidget {
                             serviceElement: service,
                             showActionButton: false,
                             trailing: _canManageServices
-                                ? _serviceActions(service)
+                                ? _serviceActions(context, service)
                                 : null,
                             onClickAssignDoctor: () {
                               if (loginUserData.value.userRole
@@ -191,9 +191,9 @@ class AllServicesScreen extends StatelessWidget {
     }
   }
 
-  Widget _serviceActions(ServiceElement service) {
+  Widget _serviceActions(BuildContext context, ServiceElement service) {
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.more_vert_rounded, size: 20, color: appColorSecondary),
+      icon: Icon(Icons.more_vert_rounded, size: 20, color: context.themePrimary),
       padding: EdgeInsets.zero,
       onSelected: (action) {
         if (action == 'edit') {

@@ -120,9 +120,9 @@ class DoctorsListScreen extends StatelessWidget {
                                                   .withValues(alpha: 0.95),
                                               shape: BoxShape.circle,
                                             ),
-                                            child: const Icon(Icons.more_vert,
+                                            child: Icon(Icons.more_vert,
                                                 size: 20,
-                                                color: appColorPrimary),
+                                                color: context.themePrimary),
                                           ),
                                           onSelected: (action) {
                                             if (action == _DoctorAction.edit) {
@@ -143,10 +143,10 @@ class DoctorsListScreen extends StatelessWidget {
                                                 value: _DoctorAction.edit,
                                                 child: Row(
                                                   children: [
-                                                    const Icon(
+                                                    Icon(
                                                         Icons.edit_outlined,
                                                         size: 18,
-                                                        color: appColorPrimary),
+                                                        color: context.themePrimary),
                                                     8.width,
                                                     Text(locale.value.edit,
                                                         style: primaryTextStyle(

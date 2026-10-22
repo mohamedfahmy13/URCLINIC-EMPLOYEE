@@ -36,7 +36,7 @@ class AddMedicalReportForm extends StatelessWidget {
                 onTap: () {
                   addMedReportCont.clearMedReportData();
                 },
-                child: Text(locale.value.reset, style: boldTextStyle(size: 12, weight: FontWeight.w700, color: appColorSecondary)),
+                child: Text(locale.value.reset, style: boldTextStyle(size: 12, weight: FontWeight.w700, color: context.themePrimary)),
               ),
             ],
           ),
@@ -99,7 +99,7 @@ class AddMedicalReportForm extends StatelessWidget {
                               width: Get.width,
                               constraints: BoxConstraints(minHeight: Get.height * 0.18),
                               backgroundColor: context.cardColor,
-                              border: Border.all(color: borderColor, width: 0.8),
+                              border: Border.all(color: context.themeBorder, width: 0.8),
                               borderRadius: defaultRadius,
                               onTap: () {
                                 hideKeyboard(context);
@@ -116,7 +116,7 @@ class AddMedicalReportForm extends StatelessWidget {
                                   16.height,
                                   Text(
                                     locale.value.uploadMedicalReport,
-                                    style: secondaryTextStyle(color: secondaryTextColor, size: 14),
+                                    style: secondaryTextStyle(color: context.themeMuted, size: 14),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -128,7 +128,7 @@ class AddMedicalReportForm extends StatelessWidget {
                 4.height,
                 Text(
                   locale.value.supportedFormat,
-                  style: secondaryTextStyle(size: 12, color: appColorSecondary, fontStyle: FontStyle.italic),
+                  style: secondaryTextStyle(size: 12, color: context.themePrimary, fontStyle: FontStyle.italic),
                 ),
                 16.height,
                 AppTextField(

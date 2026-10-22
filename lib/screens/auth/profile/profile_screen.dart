@@ -112,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcEditprofileOutlined,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -126,8 +126,8 @@ class ProfileScreen extends StatelessWidget {
                     subTitle: locale.value.manageClinicPackages,
                     onTap: () => Get.to(() => const ClinicSubscriptionScreen()),
                     titleTextStyle: boldTextStyle(size: 14),
-                    leading: const Icon(Icons.workspace_premium_outlined,
-                            color: appColorPrimary)
+                    leading: Icon(Icons.workspace_premium_outlined,
+                            color: context.themePrimary)
                         .circularLightPrimaryBg(),
                     trailing: trailing,
                     padding: const EdgeInsets.symmetric(
@@ -143,7 +143,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcClinic, color: appColorPrimary)
+                          imgPath: Assets.iconsIcClinic, color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -169,7 +169,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcTimeOutlined,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -186,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcDoctor, color: appColorPrimary)
+                          imgPath: Assets.iconsIcDoctor, color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -206,7 +206,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcBedType,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -223,7 +223,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcBed, color: appColorPrimary)
+                          imgPath: Assets.iconsIcBed, color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -243,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcRequest,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -261,7 +261,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcReceptionist,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -279,7 +279,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcEncounter,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -298,7 +298,7 @@ class ProfileScreen extends StatelessWidget {
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
                           imgPath: Assets.iconsIcSetting,
-                          color: appColorPrimary)
+                          color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -314,7 +314,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcInfo, color: appColorPrimary)
+                          imgPath: Assets.iconsIcInfo, color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   trailing: trailing,
                   padding:
@@ -355,7 +355,7 @@ class ProfileScreen extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcLogout, color: appColorPrimary)
+                          imgPath: Assets.iconsIcLogout, color: context.themePrimary)
                       .circularLightPrimaryBg(),
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -363,7 +363,7 @@ class ProfileScreen extends StatelessWidget {
                 30.height,
                 VersionInfoWidget(
                         prefixText: '${locale.value.version}  ',
-                        textStyle: primaryTextStyle(color: secondaryTextColor))
+                        textStyle: primaryTextStyle(color: context.themeMuted))
                     .center(),
                 32.height,
               ],

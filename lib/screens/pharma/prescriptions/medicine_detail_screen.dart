@@ -53,13 +53,13 @@ class MedicineDetailScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.warning_amber_rounded, color: Colors.red[400], size: 20),
+                        Icon(Icons.warning_amber_rounded, color: context.themeDanger, size: 20),
                         const SizedBox(width: 8),
                         Text(
                           locale.value.lowStock,
                           style: boldTextStyle(
                             size: 14,
-                            color: Colors.red[600],
+                            color: context.themeDanger,
                           ),
                         ),
                       ],
@@ -75,7 +75,7 @@ class MedicineDetailScreen extends StatelessWidget {
                           isScrollControlled: true,
                         );
                       },
-                      child: Text(locale.value.addStock, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: Colors.green[600])).paddingSymmetric(horizontal: 8),
+                      child: Text(locale.value.addStock, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themeSuccess)).paddingSymmetric(horizontal: 8),
                     ),
                   ],
                 ),
@@ -221,7 +221,7 @@ class MedicineDetailScreen extends StatelessWidget {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () => Get.to(() => SupplierDetails(supplier: medicineData.supplier)),
-                            child: Text(locale.value.viewDetail, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: appColorSecondary)),
+                            child: Text(locale.value.viewDetail, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themePrimary)),
                           ),
                           TextButton(
                             style: ButtonStyle(
@@ -229,7 +229,7 @@ class MedicineDetailScreen extends StatelessWidget {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () => Get.to(() => StockHistoryScreen(), arguments: medicineData.id),
-                            child: Text("Stock History", style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: appColorSecondary)),
+                            child: Text("Stock History", style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themePrimary)),
                           ),
                         ],
                       ),

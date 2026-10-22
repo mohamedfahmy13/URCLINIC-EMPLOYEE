@@ -75,7 +75,7 @@ class ClinicDetailScreen extends StatelessWidget {
                                         ),
                                         child: Text(
                                           clinicDetailCont.clinicData.value.clinicStatus,
-                                          style: boldTextStyle(size: 12, color: appColorPrimary),
+                                          style: boldTextStyle(size: 12, color: context.themePrimary),
                                         ),
                                       ),
                                     ],
@@ -96,7 +96,7 @@ class ClinicDetailScreen extends StatelessWidget {
                                 12.width,
                                 Text(
                                   clinicDetailCont.clinicData.value.contactNumber,
-                                  style: primaryTextStyle(color: appColorPrimary),
+                                  style: primaryTextStyle(color: context.themePrimary),
                                 ),
                               ],
                             ),
@@ -132,7 +132,7 @@ class ClinicDetailScreen extends StatelessWidget {
                     ReadMoreText(
                       parseHtmlString(clinicDetailCont.clinicData.value.description),
                       trimLines: 4,
-                      style: secondaryTextStyle(size: 14, color: secondaryTextColor),
+                      style: secondaryTextStyle(size: 14, color: context.themeMuted),
                       colorClickableText: appColorPrimary,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: " ...${locale.value.readMore}",

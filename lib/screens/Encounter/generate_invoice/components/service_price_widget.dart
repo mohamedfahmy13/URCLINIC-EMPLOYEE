@@ -26,7 +26,7 @@ class ServicePriceWidget extends StatelessWidget {
               Text(locale.value.price, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
               PriceWidget(
                 price: serviceDetails.servicePriceData.serviceAmount,
-                color: appColorPrimary,
+                color: context.themePrimary,
                 size: 14,
               ),
             ],

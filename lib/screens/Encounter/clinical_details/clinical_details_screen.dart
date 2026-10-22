@@ -154,7 +154,7 @@ class ClinicalDetailsScreen extends StatelessWidget {
                                 child: Text(
                                   locale.value.add,
                                   style: primaryTextStyle(
-                                      color: appColorSecondary),
+                                      color: context.themePrimary),
                                 ),
                               ),
                             ],

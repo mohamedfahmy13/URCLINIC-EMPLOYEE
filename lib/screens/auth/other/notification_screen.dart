@@ -112,7 +112,7 @@ class NotificationScreen extends StatelessWidget {
                                   width: 20,
                                   firstName: "#${notification.data.notificationDetail.id}",
                                   fit: BoxFit.cover,
-                                  color: appColorPrimary,
+                                  color: context.themePrimary,
                                   circle: true,
                                 ),
                               ),

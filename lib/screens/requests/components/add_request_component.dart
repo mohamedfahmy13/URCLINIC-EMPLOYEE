@@ -50,7 +50,7 @@ class AddRequestComponent extends StatelessWidget {
                       filled: true,
                       hintText: locale.value.name,
                     ),
-                    suffix: commonLeadingWid(imgPath: Assets.iconsIcTextIcon, color: secondaryTextColor, size: 12).paddingAll(16),
+                    suffix: commonLeadingWid(imgPath: Assets.iconsIcTextIcon, color: context.themeMuted, size: 12).paddingAll(16),
                   ),
                   16.height,
                   AppTextField(
@@ -64,7 +64,7 @@ class AddRequestComponent extends StatelessWidget {
                       filled: true,
                       hintText: locale.value.description,
                     ),
-                    suffix: commonLeadingWid(imgPath: Assets.iconsIcDollar, color: secondaryTextColor, size: 12).paddingAll(16),
+                    suffix: commonLeadingWid(imgPath: Assets.iconsIcDollar, color: context.themeMuted, size: 12).paddingAll(16),
                   ),
                   16.height,
                   AppDropDownWidget(

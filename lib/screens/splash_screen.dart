@@ -94,8 +94,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.wifi_off_rounded,
-                              color: appColorPrimary, size: 36),
+                          Icon(Icons.wifi_off_rounded,
+                              color: context.themePrimary, size: 36),
                           12.height,
                           Text(
                             'No internet connection',

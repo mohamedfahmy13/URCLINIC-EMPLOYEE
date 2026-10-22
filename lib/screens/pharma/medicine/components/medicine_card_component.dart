@@ -47,11 +47,11 @@ class MedicineCardWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.warning_amber_rounded, color: Colors.red[400], size: 20),
+                Icon(Icons.warning_amber_rounded, color: context.themeDanger, size: 20),
                 8.width,
                 Text(
                   locale.value.lowStock,
-                  style: boldTextStyle(size: 14, color: Colors.red[600]),
+                  style: boldTextStyle(size: 14, color: context.themeDanger),
                 ),
               ],
             ),
@@ -61,7 +61,7 @@ class MedicineCardWidget extends StatelessWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               onPressed: () => Get.bottomSheet(AddStockComponent(medicineId: medicineData.id), isScrollControlled: true),
-              child: Text(locale.value.addStock, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: Colors.green[600])).paddingSymmetric(horizontal: 8),
+              child: Text(locale.value.addStock, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themeSuccess)).paddingSymmetric(horizontal: 8),
             ),
           ],
         ),
@@ -115,7 +115,7 @@ class MedicineCardWidget extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             onPressed: () => Get.to(() => MedicineDetailScreen(medicineData: medicineData)),
-            child: Text(locale.value.viewDetail, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: appColorSecondary)).paddingOnly(right: 8),
+            child: Text(locale.value.viewDetail, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themePrimary)).paddingOnly(right: 8),
           ),
           if (!isExpired)
             Row(

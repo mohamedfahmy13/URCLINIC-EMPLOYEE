@@ -46,7 +46,7 @@ class DoctorAboutScreen extends StatelessWidget {
                       12.width,
                       Text(
                         doctorData.mobile,
-                        style: primaryTextStyle(color: secondaryTextColor),
+                        style: primaryTextStyle(color: context.themeMuted),
                       ),
                     ],
                   ),
@@ -63,7 +63,7 @@ class DoctorAboutScreen extends StatelessWidget {
                       12.width,
                       Text(
                         doctorData.email,
-                        style: primaryTextStyle(color: secondaryTextColor),
+                        style: primaryTextStyle(color: context.themeMuted),
                       ),
                     ],
                   ),
@@ -89,7 +89,7 @@ class DoctorAboutScreen extends StatelessWidget {
                 12.width,
                 Text(
                   doctorData.expert,
-                  style: primaryTextStyle(color: secondaryTextColor),
+                  style: primaryTextStyle(color: context.themeMuted),
                 ),
               ],
             ),
@@ -112,7 +112,7 @@ class DoctorAboutScreen extends StatelessWidget {
                 12.width,
                 Text(
                   doctorData.experience,
-                  style: primaryTextStyle(color: secondaryTextColor),
+                  style: primaryTextStyle(color: context.themeMuted),
                 ),
               ],
             ),
@@ -132,7 +132,7 @@ class DoctorAboutScreen extends StatelessWidget {
             child: ReadMoreText(
               parseHtmlString(doctorData.aboutSelf),
               trimLines: 4,
-              style: secondaryTextStyle(size: 14, color: secondaryTextColor),
+              style: secondaryTextStyle(size: 14, color: context.themeMuted),
               colorClickableText: appColorPrimary,
               trimMode: TrimMode.Line,
               textAlign: TextAlign.justify,

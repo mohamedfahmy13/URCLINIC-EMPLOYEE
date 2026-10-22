@@ -115,14 +115,14 @@ class AddMedicalReportController extends GetxController {
           children: <Widget>[
             SettingItemWidget(
               title: locale.value.file,
-              leading: const Icon(Icons.image, color: appColorPrimary),
+              leading: Icon(Icons.image, color: context.themePrimary),
               onTap: () async {
                 _handleDocumentClick();
               },
             ),
             SettingItemWidget(
               title: locale.value.camera,
-              leading: const Icon(Icons.camera, color: appColorPrimary),
+              leading: Icon(Icons.camera, color: context.themePrimary),
               onTap: () {
                 _handleCameraClick();
               },

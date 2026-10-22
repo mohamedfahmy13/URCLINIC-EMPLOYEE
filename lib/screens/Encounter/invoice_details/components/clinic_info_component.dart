@@ -24,7 +24,7 @@ class ClinicInfoComponent extends StatelessWidget {
           Row(
             children: [
               Text(clinicData.clinicName, style: boldTextStyle(size: 14, weight: FontWeight.w600, color: isDarkMode.value ? null : darkGrayTextColor)).expand(),
-              Text(clinicData.date.dateInDMMMMyyyyFormat, style: secondaryTextStyle(size: 12, color: appBodyColor)),
+              Text(clinicData.date.dateInDMMMMyyyyFormat, style: secondaryTextStyle(size: 12, color: context.themeMuted)),
             ],
           ),
           8.height,
@@ -45,7 +45,7 @@ class ClinicInfoComponent extends StatelessWidget {
                   clinicData.clinicEmail,
                   style: secondaryTextStyle(
                     size: 12,
-                    color: appColorSecondary,
+                    color: context.themePrimary,
                     decoration: TextDecoration.underline,
                     decorationColor: appColorSecondary,
                   ),

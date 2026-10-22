@@ -27,20 +27,20 @@ class AppDropDownWidget extends StatelessWidget {
       style: primaryTextStyle(size: 12),
       hint: Text(
         hintText.toString(),
-        style: primaryTextStyle(size: 12, color: iconColor.withValues(alpha: 0.5)),
+        style: primaryTextStyle(size: 12, color: context.themeMuted),
       ),
       icon: const Offstage(),
       decoration: InputDecoration(
         fillColor: context.cardColor,
         filled: true,
         suffixIcon:
-            suffixIcon == null ? Icon(Icons.keyboard_arrow_down_rounded, size: 24, color: iconColor.withValues(alpha: 0.6)) : commonLeadingWid(imgPath: suffixIcon ?? Assets.iconsIcDropdown, color: iconColor, size: 10).paddingSymmetric(vertical: 16),
+            suffixIcon == null ? Icon(Icons.keyboard_arrow_down_rounded, size: 24, color: context.themeMuted) : commonLeadingWid(imgPath: suffixIcon ?? Assets.iconsIcDropdown, color: context.themeMuted, size: 10).paddingSymmetric(vertical: 16),
         isDense: true,
         // important line,
         contentPadding: const EdgeInsets.only(bottom: 6, left: 12, right: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: radius(8),
-          borderSide: const BorderSide(color: borderColor, width: 0.0),
+          borderSide: BorderSide(color: context.themeBorder, width: 0.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: radius(8),
@@ -53,13 +53,13 @@ class AppDropDownWidget extends StatelessWidget {
         errorMaxLines: 2,
         border: OutlineInputBorder(
           borderRadius: radius(8),
-          borderSide: const BorderSide(color: borderColor, width: 0.0),
+          borderSide: BorderSide(color: context.themeBorder, width: 0.0),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: radius(8),
-          borderSide: const BorderSide(color: borderColor, width: 0.0),
+          borderSide: BorderSide(color: context.themeBorder, width: 0.0),
         ),
-        errorStyle: primaryTextStyle(color: Colors.red, size: 12),
+        errorStyle: primaryTextStyle(color: context.themeDanger, size: 12),
         focusedBorder: OutlineInputBorder(
           borderRadius: radius(8),
           borderSide: const BorderSide(color: appColorPrimary, width: 0.0),

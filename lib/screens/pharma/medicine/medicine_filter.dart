@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:kivicare_clinic_admin/utils/app_common.dart';
 import 'package:kivicare_clinic_admin/utils/colors.dart';
 import '../../../main.dart';
 import 'controller/medicine_list_controller.dart';
@@ -54,7 +53,7 @@ void showFilterBottomSheet({
                           Get.back();
                           medicinesListCont.getMedicineList();
                         },
-                        child: Text(locale.value.reset, style: primaryTextStyle(color: Colors.red)),
+                        child: Text(locale.value.reset, style: primaryTextStyle(color: context.themeDanger)),
                       ).visible(medicinesListCont.selectedFilerCount.value > 0),
                     ],
                   ),
@@ -65,15 +64,15 @@ void showFilterBottomSheet({
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        tabButton(locale.value.form1, medicinesListCont.selectedTabIndex.value == 0, () {
+                        tabButton(context, locale.value.form1, medicinesListCont.selectedTabIndex.value == 0, () {
                           medicinesListCont.selectedTabIndex(0);
                         }),
                         8.width,
-                        tabButton(locale.value.category, medicinesListCont.selectedTabIndex.value == 1, () {
+                        tabButton(context, locale.value.category, medicinesListCont.selectedTabIndex.value == 1, () {
                           medicinesListCont.selectedTabIndex(1);
                         }),
                         8.width,
-                        tabButton(locale.value.suppliers, medicinesListCont.selectedTabIndex.value == 2, () {
+                        tabButton(context, locale.value.suppliers, medicinesListCont.selectedTabIndex.value == 2, () {
                           medicinesListCont.selectedTabIndex(2);
                         }),
                       ],
@@ -198,18 +197,18 @@ Widget _buildCheckboxList({
   );
 }
 
-Widget tabButton(String title, bool isSelected, VoidCallback onTap) {
+Widget tabButton(BuildContext context, String title, bool isSelected, VoidCallback onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? appColorPrimary : Colors.grey.shade200,
+        color: isSelected ? appColorPrimary : context.themeSubtleSurface,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         title,
-        style: isSelected ? boldTextStyle(color: Colors.white) : primaryTextStyle(color: isDarkMode.value ? Colors.black : null),
+        style: isSelected ? boldTextStyle(color: Colors.white) : primaryTextStyle(color: context.themeText),
       ),
     ),
   );

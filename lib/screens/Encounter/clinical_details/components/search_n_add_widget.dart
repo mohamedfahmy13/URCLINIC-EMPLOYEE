@@ -53,7 +53,7 @@ class SearchAndAddWidget extends StatelessWidget {
               encounterDashCont.getEncObservations();
             }
           },
-          child: Text(locale.value.add, style: boldTextStyle(color: appColorSecondary, size: 14)),
+          child: Text(locale.value.add, style: boldTextStyle(color: context.themePrimary, size: 14)),
         ).visible(encounterDashCont.isSearchText.value),
       )
       /* Obx(

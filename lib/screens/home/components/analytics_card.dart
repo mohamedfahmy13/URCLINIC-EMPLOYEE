@@ -37,7 +37,7 @@ class AnalyticsCard extends StatelessWidget {
               children: [
                 Flexible(
                   child: Marquee(
-                    child: Text(countText, textDirection: TextDirection.ltr, style: boldTextStyle(color: appColorSecondary, size: 24)),
+                    child: Text(countText, textDirection: TextDirection.ltr, style: boldTextStyle(color: context.themePrimary, size: 24)),
                   ),
                 ),
                 Container(
@@ -47,7 +47,7 @@ class AnalyticsCard extends StatelessWidget {
                     url: icon,
                     height: 18,
                     width: 18,
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                   ),
                 ),
               ],

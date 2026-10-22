@@ -367,13 +367,13 @@ class TimePickerSpinnerState extends State<TimePickerSpinner> {
                 Container(
                   height: 40.0,
                   width: 60.0,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: borderColor,
+                        color: context.themeBorder,
                       ),
                       bottom: BorderSide(
-                        color: borderColor,
+                        color: context.themeBorder,
                       ),
                     ),
                   ),
@@ -441,13 +441,13 @@ class TimePickerSpinnerState extends State<TimePickerSpinner> {
                 Container(
                   height: 40.0,
                   width: 60.0,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: borderColor,
+                        color: context.themeBorder,
                       ),
                       bottom: BorderSide(
-                        color: borderColor,
+                        color: context.themeBorder,
                       ),
                     ),
                   ),

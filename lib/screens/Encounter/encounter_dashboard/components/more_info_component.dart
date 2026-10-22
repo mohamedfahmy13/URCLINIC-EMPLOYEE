@@ -52,7 +52,7 @@ class MoreInfoComponent extends StatelessWidget {
           },
           titleTextStyle: boldTextStyle(size: 14),
           leading: commonLeadingWid(
-              imgPath: Assets.iconsIcFile, color: appColorSecondary),
+              imgPath: Assets.iconsIcFile, color: context.themePrimary),
           trailing: const Icon(Icons.arrow_forward_ios_rounded,
               size: 12, color: darkGray),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -70,7 +70,7 @@ class MoreInfoComponent extends StatelessWidget {
           },
           titleTextStyle: boldTextStyle(size: 14),
           leading: commonLeadingWid(
-              imgPath: Assets.iconsIcSoap, color: appColorSecondary),
+              imgPath: Assets.iconsIcSoap, color: context.themePrimary),
           trailing: const Icon(Icons.arrow_forward_ios_rounded,
               size: 12, color: darkGray),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -87,7 +87,7 @@ class MoreInfoComponent extends StatelessWidget {
           },
           titleTextStyle: boldTextStyle(size: 14),
           leading: commonLeadingWid(
-              imgPath: Assets.iconsIcInvoice, color: appColorSecondary),
+              imgPath: Assets.iconsIcInvoice, color: context.themePrimary),
           trailing: const Icon(Icons.arrow_forward_ios_rounded,
               size: 12, color: darkGray),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -115,7 +115,7 @@ class MoreInfoComponent extends StatelessWidget {
                       },
                       titleTextStyle: boldTextStyle(size: 14),
                       leading: commonLeadingWid(
-                          imgPath: Assets.iconsIcBed, color: appColorSecondary),
+                          imgPath: Assets.iconsIcBed, color: context.themePrimary),
                       trailing: Obx(() => Icon(
                           isBedDetailsVisible.value
                               ? Icons.keyboard_arrow_up_rounded
@@ -154,7 +154,7 @@ class MoreInfoComponent extends StatelessWidget {
                   },
                   titleTextStyle: boldTextStyle(size: 14),
                   leading: commonLeadingWid(
-                      imgPath: Assets.iconsIcBed, color: appColorSecondary),
+                      imgPath: Assets.iconsIcBed, color: context.themePrimary),
                   trailing: const Icon(Icons.arrow_forward_ios_rounded,
                       size: 12, color: darkGray),
                   padding:
@@ -169,7 +169,7 @@ class MoreInfoComponent extends StatelessWidget {
                   child: Row(
                     children: [
                       commonLeadingWid(
-                          imgPath: Assets.iconsIcBed, color: Colors.grey),
+                          imgPath: Assets.iconsIcBed, color: context.themeMuted),
                       12.width,
                       Expanded(
                         child: Column(
@@ -183,7 +183,7 @@ class MoreInfoComponent extends StatelessWidget {
                             Text(
                               'No bed assigned',
                               style: secondaryTextStyle(
-                                  size: 12, color: Colors.grey),
+                                  size: 12, color: context.themeMuted),
                             ),
                           ],
                         ),
@@ -210,7 +210,7 @@ class MoreInfoComponent extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios_rounded,
                     size: 12, color: darkGray),
                 leading: commonLeadingWid(
-                    imgPath: Assets.iconsIcBed, color: appColorSecondary),
+                    imgPath: Assets.iconsIcBed, color: context.themePrimary),
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
               ).paddingTop(16).visible(!loginUserData.value.userRole
@@ -233,7 +233,7 @@ class MoreInfoComponent extends StatelessWidget {
                 },
                 titleTextStyle: boldTextStyle(size: 14),
                 leading: commonLeadingWid(
-                    imgPath: Assets.iconsIcBed, color: appColorSecondary),
+                    imgPath: Assets.iconsIcBed, color: context.themePrimary),
                 trailing: const Icon(Icons.arrow_forward_ios_rounded,
                     size: 12, color: darkGray),
                 padding:

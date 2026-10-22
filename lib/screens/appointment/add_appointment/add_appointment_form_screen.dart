@@ -219,7 +219,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                           monthTextStyle: secondaryTextStyle(size: 14),
                           DateTime.now(),
                           initialSelectedDate: DateTime.now(),
-                          selectionColor: lightPrimaryColor,
+                          selectionColor: context.themeSoftPrimary,
                           selectedTextColor: appColorPrimary,
                           height: 100,
                           onDateChange: (date) {
@@ -289,7 +289,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                             style: primaryTextStyle(
                                               size: 12,
-                                              color: (addAppointmentCont.selectedSlot.value == slot) ? Colors.white : appColorPrimary,
+                                              color: (addAppointmentCont.selectedSlot.value == slot) ? Colors.white : context.themePrimary,
                                             ),
                                           ),
                                         ),
@@ -428,7 +428,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                       Text(
                                         locale.value.asPerDoctorCharges,
                                         style: secondaryTextStyle(
-                                          color: appColorSecondary,
+                                          color: context.themePrimary,
                                           size: 11,
                                           fontStyle: FontStyle.italic,
                                         ),
@@ -439,7 +439,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                         child: Text(
                                           locale.value.includesInclusiveTax,
                                           style: secondaryTextStyle(
-                                            color: appColorSecondary,
+                                            color: context.themePrimary,
                                             size: 10,
                                             fontStyle: FontStyle.italic,
                                           ),
@@ -460,12 +460,12 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                         if (addAppointmentCont.finalAssignDoctor.priceDetail.discountType == TaxType.PERCENTAGE)
                                           Text(
                                             ' (${addAppointmentCont.finalAssignDoctor.priceDetail.discountValue}% ${locale.value.off})',
-                                            style: boldTextStyle(color: Colors.green, size: 12),
+                                            style: boldTextStyle(color: context.themeSuccess, size: 12),
                                           )
                                         else if (addAppointmentCont.finalAssignDoctor.priceDetail.discountType == TaxType.FIXED)
                                           PriceWidget(
                                             price: addAppointmentCont.finalAssignDoctor.priceDetail.discountValue,
-                                            color: Colors.green,
+                                            color: context.themeSuccess,
                                             size: 12,
                                             isDiscountedPrice: true,
                                           ),
@@ -482,12 +482,12 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                         if (addAppointmentCont.selectedService.value.discountType == TaxType.PERCENTAGE)
                                           Text(
                                             ' (${addAppointmentCont.selectedService.value.discountValue}% ${locale.value.off})',
-                                            style: boldTextStyle(color: Colors.green, size: 12),
+                                            style: boldTextStyle(color: context.themeSuccess, size: 12),
                                           )
                                         else if (addAppointmentCont.selectedService.value.discountType == TaxType.FIXED)
                                           PriceWidget(
                                             price: addAppointmentCont.selectedService.value.discountValue,
-                                            color: Colors.green,
+                                            color: context.themeSuccess,
                                             size: 12,
                                             isDiscountedPrice: true,
                                           ),
@@ -519,7 +519,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                   leadingWidget: Row(
                                     children: [
                                       Text(locale.value.exclusiveTax, style: secondaryTextStyle()).expand(),
-                                      const Icon(Icons.info_outline_rounded, size: 20, color: appColorPrimary).onTap(
+                                      Icon(Icons.info_outline_rounded, size: 20, color: context.themePrimary).onTap(
                                         () {
                                           showModalBottomSheet(
                                             context: context,
@@ -552,7 +552,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                   Text(locale.value.total, style: boldTextStyle(size: 14)),
                                   PriceWidget(
                                     price: addAppointmentCont.totalAmount,
-                                    color: appColorPrimary,
+                                    color: context.themePrimary,
                                   ),
                                 ],
                               ),
@@ -566,7 +566,7 @@ class AddAppointmentFormScreen extends StatelessWidget {
                                       Text(locale.value.advancePayableAmount, overflow: TextOverflow.ellipsis, maxLines: 2, style: secondaryTextStyle()),
                                       Text(
                                         ' (${addAppointmentCont.selectedService.value.advancePaymentAmount}%)',
-                                        style: boldTextStyle(color: Colors.green, size: 12),
+                                        style: boldTextStyle(color: context.themeSuccess, size: 12),
                                       ),
                                     ],
                                   ).flexible(),
@@ -687,7 +687,7 @@ class _ServicePickerList extends StatelessWidget {
                   imageUrl: service.serviceImage,
                   title: service.name,
                   subtitle: "${locale.value.duration}: ${doctorPrice.priceDetail.duration > 0 ? doctorPrice.priceDetail.duration : service.duration}",
-                  trailing: PriceWidget(price: doctorPrice.priceDetail.totalAmount, size: 14, color: appColorPrimary),
+                  trailing: PriceWidget(price: doctorPrice.priceDetail.totalAmount, size: 14, color: context.themePrimary),
                   isSelected: controller.selectedService.value.id == service.id,
                   onTap: () {
                     controller.selectService(service);
@@ -726,7 +726,7 @@ class _PickerTile extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         decoration: boxDecorationDefault(
           borderRadius: BorderRadius.circular(6),
-          color: isSelected ? lightPrimaryColor : (isDarkMode.value ? appScreenBackgroundDark : appScreenBackground),
+          color: isSelected ? context.themeSoftPrimary : Theme.of(context).scaffoldBackgroundColor,
         ),
         child: Row(
           children: [

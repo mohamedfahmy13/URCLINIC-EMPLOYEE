@@ -32,13 +32,13 @@ class PayoutCardWid extends StatelessWidget {
             children: [
               PriceWidget(
                 price: payout.totalAmount,
-                color: appColorPrimary,
+                color: context.themePrimary,
                 size: 18,
                 isExtraBoldText: true,
               ),
               Text(
                 payout.paymentType,
-                style: boldTextStyle(size: 12, color: secondaryTextColor),
+                style: boldTextStyle(size: 12, color: context.themeMuted),
               ),
             ],
           ),

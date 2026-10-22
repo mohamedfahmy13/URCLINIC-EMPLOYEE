@@ -38,7 +38,7 @@ class BodyChartCardComponent extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text("#${chartDetails.id}", style: primaryTextStyle(size: 12, color: appColorSecondary)).expand(),
+              Text("#${chartDetails.id}", style: primaryTextStyle(size: 12, color: context.themePrimary)).expand(),
               IconButton(
                 padding: const EdgeInsets.all(8),
                 constraints: const BoxConstraints(),

@@ -43,7 +43,7 @@ class DoctorDetailBtmComp extends StatelessWidget {
             },
             titleTextStyle: boldTextStyle(size: 14),
             leading: commonLeadingWid(
-                imgPath: Assets.iconsIcInfo, color: appColorSecondary),
+                imgPath: Assets.iconsIcInfo, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded,
                 size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -83,7 +83,7 @@ class DoctorDetailBtmComp extends StatelessWidget {
             },
             titleTextStyle: boldTextStyle(size: 14),
             leading: commonLeadingWid(
-                imgPath: Assets.iconsIcClock, color: appColorSecondary),
+                imgPath: Assets.iconsIcClock, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded,
                 size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -105,7 +105,7 @@ class DoctorDetailBtmComp extends StatelessWidget {
             },
             titleTextStyle: boldTextStyle(size: 14),
             leading: commonLeadingWid(
-                imgPath: Assets.iconsIcServices, color: appColorSecondary),
+                imgPath: Assets.iconsIcServices, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded,
                 size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
@@ -129,7 +129,7 @@ class DoctorDetailBtmComp extends StatelessWidget {
             },
             titleTextStyle: boldTextStyle(size: 14),
             leading: commonLeadingWid(
-                imgPath: Assets.iconsIcQualification, color: appColorSecondary),
+                imgPath: Assets.iconsIcQualification, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded,
                 size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),

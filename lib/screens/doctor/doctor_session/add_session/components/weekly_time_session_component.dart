@@ -171,7 +171,7 @@ class WeeklyTimeSessionComponent extends StatelessWidget {
                           locale.value.addBreak,
                           style: boldTextStyle(
                             size: 14,
-                            color: appColorSecondary,
+                            color: context.themePrimary,
                             weight: FontWeight.w700,
                           ),
                         ),

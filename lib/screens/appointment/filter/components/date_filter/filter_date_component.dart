@@ -76,11 +76,11 @@ class FilterDateComponent extends StatelessWidget {
             ),
             suffixPasswordVisibleWidget: commonLeadingWid(
                     imgPath: Assets.iconsIcEye,
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                     size: 12)
                 .paddingAll(14),
             suffixPasswordInvisibleWidget: commonLeadingWid(
-                    imgPath: Assets.iconsIcEyeSlash, color: appColorPrimary)
+                    imgPath: Assets.iconsIcEyeSlash, color: context.themePrimary)
                 .paddingAll(14),
             onTap: () async {
               final DateTime? pickedDate = await showDatePicker(

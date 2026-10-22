@@ -30,9 +30,9 @@ class ClinicBoostCard extends StatelessWidget {
     final color = rejected
         ? Theme.of(context).colorScheme.error
         : boost.isLive
-            ? Colors.green.shade700
+            ? context.themeSuccess
             : boost.bannerStatus == 'pending_review'
-                ? Colors.orange.shade800
+                ? context.themeWarning
                 : appColorPrimary;
     return Card(
       elevation: 0,

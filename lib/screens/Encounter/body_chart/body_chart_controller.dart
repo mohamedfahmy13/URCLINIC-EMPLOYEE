@@ -109,14 +109,14 @@ class BodyChartController extends GetxController {
           children: <Widget>[
             SettingItemWidget(
               title: locale.value.gallery,
-              leading: const Icon(Icons.image, color: appColorPrimary),
+              leading: Icon(Icons.image, color: context.themePrimary),
               onTap: () async {
                 _handleGalleryClick();
               },
             ),
             SettingItemWidget(
               title: locale.value.camera,
-              leading: const Icon(Icons.camera, color: appColorPrimary),
+              leading: Icon(Icons.camera, color: context.themePrimary),
               onTap: () {
                 _handleCameraClick();
               },

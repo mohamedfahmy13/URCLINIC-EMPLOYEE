@@ -270,7 +270,7 @@ class AddEditBedScreen extends StatelessWidget {
                                                             .type)
                                                       Icon(Icons.check_circle,
                                                           color:
-                                                              appColorPrimary,
+                                                              context.themePrimary,
                                                           size: 20),
                                                   ],
                                                 ),
@@ -358,7 +358,7 @@ class AddEditBedScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: context.cardColor,
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey.shade300),
+                              border: Border.all(color: context.themeBorder),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Row(

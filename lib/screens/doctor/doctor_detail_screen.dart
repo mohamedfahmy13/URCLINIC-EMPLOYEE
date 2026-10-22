@@ -106,7 +106,7 @@ class DoctorDetailScreen extends StatelessWidget {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: primaryTextStyle(
-                                              color: secondaryTextColor),
+                                              color: context.themeMuted),
                                         ).flexible(),
                                       ],
                                     ),

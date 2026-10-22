@@ -71,7 +71,7 @@ class ForgetPassword extends StatelessWidget {
                         filled: true,
                         hintText: locale.value.email,
                       ),
-                      suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: secondaryTextColor, size: 12).paddingAll(16),
+                      suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: context.themeMuted, size: 12).paddingAll(16),
                     ),
                     64.height,
                     AppButton(

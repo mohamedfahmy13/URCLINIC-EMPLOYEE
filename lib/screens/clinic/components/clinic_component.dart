@@ -96,7 +96,7 @@ class ClinicComponent extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(text: "${locale.value.pinCode}: ", style: primaryTextStyle()),
-                      TextSpan(text: clinicData.pincode, style: primaryTextStyle(color: appColorSecondary)),
+                      TextSpan(text: clinicData.pincode, style: primaryTextStyle(color: context.themePrimary)),
                     ],
                   ),
                 ).paddingTop(8).visible(clinicData.pincode.isNotEmpty),
@@ -137,7 +137,7 @@ class ClinicComponent extends StatelessWidget {
                       12.width,
                       Text(
                         clinicData.contactNumber,
-                        style: primaryTextStyle(color: appColorPrimary),
+                        style: primaryTextStyle(color: context.themePrimary),
                       ),
                     ],
                   ),

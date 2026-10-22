@@ -233,8 +233,8 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
                                                   fontWeight: FontWeight.bold)),
                                       const SizedBox(height: 6),
                                       Text(_schedule!.clinicName,
-                                          style: const TextStyle(
-                                              color: appColorPrimary)),
+                                          style: TextStyle(
+                                              color: context.themePrimary)),
                                       const SizedBox(height: 12),
                                       Text(locale.value.scheduleHint),
                                     ])),

@@ -56,11 +56,11 @@ class AddFilesWidget extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.add_circle_outline_rounded, color: appColorPrimary, size: 24),
+                      Icon(Icons.add_circle_outline_rounded, color: context.themePrimary, size: 24),
                       8.height,
                       Text(
                         locale.value.addFiles,
-                        style: boldTextStyle(color: appColorPrimary, size: 14),
+                        style: boldTextStyle(color: context.themePrimary, size: 14),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -173,7 +173,7 @@ class AddFilesWidget extends StatelessWidget {
                             CachedImageWidget(
                               url: Assets.iconsIcImageUpload,
                               height: 20,
-                              color: secondaryTextColor,
+                              color: context.themeMuted,
                               fit: BoxFit.fitHeight,
                             ),
                             10.height,
@@ -215,7 +215,7 @@ class AddFilesWidget extends StatelessWidget {
                                   decoration: boxDecorationDefault(borderRadius: const BorderRadius.all(Radius.circular(8))),
                                   leading: Icon(
                                     fileList[index].path.isImage ? Icons.image_outlined : Icons.file_copy_outlined,
-                                    color: appColorPrimary,
+                                    color: context.themePrimary,
                                     size: 20,
                                   ),
                                   trailing: Container(

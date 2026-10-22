@@ -152,38 +152,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RestartAppWidget(
-      child: Obx(
-        () => GetMaterialApp(
-          navigatorKey: navigatorKey,
-          title: APP_NAME,
-          debugShowCheckedModeBanner: false,
-          supportedLocales: LanguageDataModel.languageLocales(),
-          localizationsDelegates: const [
-            AppLocalizations(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          builder: (context, child) {
-            return MediaQuery(
-              data: MediaQuery.of(context)
-                  .copyWith(textScaler: const TextScaler.linear(1.0)),
-              child: child!,
-            );
-          },
-          localeResolutionCallback: (locale, supportedLocales) =>
-              Locale(selectedLanguageCode.value),
-          fallbackLocale: const Locale(DEFAULT_LANGUAGE),
-          locale: Locale(selectedLanguageCode.value),
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-          initialBinding: BindingsBuilder(() {
-            //initialBinding logic
-            setStatusBarColor(transparentColor);
-          }),
-          home: SplashScreen(),
+    return ListenableBuilder(
+      listenable: themeModeController,
+      builder: (context, _) => RestartAppWidget(
+        child: Obx(
+          () => GetMaterialApp(
+            navigatorKey: navigatorKey,
+            title: APP_NAME,
+            debugShowCheckedModeBanner: false,
+            supportedLocales: LanguageDataModel.languageLocales(),
+            localizationsDelegates: const [
+              AppLocalizations(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            builder: (context, child) {
+              return MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: const TextScaler.linear(1.0)),
+                child: child!,
+              );
+            },
+            localeResolutionCallback: (locale, supportedLocales) =>
+                Locale(selectedLanguageCode.value),
+            fallbackLocale: const Locale(DEFAULT_LANGUAGE),
+            locale: Locale(selectedLanguageCode.value),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeModeController.mode,
+            initialBinding: BindingsBuilder(() {
+              //initialBinding logic
+              setStatusBarColor(transparentColor);
+            }),
+            home: SplashScreen(),
+          ),
         ),
       ),
     );

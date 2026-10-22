@@ -40,11 +40,11 @@ class ProblemComponent extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: boxDecorationDefault(
                     color: context.cardColor,
-                    border: Border.all(color: borderColor),
+                    border: Border.all(color: context.themeBorder),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   alignment: Alignment.center,
-                  child: Text(locale.value.noProblemAdded, style: primaryTextStyle(size: 12, color: appColorSecondary)),
+                  child: Text(locale.value.noProblemAdded, style: primaryTextStyle(size: 12, color: context.themePrimary)),
                 )
               : AnimatedListView(
                   listAnimationType: ListAnimationType.None,
@@ -79,7 +79,7 @@ class ProblemComponent extends StatelessWidget {
                             },
                             icon: Container(
                               padding: const EdgeInsets.all(5),
-                              decoration: boxDecorationDefault(color: lightPrimaryColor, shape: BoxShape.circle),
+                              decoration: boxDecorationDefault(color: context.themeSoftPrimary, shape: BoxShape.circle),
                               child: const Icon(
                                 Icons.close_rounded,
                                 size: 14,

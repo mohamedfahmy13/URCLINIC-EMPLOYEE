@@ -190,7 +190,7 @@ class AllPrescriptionsScreen extends StatelessWidget {
                               Get.back();
                               allPrescriptionsCont.getPrescriptions();
                             },
-                            child: Text(locale.value.reset, style: primaryTextStyle(color: Colors.red)),
+                            child: Text(locale.value.reset, style: primaryTextStyle(color: context.themeDanger)),
                           ).visible(allPrescriptionsCont.count > 0),
                         ],
                       ),

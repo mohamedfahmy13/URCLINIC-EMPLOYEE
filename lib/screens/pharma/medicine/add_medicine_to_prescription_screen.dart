@@ -123,7 +123,7 @@ class MultiSelectedPrescMedsComponent extends StatelessWidget {
                 Text(form.medicine.name, style: boldTextStyle()),
                 8.width,
                 AppButton(
-                  textStyle: boldTextStyle(color: appColorSecondary, size: 14),
+                  textStyle: boldTextStyle(color: context.themePrimary, size: 14),
                   color: isDarkMode.value ? scaffoldDarkColor : context.scaffoldBackgroundColor,
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   shapeBorder: RoundedRectangleBorder(borderRadius: radius(4)),
@@ -131,7 +131,7 @@ class MultiSelectedPrescMedsComponent extends StatelessWidget {
                     form.quantityCont.text = "";
                     addMedToPresCont.selectedMedicines.remove(form);
                   },
-                  child: const Icon(Icons.delete, size: 20, color: Colors.red),
+                  child: Icon(Icons.delete, size: 20, color: context.themeDanger),
                 ),
               ],
             ),
@@ -146,7 +146,7 @@ class MultiSelectedPrescMedsComponent extends StatelessWidget {
                 hintText: locale.value.dosage,
                 border: OutlineInputBorder(
                   borderRadius: radius(defaultRadius / 2),
-                  borderSide: const BorderSide(color: borderColor, width: 0.0),
+                  borderSide: BorderSide(color: context.themeBorder, width: 0.0),
                 ),
                 fillColor: context.cardColor,
                 filled: true,
@@ -163,7 +163,7 @@ class MultiSelectedPrescMedsComponent extends StatelessWidget {
                 hintText: locale.value.form,
                 border: OutlineInputBorder(
                   borderRadius: radius(defaultRadius / 2),
-                  borderSide: const BorderSide(color: borderColor, width: 0.0),
+                  borderSide: BorderSide(color: context.themeBorder, width: 0.0),
                 ),
                 fillColor: context.cardColor,
                 filled: true,

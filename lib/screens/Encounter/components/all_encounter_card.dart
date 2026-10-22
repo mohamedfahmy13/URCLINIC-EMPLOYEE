@@ -47,7 +47,7 @@ class AllEncounterCard extends StatelessWidget {
             children: [
               Text(
                 encounterElement.appointmentId == -1 ? locale.value.encounterWithId(encounterElement.id) : '${locale.value.appointment} #${encounterElement.appointmentId}',
-                style: boldTextStyle(size: 14, color: appColorPrimary),
+                style: boldTextStyle(size: 14, color: context.themePrimary),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -80,7 +80,7 @@ class AllEncounterCard extends StatelessWidget {
             children: [
               Text(
                 '${locale.value.date}:',
-                style: primaryTextStyle(size: 12, color: secondaryTextColor),
+                style: primaryTextStyle(size: 12, color: context.themeMuted),
               ),
               6.width,
               Text(
@@ -95,7 +95,7 @@ class AllEncounterCard extends StatelessWidget {
             children: [
               Text(
                 '${locale.value.patientName}:',
-                style: primaryTextStyle(size: 12, color: secondaryTextColor),
+                style: primaryTextStyle(size: 12, color: context.themeMuted),
               ),
               6.width,
               Text(
@@ -110,7 +110,7 @@ class AllEncounterCard extends StatelessWidget {
             children: [
               Text(
                 '${locale.value.clinicName}:',
-                style: primaryTextStyle(size: 12, color: secondaryTextColor),
+                style: primaryTextStyle(size: 12, color: context.themeMuted),
               ),
               6.width,
               Text(

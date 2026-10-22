@@ -58,7 +58,7 @@ class SupplierCard extends StatelessWidget {
                             ),
                           ),
                           4.width,
-                          const Icon(Icons.verified, color: Colors.green, size: 16),
+                          Icon(Icons.verified, color: context.themeSuccess, size: 16),
                         ],
                       ),
                     ),
@@ -100,7 +100,7 @@ class SupplierCard extends StatelessWidget {
                     12.width,
                     Text(
                       supplier.contactNumber,
-                      style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorPrimary, color: appColorPrimary),
+                      style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: context.themePrimary, color: context.themePrimary),
                     ),
                   ],
                 ),
@@ -120,7 +120,7 @@ class SupplierCard extends StatelessWidget {
                     12.width,
                     Text(
                       supplier.email,
-                      style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: appColorSecondary),
+                      style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: context.themePrimary),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

@@ -55,7 +55,7 @@ class SwitchDialogComponent extends StatelessWidget {
                   color: appColorSecondary,
                   child: Text(
                     locale.value.cancel,
-                    style: boldTextStyle(size: 14, color: appBodyColor),
+                    style: boldTextStyle(size: 14, color: context.themeMuted),
                   ),
                 ),
               ).expand(),

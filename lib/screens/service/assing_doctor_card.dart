@@ -70,7 +70,7 @@ class AssingDoctorCardWid extends StatelessWidget {
                                 log('allSCont = Get.find() Errr: $e');
                               }
                             },
-                            side: const BorderSide(color: secondaryTextColor, width: 1.5),
+                            side: BorderSide(color: context.themeMuted, width: 1.5),
                           ),
                         ),
                         8.width,
@@ -100,7 +100,7 @@ class AssingDoctorCardWid extends StatelessWidget {
               fillColor: context.cardColor,
               filled: true,
             ),
-            suffix: commonLeadingWid(imgPath: Assets.iconsIcTotalPayout, color: secondaryTextColor.withValues(alpha: 0.6), size: 12).paddingAll(16),
+            suffix: commonLeadingWid(imgPath: Assets.iconsIcTotalPayout, color: context.themeMuted.withValues(alpha: 0.6), size: 12).paddingAll(16),
           ).paddingTop(8).visible(doctorData.isSelected.value),
         ),
       ],

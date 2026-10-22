@@ -106,7 +106,7 @@ class WeekTimeComponent extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text(locale.value.editBreak, style: boldTextStyle(size: 12, color: appColorSecondary)),
+                  child: Text(locale.value.editBreak, style: boldTextStyle(size: 12, color: context.themePrimary)),
                 ),
               ],
             ).paddingBottom(6);

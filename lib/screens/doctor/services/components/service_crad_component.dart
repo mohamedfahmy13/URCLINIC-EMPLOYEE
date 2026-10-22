@@ -71,7 +71,7 @@ class ServiceCardComponent extends StatelessWidget {
                     serviceListCont.checkSelServiceList(service: serviceData);
                   }
                 },
-                side: const BorderSide(color: secondaryTextColor, width: 1.5),
+                side: BorderSide(color: context.themeMuted, width: 1.5),
               ),
             ),
           ],

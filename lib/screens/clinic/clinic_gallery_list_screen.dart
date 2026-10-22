@@ -35,7 +35,7 @@ class ClinicGalleryListScreen extends StatelessWidget {
             width: Get.width,
             constraints: BoxConstraints(minHeight: Get.height * 0.18),
             backgroundColor: context.cardColor,
-            border: Border.all(color: borderColor, width: 0.8),
+            border: Border.all(color: context.themeBorder, width: 0.8),
             borderRadius: defaultRadius,
             onTap: () {
               hideKeyboard(context);
@@ -52,7 +52,7 @@ class ClinicGalleryListScreen extends StatelessWidget {
                 16.height,
                 Text(
                   locale.value.chooseImageToUpload,
-                  style: secondaryTextStyle(color: secondaryTextColor, size: 14),
+                  style: secondaryTextStyle(color: context.themeMuted, size: 14),
                   textAlign: TextAlign.center,
                 ),
               ],

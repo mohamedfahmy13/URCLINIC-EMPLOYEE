@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                                       style: boldTextStyle(
                                           size: 12,
                                           fontFamily: fontFamilyWeight700,
-                                          color: appColorSecondary))
+                                          color: context.themePrimary))
                                   .paddingSymmetric(horizontal: 8),
                             ).visible(loginUserData.value.userRole
                                 .contains(EmployeeKeyConst.doctor))
@@ -175,8 +175,8 @@ class HomeScreen extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
-                          leading: const Icon(Icons.workspace_premium_outlined,
-                              color: appColorPrimary, size: 32),
+                          leading: Icon(Icons.workspace_premium_outlined,
+                              color: context.themePrimary, size: 32),
                           title: Text(locale.value.clinicPackages,
                               style: boldTextStyle()),
                           subtitle: Text(locale.value.manageClinicPackages),

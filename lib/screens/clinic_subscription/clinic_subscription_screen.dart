@@ -384,8 +384,8 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(24)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Icon(Icons.workspace_premium_outlined,
-              color: appColorPrimary, size: 36),
+          Icon(Icons.workspace_premium_outlined,
+              color: context.themePrimary, size: 36),
           const SizedBox(height: 18),
           Text(locale.value.noClinicSubscription,
               style: Theme.of(context)
@@ -465,8 +465,8 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
         child: Padding(
             padding: const EdgeInsets.all(18),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Icon(Icons.event_available_outlined,
-                  color: appColorPrimary),
+              Icon(Icons.event_available_outlined,
+                  color: context.themePrimary),
               const SizedBox(width: 12),
               Expanded(
                   child: Column(
@@ -500,7 +500,7 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
             color: appColorPrimary.withValues(alpha: .07),
             borderRadius: BorderRadius.circular(16)),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(icon, color: appColorPrimary, size: 20),
+          Icon(icon, color: context.themePrimary, size: 20),
           const SizedBox(width: 10),
           Expanded(child: Text(text)),
         ]),
@@ -582,7 +582,7 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                         ? Icons.radio_button_checked
                         : Icons.radio_button_off,
                     color: selected
-                        ? appColorPrimary
+                        ? context.themePrimary
                         : Theme.of(context).disabledColor),
               ]),
               const SizedBox(height: 6),
@@ -591,10 +591,10 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
               const SizedBox(height: 16),
               Text(_price(plan.price, plan.currency),
                   textDirection: TextDirection.ltr,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: appColorPrimary)),
+                      color: context.themePrimary)),
               if (_controller.state.current?.planId == plan.id) ...[
                 const SizedBox(height: 8),
                 _badge(locale.value.currentClinicSubscription, appColorPrimary),
@@ -611,7 +611,7 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                                   ? Icons.image_outlined
                                   : Icons.trending_up,
                               size: 20,
-                              color: appColorPrimary),
+                              color: context.themePrimary),
                           const SizedBox(width: 10),
                           Expanded(
                               child: Text(
@@ -649,8 +649,8 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                                 const TextStyle(fontWeight: FontWeight.w600)),
                         Text(_price(plan.price, plan.currency),
                             textDirection: TextDirection.ltr,
-                            style: const TextStyle(
-                                color: appColorPrimary,
+                            style: TextStyle(
+                                color: context.themePrimary,
                                 fontWeight: FontWeight.bold)),
                       ]),
                   const SizedBox(height: 10),
@@ -682,10 +682,10 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
     final paid = payment.status == 'paid';
     final failed = payment.status == 'failed';
     final color = paid
-        ? Colors.green
+        ? context.themeSuccess
         : failed
-            ? Colors.red
-            : Colors.orange.shade800;
+            ? context.themeDanger
+            : context.themeWarning;
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 12),

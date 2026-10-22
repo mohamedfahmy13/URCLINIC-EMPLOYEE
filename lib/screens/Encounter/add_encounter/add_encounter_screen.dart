@@ -36,7 +36,7 @@ class AddEncounterScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               listAnimationType: ListAnimationType.None,
               children: [
-                Text('*${locale.value.fillPatientEncounterDetails}', style: boldTextStyle(size: 12, weight: FontWeight.w600, fontStyle: FontStyle.italic, color: appColorSecondary)),
+                Text('*${locale.value.fillPatientEncounterDetails}', style: boldTextStyle(size: 12, weight: FontWeight.w600, fontStyle: FontStyle.italic, color: context.themePrimary)),
                 16.height,
                 AppTextField(
                   textStyle: primaryTextStyle(size: 12),

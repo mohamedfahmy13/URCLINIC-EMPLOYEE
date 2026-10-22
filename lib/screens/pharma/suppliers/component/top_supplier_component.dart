@@ -86,7 +86,7 @@ class TopSupplierComponent extends StatelessWidget {
                           6.width,
                           Text(
                             "${supplier.unit} ${locale.value.unit}",
-                            style: primaryTextStyle(color: appColorPrimary),
+                            style: primaryTextStyle(color: context.themePrimary),
                           ),
                           6.height,
                           Text(

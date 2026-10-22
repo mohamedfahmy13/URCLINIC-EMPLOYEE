@@ -35,7 +35,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
               Get.to(() => ClinicSessionScreen(), arguments: clinicData);
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcClock, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcClock, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).visible(!loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)),
@@ -48,7 +48,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
               Get.to(() => AllServicesScreen(), arguments: clinicData);
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16),
@@ -64,7 +64,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
               Get.to(() => AddServiceForm(), arguments: clinicData);
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcServices, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16).visible(false),
@@ -77,7 +77,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
               Get.to(() => DoctorsListScreen(), arguments: clinicData);
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcDoctor, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcDoctor, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16).visible(!loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)),
@@ -90,7 +90,7 @@ class ClinicDetailBtmComp extends StatelessWidget {
               Get.to(() => ClinicGalleryListScreen(), arguments: clinicData.id);
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcGallery, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcGallery, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingTop(16).visible(!loginUserData.value.userRole.contains(EmployeeKeyConst.doctor)),

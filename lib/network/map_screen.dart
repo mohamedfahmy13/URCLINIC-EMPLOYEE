@@ -1,3 +1,4 @@
+import '../utils/map_styles.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -148,6 +149,7 @@ class MapScreenState extends State<MapScreen> {
         body: Stack(
           children: <Widget>[
             GoogleMap(
+              style: context.themeIsDark ? darkMapStyle : null,
               markers: Set<Marker>.from(markers),
               initialCameraPosition: _initialLocation,
               myLocationEnabled: true,

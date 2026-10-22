@@ -37,7 +37,7 @@ class AddPatientScreen extends StatelessWidget {
               textFieldType: TextFieldType.NAME,
               errorThisFieldRequired: locale.value.thisFieldIsRequired,
               decoration: inputDecoration(context, hintText: locale.value.firstName, fillColor: context.cardColor, filled: true),
-              suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+              suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
             ),
             16.height,
             AppTextField(
@@ -48,7 +48,7 @@ class AddPatientScreen extends StatelessWidget {
               textFieldType: TextFieldType.NAME,
               errorThisFieldRequired: locale.value.thisFieldIsRequired,
               decoration: inputDecoration(context, hintText: locale.value.lastName, fillColor: context.cardColor, filled: true),
-              suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+              suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
             ),
             16.height,
             Row(
@@ -96,7 +96,7 @@ class AddPatientScreen extends StatelessWidget {
                     return null;
                   },
                   decoration: inputDecoration(context, hintText: locale.value.mobileNumber, fillColor: context.cardColor, filled: true),
-                  suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: secondaryTextColor, size: 12).paddingAll(16),
+                  suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: context.themeMuted, size: 12).paddingAll(16),
                 ).expand(flex: 8),
               ],
             ),
@@ -114,7 +114,7 @@ class AddPatientScreen extends StatelessWidget {
                 return email.validateEmailEnhanced() ? null : locale.value.pleaseEnterValidEmail;
               },
               decoration: inputDecoration(context, hintText: "${locale.value.email} (${locale.value.optional})", fillColor: context.cardColor, filled: true),
-              suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: secondaryTextColor, size: 12).paddingAll(16),
+              suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: context.themeMuted, size: 12).paddingAll(16),
             ),
             16.height,
             Text(locale.value.gender, style: primaryTextStyle()),

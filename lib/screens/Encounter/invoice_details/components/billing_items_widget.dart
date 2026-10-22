@@ -140,7 +140,7 @@ class BillingItemsWidget extends StatelessWidget {
                                   Text(" x ${genInvoiceCon.billingItemList[index].quantity} = ", style: primaryTextStyle(size: 12, color: dividerColor)),
                                 PriceWidget(
                                   price: genInvoiceCon.billingItemList[index].totalAmount,
-                                  color: appColorPrimary,
+                                  color: context.themePrimary,
                                   size: 14,
                                 ),
                               ],
@@ -156,7 +156,7 @@ class BillingItemsWidget extends StatelessWidget {
                           Text(
                             " ${locale.value.includesInclusiveTax}",
                             style: secondaryTextStyle(
-                              color: appColorSecondary,
+                              color: context.themePrimary,
                               size: 10,
                               fontStyle: FontStyle.italic,
                             ),

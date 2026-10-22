@@ -30,7 +30,7 @@ class DoctorNameComponent extends StatelessWidget {
             color: context.cardColor,
             borderRadius: BorderRadius.all(radiusCircular(6)),
             border: Border.all(
-              color: borderColor,
+              color: context.themeBorder,
             ),
           ),
           child: Row(
@@ -51,10 +51,10 @@ class DoctorNameComponent extends StatelessWidget {
                     color: redTextColor,
                   ),
                 ).expand(),
-              const Icon(
+              Icon(
                 Icons.keyboard_arrow_down_outlined,
                 size: 16,
-                color: appBodyColor,
+                color: context.themeMuted,
               ),
             ],
           ),

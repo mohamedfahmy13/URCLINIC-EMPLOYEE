@@ -66,7 +66,7 @@ class SignInScreen extends StatelessWidget {
                       ),
                       suffix: commonLeadingWid(
                               imgPath: Assets.iconsIcMail,
-                              color: secondaryTextColor,
+                              color: context.themeMuted,
                               size: 12)
                           .paddingAll(16),
                     ),
@@ -89,12 +89,12 @@ class SignInScreen extends StatelessWidget {
                       ),
                       suffixPasswordVisibleWidget: commonLeadingWid(
                               imgPath: Assets.iconsIcEye,
-                              color: appColorPrimary,
+                              color: context.themePrimary,
                               size: 12)
                           .paddingAll(14),
                       suffixPasswordInvisibleWidget: commonLeadingWid(
                               imgPath: Assets.iconsIcEyeSlash,
-                              color: appColorPrimary,
+                              color: context.themePrimary,
                               size: 12)
                           .paddingAll(14),
                     ),
@@ -116,8 +116,8 @@ class SignInScreen extends StatelessWidget {
                             },
                             checkboxShape:
                                 RoundedRectangleBorder(borderRadius: radius(0)),
-                            side: const BorderSide(
-                                color: secondaryTextColor, width: 1.5),
+                            side: BorderSide(
+                                color: context.themeMuted, width: 1.5),
                             title: Text(
                               locale.value.rememberMe,
                               style: secondaryTextStyle(color: darkGrayGeneral),
@@ -132,10 +132,10 @@ class SignInScreen extends StatelessWidget {
                             locale.value.forgotPassword,
                             style: primaryTextStyle(
                               size: 12,
-                              color: appColorPrimary,
+                              color: context.themePrimary,
                               decoration: TextDecoration.underline,
                               fontStyle: FontStyle.italic,
-                              decorationColor: appColorPrimary,
+                              decorationColor: context.themePrimary,
                             ),
                           ),
                         ),
@@ -173,9 +173,9 @@ class SignInScreen extends StatelessWidget {
                     locale.value.demoAccounts,
                     style: primaryTextStyle(
                       size: 14,
-                      color: appColorPrimary,
+                      color: context.themePrimary,
                       decoration: TextDecoration.underline,
-                      decorationColor: appColorPrimary,
+                      decorationColor: context.themePrimary,
                     ),
                   ).paddingSymmetric(horizontal: 8),
                 ).paddingBottom(16).visible(shouldShowDemoCredentials),
@@ -216,7 +216,7 @@ class SignInScreen extends StatelessWidget {
                           locale.value.signUp,
                           style: boldTextStyle(
                             size: 12,
-                            color: appColorSecondary,
+                            color: context.themePrimary,
                             decorationColor: appColorSecondary,
                           ),
                         ),
@@ -261,7 +261,7 @@ void chooseEmployeeType(BuildContext context,
             titleTextStyle: primaryTextStyle(size: 14),
             leading: CachedImageWidget(
                 url: loginRoles[index].icon,
-                color: appColorPrimary,
+                color: context.themePrimary,
                 height: 22,
                 fit: BoxFit.fitHeight,
                 width: 22),

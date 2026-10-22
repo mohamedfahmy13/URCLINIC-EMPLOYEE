@@ -86,7 +86,7 @@ class ClinicCenterCardWidget extends StatelessWidget {
                           clinicListController.checkSelClinicList(clinic: clinicData);
                         }
                       },
-                      side: const BorderSide(color: secondaryTextColor, width: 1.5),
+                      side: BorderSide(color: context.themeMuted, width: 1.5),
                     ),
             ),
           ],

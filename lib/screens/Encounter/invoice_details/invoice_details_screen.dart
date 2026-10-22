@@ -68,7 +68,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                               ),
                               TextSpan(
                                 text: '  #${billingDetails.id}',
-                                style: secondaryTextStyle(size: 14, weight: FontWeight.w600, color: appColorSecondary),
+                                style: secondaryTextStyle(size: 14, weight: FontWeight.w600, color: context.themePrimary),
                               ),
                             ],
                           ),
@@ -126,14 +126,14 @@ class InvoiceDetailsScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(12),
-                                decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: borderColor)),
+                                decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: context.themeBorder)),
                                 child: Row(
                                   children: [
                                     Text(locale.value.paid, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
                                     Icon(
                                       invoiceDetailsCon.invoiceData.value.paymentStatus == 1 ? Icons.radio_button_checked_outlined : Icons.radio_button_off_outlined,
                                       size: 20,
-                                      color: invoiceDetailsCon.invoiceData.value.paymentStatus == 1 ? appColorPrimary : borderColor,
+                                      color: invoiceDetailsCon.invoiceData.value.paymentStatus == 1 ? context.themePrimary : borderColor,
                                     ),
                                   ],
                                 ),
@@ -148,14 +148,14 @@ class InvoiceDetailsScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(12),
-                                decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: borderColor)),
+                                decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: context.themeBorder)),
                                 child: Row(
                                   children: [
                                     Text(locale.value.unpaid, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
                                     Icon(
                                       invoiceDetailsCon.invoiceData.value.paymentStatus == 0 ? Icons.radio_button_checked_outlined : Icons.radio_button_off_outlined,
                                       size: 20,
-                                      color: invoiceDetailsCon.invoiceData.value.paymentStatus == 0 ? appColorPrimary : borderColor,
+                                      color: invoiceDetailsCon.invoiceData.value.paymentStatus == 0 ? context.themePrimary : borderColor,
                                     ),
                                   ],
                                 ),
@@ -191,7 +191,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                                     decoration: boxDecorationDefault(
                                       color: context.cardColor,
                                       borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: borderColor),
+                                      border: Border.all(color: context.themeBorder),
                                     ),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -203,7 +203,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                                               ? Icons.radio_button_checked_outlined
                                               : Icons.radio_button_off_outlined,
                                           size: 20,
-                                          color: invoiceDetailsCon.bedPaymentStatus.value == PaymentStatus.paid ? appColorPrimary : borderColor,
+                                          color: invoiceDetailsCon.bedPaymentStatus.value == PaymentStatus.paid ? context.themePrimary : borderColor,
                                         ),
                                       ],
                                     ),
@@ -223,7 +223,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                                     decoration: boxDecorationDefault(
                                       color: context.cardColor,
                                       borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: borderColor),
+                                      border: Border.all(color: context.themeBorder),
                                     ),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,7 +235,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                                               ? Icons.radio_button_checked_outlined
                                               : Icons.radio_button_off_outlined,
                                           size: 20,
-                                          color: invoiceDetailsCon.bedPaymentStatus.value == PaymentStatus.unpaid ? appColorPrimary : borderColor,
+                                          color: invoiceDetailsCon.bedPaymentStatus.value == PaymentStatus.unpaid ? context.themePrimary : borderColor,
                                         ),
                                       ],
                                     ),

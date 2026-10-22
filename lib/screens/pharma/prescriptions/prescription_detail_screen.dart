@@ -96,7 +96,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                                             12.width,
                                             Text(
                                               prescriptionDetailCont.prescriptionDetail.value.patientInfo.phone,
-                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorPrimary, color: appColorPrimary),
+                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: context.themePrimary, color: context.themePrimary),
                                             ),
                                           ],
                                         ),
@@ -116,7 +116,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                                             12.width,
                                             Text(
                                               prescriptionDetailCont.prescriptionDetail.value.patientInfo.email,
-                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: appColorSecondary),
+                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: context.themePrimary),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -173,7 +173,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                                             12.width,
                                             Text(
                                               prescriptionDetailCont.prescriptionDetail.value.doctorInfo.phone,
-                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorPrimary, color: appColorPrimary),
+                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: context.themePrimary, color: context.themePrimary),
                                             ),
                                           ],
                                         ),
@@ -193,7 +193,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                                             12.width,
                                             Text(
                                               prescriptionDetailCont.prescriptionDetail.value.doctorInfo.email,
-                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: appColorSecondary),
+                                              style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: context.themePrimary),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -462,7 +462,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                   leadingWidget: Row(
                     children: [
                       Text(locale.value.exclusiveTax, style: secondaryTextStyle()).expand(),
-                      const Icon(Icons.info_outline_rounded, size: 20, color: appColorPrimary).onTap(
+                      Icon(Icons.info_outline_rounded, size: 20, color: context.themePrimary).onTap(
                         () {
                           showModalBottomSheet(
                             context: context,
@@ -495,7 +495,7 @@ class PrescriptionDetailScreen extends StatelessWidget {
                   Text(locale.value.total, style: boldTextStyle(size: 14)),
                   PriceWidget(
                     price: prescriptionDetailCont.prescriptionDetail.value.paymentInfo.totalAmount,
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                     size: 16,
                   ),
                 ],

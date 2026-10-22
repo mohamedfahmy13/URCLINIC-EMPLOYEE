@@ -29,7 +29,7 @@ class ServiceComponent extends StatelessWidget {
               Text(locale.value.price, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
               PriceWidget(
                 price: serviceInfo.serviceAmount,
-                color: appColorPrimary,
+                color: context.themePrimary,
                 size: 14,
               ),
             ],

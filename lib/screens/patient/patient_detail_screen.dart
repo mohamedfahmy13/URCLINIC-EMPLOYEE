@@ -91,7 +91,7 @@ class PatientDetailScreen extends StatelessWidget {
               });
             },
             titleTextStyle: boldTextStyle(size: 14),
-            leading: commonLeadingWid(imgPath: Assets.iconsIcCalendarplus, color: appColorSecondary),
+            leading: commonLeadingWid(imgPath: Assets.iconsIcCalendarplus, color: context.themePrimary),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: darkGray),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
           ).paddingSymmetric(horizontal: 24),

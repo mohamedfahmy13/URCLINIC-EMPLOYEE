@@ -26,7 +26,7 @@ class SOAPScreen extends StatelessWidget {
           children: [
             Text(
               "* ${locale.value.noteTheAcronymSoapStandsForSubjectiveObjectiv}",
-              style: secondaryTextStyle(color: appColorSecondary, size: 11, fontStyle: FontStyle.italic),
+              style: secondaryTextStyle(color: context.themePrimary, size: 11, fontStyle: FontStyle.italic),
             ),
             AppTextField(
               title: locale.value.subjective,

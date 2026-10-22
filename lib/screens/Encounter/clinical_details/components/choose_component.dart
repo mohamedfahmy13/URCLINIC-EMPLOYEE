@@ -82,10 +82,10 @@ class ChooseComponent extends StatelessWidget {
                               list[index].name,
                               style: primaryTextStyle(size: 12, color: dividerColor),
                             ).flexible(),
-                            const Icon(
+                            Icon(
                               Icons.check_rounded,
                               size: 22,
-                              color: appColorPrimary,
+                              color: context.themePrimary,
                             ).visible(list[index].isSelected.value),
                           ],
                         ),
@@ -97,7 +97,7 @@ class ChooseComponent extends StatelessWidget {
             ).expand(),
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: boxDecorationDefault(color: lightPrimaryColor),
+              decoration: boxDecorationDefault(color: context.themeSoftPrimary),
               child: Row(
                 children: [
                   Expanded(

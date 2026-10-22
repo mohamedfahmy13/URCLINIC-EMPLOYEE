@@ -707,7 +707,7 @@ class AppointmentDetail extends StatelessWidget {
                           TaxType.PERCENTAGE)
                         Text(
                           ' (${appointmentDetailCont.appintmentData.value.billingFinalDiscountValue}% ${locale.value.off})',
-                          style: boldTextStyle(color: Colors.green, size: 12),
+                          style: boldTextStyle(color: context.themeSuccess, size: 12),
                         )
                       else if (appointmentDetailCont
                               .appintmentData.value.billingFinalDiscountType ==
@@ -715,7 +715,7 @@ class AppointmentDetail extends StatelessWidget {
                         PriceWidget(
                           price: appointmentDetailCont
                               .appintmentData.value.billingFinalDiscountValue,
-                          color: Colors.green,
+                          color: context.themeSuccess,
                           size: 12,
                           isDiscountedPrice: true,
                         )
@@ -740,8 +740,8 @@ class AppointmentDetail extends StatelessWidget {
                       Text(locale.value.exclusiveTax,
                               style: secondaryTextStyle())
                           .expand(),
-                      const Icon(Icons.info_outline_rounded,
-                              size: 20, color: appColorPrimary)
+                      Icon(Icons.info_outline_rounded,
+                              size: 20, color: context.themePrimary)
                           .onTap(
                         () {
                           showModalBottomSheet(
@@ -793,7 +793,7 @@ class AppointmentDetail extends StatelessWidget {
                   PriceWidget(
                     price: (appointmentDetailCont
                         .appintmentData.value.totalAmount),
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                   ),
                 ],
               ),
@@ -938,7 +938,7 @@ class AppointmentDetail extends StatelessWidget {
                 height: 80,
                 decoration: boxDecorationWithRoundedCorners(
                   backgroundColor: Get.context!.cardColor,
-                  border: Border.all(color: borderColor),
+                  border: Border.all(color: ctx.themeBorder),
                 ),
                 child: medicalReportData.url.isImage
                     ? CachedImageWidget(
@@ -1014,7 +1014,7 @@ class AppointmentDetail extends StatelessWidget {
                       child: Container(
                         decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor,
-                          border: Border.all(color: borderColor),
+                          border: Border.all(color: context.themeBorder),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,

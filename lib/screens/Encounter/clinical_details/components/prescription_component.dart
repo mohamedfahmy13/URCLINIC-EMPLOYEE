@@ -36,11 +36,11 @@ class PrescriptionComponent extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: boxDecorationDefault(
                     color: context.cardColor,
-                    border: Border.all(color: borderColor),
+                    border: Border.all(color: context.themeBorder),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   alignment: Alignment.center,
-                  child: Text(locale.value.noPatientFound, style: primaryTextStyle(size: 12, color: appColorSecondary)),
+                  child: Text(locale.value.noPatientFound, style: primaryTextStyle(size: 12, color: context.themePrimary)),
                 )
               : Obx(
                   () => AnimatedListView(

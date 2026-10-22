@@ -38,7 +38,7 @@ class PaymentComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(locale.value.exclusiveTax, style: secondaryTextStyle()).expand(),
-                  const Icon(Icons.info_outline_rounded, size: 20, color: appColorPrimary).onTap(
+                  Icon(Icons.info_outline_rounded, size: 20, color: context.themePrimary).onTap(
                         () {
                       showModalBottomSheet(
                         context: context,
@@ -100,12 +100,12 @@ class PaymentComponent extends StatelessWidget {
                       if (paymentData.billingFinalDiscountType == TaxType.PERCENTAGE)
                         Text(
                           ' (${paymentData.billingFinalDiscountValue}% ${locale.value.off})',
-                          style: boldTextStyle(color: Colors.green, size: 12),
+                          style: boldTextStyle(color: context.themeSuccess, size: 12),
                         )
                       else if (paymentData.discountType == TaxType.FIXED)
                         PriceWidget(
                           price: paymentData.billingFinalDiscountValue,
-                          color: Colors.green,
+                          color: context.themeSuccess,
                           size: 12,
                           isDiscountedPrice: true,
                         ),
@@ -113,7 +113,7 @@ class PaymentComponent extends StatelessWidget {
                   ),
                   PriceWidget(
                     price: paymentData.billingFinalDiscountAmount,
-                    color: Colors.green,
+                    color: context.themeSuccess,
                     size: 14,
                   ),
                 ],
@@ -145,7 +145,7 @@ class PaymentComponent extends StatelessWidget {
                   Text(locale.value.advancePaidAmount, overflow: TextOverflow.ellipsis, maxLines: 2, style: secondaryTextStyle()),
                   Text(
                     ' (${paymentData.advancePaymentAmount}%)',
-                    style: boldTextStyle(color: Colors.green, size: 12),
+                    style: boldTextStyle(color: context.themeSuccess, size: 12),
                   ),
                 ],
               ).flexible(),

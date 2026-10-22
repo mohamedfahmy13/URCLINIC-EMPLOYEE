@@ -54,7 +54,7 @@ class DoctorInfoCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         decoration: boxDecorationDefault(
-                          color: extraLightPrimaryColor,
+                          color: context.themeSubtleSurface,
                           borderRadius: radius(22),
                         ),
                         child: Row(
@@ -75,7 +75,7 @@ class DoctorInfoCard extends StatelessWidget {
                   8.height,
                   Row(
                     children: [
-                      Text(doctorDetailCont.doctorDetails.value.expert.isNotEmpty ? doctorDetailCont.doctorDetails.value.expert : "Orthocare Expert", maxLines: 1, overflow: TextOverflow.ellipsis, style: primaryTextStyle(color: secondaryTextColor))
+                      Text(doctorDetailCont.doctorDetails.value.expert.isNotEmpty ? doctorDetailCont.doctorDetails.value.expert : "Orthocare Expert", maxLines: 1, overflow: TextOverflow.ellipsis, style: primaryTextStyle(color: context.themeMuted))
                           .flexible(),
                     ],
                   ),
@@ -147,7 +147,7 @@ class SocialMediaElement extends StatelessWidget {
       onPressed: onPressed,
       icon: Container(
         padding: const EdgeInsets.all(10),
-        decoration: boxDecorationDefault(color: lightPrimaryColor, shape: BoxShape.circle),
+        decoration: boxDecorationDefault(color: context.themeSoftPrimary, shape: BoxShape.circle),
         child: CachedImageWidget(
           url: iconPath,
           height: 16,

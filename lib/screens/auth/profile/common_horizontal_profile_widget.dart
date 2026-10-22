@@ -113,7 +113,7 @@ class ProfilePicHorizotalWidget extends StatelessWidget {
                       children: [
                         Text(userName, style: boldTextStyle(size: 20)),
                         4.height,
-                        Text(subInfo, style: primaryTextStyle(size: 14, color: secondaryTextColor)),
+                        Text(subInfo, style: primaryTextStyle(size: 14, color: context.themeMuted)),
                       ],
                     ).expand(),
                   ],
@@ -131,7 +131,7 @@ class ProfilePicHorizotalWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
               return Row(
                 children: [
-                  commonLeadingWid(imgPath: Assets.iconsIcUnFillWallet, color: appColorPrimary),
+                  commonLeadingWid(imgPath: Assets.iconsIcUnFillWallet, color: context.themePrimary),
                   16.width,
                   Text(selectedAppCommission[index].name, style: primaryTextStyle(size: 14)),
                   const Spacer(),

@@ -56,10 +56,10 @@ class PatientInfoCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: boxDecorationDefault(
-                    color: extraLightPrimaryColor,
+                    color: context.themeSubtleSurface,
                     shape: BoxShape.circle,
                   ),
-                  child: commonLeadingWid(imgPath: Assets.iconsIcCall, color: appColorPrimary, size: 15),
+                  child: commonLeadingWid(imgPath: Assets.iconsIcCall, color: context.themePrimary, size: 15),
                 ),
               ),
               16.width,
@@ -71,10 +71,10 @@ class PatientInfoCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: boxDecorationDefault(
-                    color: extraLightPrimaryColor,
+                    color: context.themeSubtleSurface,
                     shape: BoxShape.circle,
                   ),
-                  child: commonLeadingWid(imgPath: Assets.iconsIcMail, color: appColorPrimary, size: 15),
+                  child: commonLeadingWid(imgPath: Assets.iconsIcMail, color: context.themePrimary, size: 15),
                 ),
               ),
             ],
@@ -102,7 +102,7 @@ class SocialMediaElement extends StatelessWidget {
       onPressed: onPressed,
       icon: Container(
         padding: const EdgeInsets.all(10),
-        decoration: boxDecorationDefault(color: lightPrimaryColor, shape: BoxShape.circle),
+        decoration: boxDecorationDefault(color: context.themeSoftPrimary, shape: BoxShape.circle),
         child: CachedImageWidget(
           url: iconPath,
           height: 14,

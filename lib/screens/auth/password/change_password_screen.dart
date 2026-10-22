@@ -57,8 +57,8 @@ class ChangePassword extends StatelessWidget {
                   return null;
                 },
                 decoration: inputDecoration(context, fillColor: context.cardColor, filled: true, hintText: locale.value.oldPassword),
-                suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: appColorPrimary, size: 12).paddingAll(14),
-                suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: appColorPrimary).paddingAll(14),
+                suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: context.themePrimary, size: 12).paddingAll(14),
+                suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: context.themePrimary).paddingAll(14),
               ),
               16.height,
               Focus(
@@ -83,8 +83,8 @@ class ChangePassword extends StatelessWidget {
                     }
                     return null;
                   },
-                  suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: appColorPrimary, size: 12).paddingAll(14),
-                  suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: appColorPrimary, size: 12).paddingAll(14),
+                  suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: context.themePrimary, size: 12).paddingAll(14),
+                  suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: context.themePrimary, size: 12).paddingAll(14),
                 ),
               ),
               6.height,
@@ -133,8 +133,8 @@ class ChangePassword extends StatelessWidget {
                   }
                   return null;
                 },
-                suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: appColorPrimary, size: 12).paddingAll(14),
-                suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: appColorPrimary, size: 12).paddingAll(14),
+                suffixPasswordVisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEye, color: context.themePrimary, size: 12).paddingAll(14),
+                suffixPasswordInvisibleWidget: commonLeadingWid(imgPath: Assets.iconsIcEyeSlash, color: context.themePrimary, size: 12).paddingAll(14),
               ),
               64.height,
               AppButton(

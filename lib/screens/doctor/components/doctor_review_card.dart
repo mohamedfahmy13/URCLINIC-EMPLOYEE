@@ -29,7 +29,7 @@ class DoctorReviewCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: boxDecorationDefault(color: extraLightPrimaryColor, borderRadius: radius(22)),
+                  decoration: boxDecorationDefault(color: context.themeSubtleSurface, borderRadius: radius(22)),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -43,7 +43,7 @@ class DoctorReviewCard extends StatelessWidget {
                         doctorReviewData.rating.toStringAsFixed(1),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: boldTextStyle(size: 12, color: appColorPrimary, weight: FontWeight.w700),
+                        style: boldTextStyle(size: 12, color: context.themePrimary, weight: FontWeight.w700),
                       ).paddingTop(2),
                     ],
                   ),
@@ -62,7 +62,7 @@ class DoctorReviewCard extends StatelessWidget {
                     doctorReviewData.serviceName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: boldTextStyle(size: 12, color: appColorSecondary),
+                    style: boldTextStyle(size: 12, color: context.themePrimary),
                   ),
                 ).paddingLeft(16).expand().visible(doctorReviewData.serviceName.isNotEmpty),
               ],
@@ -96,7 +96,7 @@ class DoctorReviewCard extends StatelessWidget {
                   4.height,
                   Text(
                     doctorReviewData.createdAt.dateInyyyyMMddHHmmFormat.timeAgoWithLocalization,
-                    style: secondaryTextStyle(color: secondaryTextColor),
+                    style: secondaryTextStyle(color: context.themeMuted),
                   ),
                 ],
               ),

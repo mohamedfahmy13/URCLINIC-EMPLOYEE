@@ -11,7 +11,7 @@ class LoaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loader = Center(
-      child: CircularProgressIndicator(color: loaderColor ?? appColorPrimary),
+      child: CircularProgressIndicator(color: loaderColor ?? context.themePrimary),
     );
     if (isBlurBackground) {
       return AbsorbPointer(

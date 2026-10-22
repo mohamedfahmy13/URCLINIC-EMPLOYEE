@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -71,7 +72,8 @@ class AppScaffold extends StatelessWidget {
               child: AppBar(
                 elevation: appBarelevation,
                 automaticallyImplyLeading: automaticallyImplyLeading,
-                backgroundColor: appBarbackgroundColor ?? context.scaffoldBackgroundColor,
+                backgroundColor:
+                    appBarbackgroundColor ?? context.scaffoldBackgroundColor,
                 centerTitle: isCenterTitle,
                 titleSpacing: 2,
                 title: appBarTitle ??
@@ -80,10 +82,12 @@ class AppScaffold extends StatelessWidget {
                       style: primaryTextStyle(size: 16),
                     ).paddingLeft(hasLeadingWidget ? 0 : 16),
                 actions: actions,
-                leading: leadingWidget ?? (hasLeadingWidget ? backButton() : null),
+                leading:
+                    leadingWidget ?? (hasLeadingWidget ? backButton() : null),
               ).paddingTop(10),
             ),
-      backgroundColor: scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
+      backgroundColor:
+          scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
       body: Body(
         isLoading: isLoading ?? false.obs,
         child: body,
@@ -135,7 +139,8 @@ class AppScaffoldNew extends StatelessWidget {
     this.isAuthScreen = false,
   });
 
-  double get topBarHeight => hideAppBar ? 0 : appBarVerticalSize ?? Get.height * 0.15;
+  double get topBarHeight =>
+      hideAppBar ? 0 : appBarVerticalSize ?? Get.height * 0.15;
 
   Widget get topBarComponent =>
       appBarChild ??
@@ -155,7 +160,12 @@ class AppScaffoldNew extends StatelessWidget {
                       appBartitleText ?? "",
                       overflow: TextOverflow.ellipsis,
                       textAlign: titleAlign,
-                      style: primaryTextStyle(size: 18, fontFamily: GoogleFonts.interTight(fontWeight: FontWeight.w600).fontFamily, color: white),
+                      style: primaryTextStyle(
+                          size: 18,
+                          fontFamily: GoogleFonts.interTight(
+                                  fontWeight: FontWeight.w600)
+                              .fontFamily,
+                          color: white),
                     ).expand(),
                   ],
                 ).paddingSymmetric(horizontal: Get.width * 0.12),
@@ -167,7 +177,10 @@ class AppScaffoldNew extends StatelessWidget {
                               onPressed: () {
                                 Get.back();
                               },
-                              icon: const Icon(Icons.arrow_back_ios_new_outlined, color: white, size: 20),
+                              icon: const Icon(
+                                  Icons.arrow_back_ios_new_outlined,
+                                  color: white,
+                                  size: 20),
                             )
                           : const Offstage()),
                 ),
@@ -185,88 +198,114 @@ class AppScaffoldNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: resizeToAvoidBottomPadding,
-      backgroundColor: scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
-      body: Stack(
-        children: [
-          Container(
-            width: Get.width,
-            height: Get.height,
-            decoration: BoxDecoration(color: topBarBgColor ?? appColorPrimary),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Positioned(
-                  height: topBarHeight,
-                  child: Container(
-                    child: topBarComponent.paddingTop(context.statusBarHeight),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+        systemNavigationBarIconBrightness:
+            context.themeIsDark ? Brightness.light : Brightness.dark,
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: resizeToAvoidBottomPadding,
+        backgroundColor:
+            scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
+        body: Stack(
+          children: [
+            Container(
+              width: Get.width,
+              height: Get.height,
+              decoration: BoxDecoration(
+                  color: topBarBgColor ??
+                      (context.themeIsDark
+                          ? context.themeSurface
+                          : appColorPrimary)),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Positioned(
+                    height: topBarHeight,
+                    child: Container(
+                      child:
+                          topBarComponent.paddingTop(context.statusBarHeight),
+                    ),
                   ),
-                ),
-                Container(
-                  clipBehavior: clipBehaviorSplitRegion,
-                  margin: EdgeInsets.only(top: topBarHeight),
-                  decoration: boxDecorationDefault(
-                    color: scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
+                  Container(
+                    clipBehavior: clipBehaviorSplitRegion,
+                    margin: EdgeInsets.only(top: topBarHeight),
+                    decoration: boxDecorationDefault(
+                      color: scaffoldBackgroundColor ??
+                          context.scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(defaultRadius * 2),
+                        topRight: Radius.circular(defaultRadius * 2),
+                      ),
+                    ),
+                    child: SafeArea(top: false, child: body),
+                  ),
+                  SafeArea(
+                    child: Stack(children: widgetsStackedOverBody),
+                  ),
+                ],
+              ),
+            ),
+            Obx(() {
+              if (!(isLoading ?? false.obs).value)
+                return const SizedBox.shrink();
+              if (isAuthScreen) {
+                return AbsorbPointer(
+                  child: SizedBox(
+                    height: Get.height,
+                    width: Get.width,
+                    child: isBlurBackgroundinLoader
+                        ? BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 4.0,
+                                sigmaY: 4.0,
+                                tileMode: TileMode.mirror),
+                            child: SpinKitFadingCircle(
+                              itemBuilder: (_, __) => const DecoratedBox(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: appColorSecondary),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: SpinKitFadingCircle(
+                              itemBuilder: (_, __) => const DecoratedBox(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: appColorSecondary),
+                              ),
+                            ),
+                          ),
+                  ),
+                );
+              }
+              return Positioned(
+                top: topBarHeight,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: AbsorbPointer(
+                  child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(defaultRadius * 2),
                       topRight: Radius.circular(defaultRadius * 2),
                     ),
+                    child: Container(
+                      color: scaffoldBackgroundColor ??
+                          context.scaffoldBackgroundColor,
+                      child: const LoaderWidget(),
+                    ),
                   ),
-                  child: SafeArea(top: false, child: body),
-                ),
-                SafeArea(
-                  child: Stack(children: widgetsStackedOverBody),
-                ),
-              ],
-            ),
-          ),
-          Obx(() {
-            if (!(isLoading ?? false.obs).value) return const SizedBox.shrink();
-            if (isAuthScreen) {
-              return AbsorbPointer(
-                child: SizedBox(
-                  height: Get.height,
-                  width: Get.width,
-                  child: isBlurBackgroundinLoader
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0, tileMode: TileMode.mirror),
-                          child: SpinKitFadingCircle(
-                            itemBuilder: (_, __) => const DecoratedBox(
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: appColorSecondary),
-                            ),
-                          ),
-                        )
-                      : Center(
-                          child: SpinKitFadingCircle(
-                            itemBuilder: (_, __) => const DecoratedBox(
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: appColorSecondary),
-                            ),
-                          ),
-                        ),
                 ),
               );
-            }
-            return Positioned(
-              top: topBarHeight,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: AbsorbPointer(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(defaultRadius * 2),
-                    topRight: Radius.circular(defaultRadius * 2),
-                  ),
-                  child: Container(
-                    color: scaffoldBackgroundColor ?? context.scaffoldBackgroundColor,
-                    child: const LoaderWidget(),
-                  ),
-                ),
-              ),
-            );
-          }),
-        ],
+            }),
+          ],
+        ),
       ),
     );
   }

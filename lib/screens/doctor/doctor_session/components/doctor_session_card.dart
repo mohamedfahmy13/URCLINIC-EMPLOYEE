@@ -75,8 +75,8 @@ class DcotorSessionCard extends StatelessWidget {
           ),
           if (doctorSession.doctorSession.isNotEmpty) ...[
             8.height,
-            const Divider(
-              color: borderColor,
+            Divider(
+              color: context.themeBorder,
             ),
             8.height,
             Row(

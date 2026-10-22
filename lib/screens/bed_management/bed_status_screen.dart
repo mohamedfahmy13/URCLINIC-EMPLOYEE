@@ -296,7 +296,7 @@ class BedStatusItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Default colors
-    Color borderColor = Colors.grey.shade300;
+    Color borderColor = context.themeBorder;
     Color backgroundColor = context.cardColor;
     Color iconColor = Colors.grey;
 

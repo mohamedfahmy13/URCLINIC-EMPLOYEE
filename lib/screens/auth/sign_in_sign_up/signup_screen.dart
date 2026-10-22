@@ -71,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         suffix: commonLeadingWid(
                           imgPath: Assets.navigationIcUserOutlined,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12,
                         ).paddingAll(16),
                       ).paddingTop(16),
@@ -89,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         suffix: commonLeadingWid(
                           imgPath: Assets.navigationIcUserOutlined,
-                          color: secondaryTextColor,
+                          color: context.themeMuted,
                           size: 12,
                         ).paddingAll(16),
                       ).paddingTop(16),
@@ -109,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           suffix: commonLeadingWid(
                             imgPath: Assets.iconsIcMail,
-                            color: secondaryTextColor,
+                            color: context.themeMuted,
                             size: 12,
                           ).paddingAll(16),
                         ).paddingTop(16),
@@ -336,8 +336,8 @@ class SignUpScreen extends StatelessWidget {
                                     signUpController.isAcceptedTc.value = !signUpController.isAcceptedTc.value;
                                   },
                                   checkboxShape: RoundedRectangleBorder(borderRadius: radius(0)),
-                                  side: const BorderSide(
-                                    color: secondaryTextColor,
+                                  side: BorderSide(
+                                    color: context.themeMuted,
                                     width: 1.5,
                                   ),
                                   title: RichTextWidget(
@@ -349,10 +349,10 @@ class SignUpScreen extends StatelessWidget {
                                       TextSpan(
                                         text: locale.value.termsConditions,
                                         style: primaryTextStyle(
-                                          color: appColorPrimary,
+                                          color: context.themePrimary,
                                           size: 12,
                                           decoration: TextDecoration.underline,
-                                          decorationColor: appColorPrimary,
+                                          decorationColor: context.themePrimary,
                                         ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
@@ -369,10 +369,10 @@ class SignUpScreen extends StatelessWidget {
                                       TextSpan(
                                         text: locale.value.privacyPolicy,
                                         style: primaryTextStyle(
-                                          color: appColorPrimary,
+                                          color: context.themePrimary,
                                           size: 12,
                                           decoration: TextDecoration.underline,
-                                          decorationColor: appColorPrimary,
+                                          decorationColor: context.themePrimary,
                                         ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
@@ -422,7 +422,7 @@ class SignUpScreen extends StatelessWidget {
                         locale.value.signIn,
                         style: boldTextStyle(
                           size: 12,
-                          color: appColorSecondary,
+                          color: context.themePrimary,
                           decorationColor: appColorSecondary,
                         ),
                       ),

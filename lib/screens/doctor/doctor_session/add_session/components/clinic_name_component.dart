@@ -29,7 +29,7 @@ class ClinicNameComponent extends StatelessWidget {
             color: white,
             borderRadius: BorderRadius.all(radiusCircular(6)),
             border: Border.all(
-              color: borderColor,
+              color: context.themeBorder,
             ),
           ),
           child: Row(
@@ -50,10 +50,10 @@ class ClinicNameComponent extends StatelessWidget {
                     color: redTextColor,
                   ),
                 ).expand(),
-              const Icon(
+              Icon(
                 Icons.keyboard_arrow_down_outlined,
                 size: 16,
-                color: appBodyColor,
+                color: context.themeMuted,
               ),
             ],
           ),

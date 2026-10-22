@@ -72,10 +72,10 @@ class ReceptionistCardComponent extends StatelessWidget {
                 onPressed: () {
                   Get.to(() => const ReceptionistBedTypeScreen());
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.hotel,
                   size: 18,
-                  color: appColorPrimary,
+                  color: context.themePrimary,
                 ),
               ),
               IconButton(
@@ -99,11 +99,11 @@ class ReceptionistCardComponent extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 onPressed: onEditClick,
-                icon: const CachedImageWidget(
+                icon: CachedImageWidget(
                   url: Assets.iconsIcEditReview,
                   height: 18,
                   width: 18,
-                  color: appColorPrimary,
+                  color: context.themePrimary,
                 ),
               ),
             ],

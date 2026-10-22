@@ -51,14 +51,14 @@ class AddFinalDiscountComponent extends StatelessWidget {
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(12),
-                          decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: borderColor.withValues(alpha: 0.5))),
+                          decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: context.themeBorder.withValues(alpha: 0.5))),
                           child: Row(
                             children: [
                               Text(locale.value.percent, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
                               Icon(
                                 invoiceDetailsCon.finalDiscoutType.value == DiscountType.PERCENTAGE ? Icons.radio_button_checked_outlined : Icons.radio_button_off_outlined,
                                 size: 20,
-                                color: invoiceDetailsCon.finalDiscoutType.value == DiscountType.PERCENTAGE ? appColorPrimary : borderColor,
+                                color: invoiceDetailsCon.finalDiscoutType.value == DiscountType.PERCENTAGE ? context.themePrimary : borderColor,
                               ),
                             ],
                           ),
@@ -72,14 +72,14 @@ class AddFinalDiscountComponent extends StatelessWidget {
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(12),
-                          decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: borderColor.withValues(alpha: 0.5))),
+                          decoration: boxDecorationDefault(color: context.cardColor, borderRadius: BorderRadius.circular(6), border: Border.all(color: context.themeBorder.withValues(alpha: 0.5))),
                           child: Row(
                             children: [
                               Text(locale.value.fixed, style: primaryTextStyle(size: 12, color: dividerColor)).expand(),
                               Icon(
                                 invoiceDetailsCon.finalDiscoutType.value == DiscountType.FIXED ? Icons.radio_button_checked_outlined : Icons.radio_button_off_outlined,
                                 size: 20,
-                                color: invoiceDetailsCon.finalDiscoutType.value == DiscountType.FIXED ? appColorPrimary : borderColor,
+                                color: invoiceDetailsCon.finalDiscoutType.value == DiscountType.FIXED ? context.themePrimary : borderColor,
                               ),
                             ],
                           ),

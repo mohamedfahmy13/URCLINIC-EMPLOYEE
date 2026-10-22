@@ -60,7 +60,7 @@ class PatientCardComponent extends StatelessWidget {
                       encounterData.userEmail,
                       style: secondaryTextStyle(
                         size: 12,
-                        color: appColorSecondary,
+                        color: context.themePrimary,
                         decoration: TextDecoration.underline,
                         decorationColor: appColorSecondary,
                       ),

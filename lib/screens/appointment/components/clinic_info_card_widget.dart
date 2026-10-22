@@ -58,7 +58,7 @@ class ClinicInfoCardWidget extends StatelessWidget {
                               12.width,
                               Text(
                                 clinicInfo.clinicPhone,
-                                style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: appColorSecondary),
+                                style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: context.themePrimary),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -82,7 +82,7 @@ class ClinicInfoCardWidget extends StatelessWidget {
                                 clinicInfo.clinicAddress,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 3,
-                                style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorPrimary, color: appColorPrimary),
+                                style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: context.themePrimary, color: context.themePrimary),
                               ).flexible(),
                             ],
                           ),

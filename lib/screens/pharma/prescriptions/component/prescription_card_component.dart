@@ -65,7 +65,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                       children: [
                         Text(
                           locale.value.encounterId,
-                          style: primaryTextStyle(size: 14, color: secondaryTextColor),
+                          style: primaryTextStyle(size: 14, color: context.themeMuted),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -89,7 +89,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       locale.value.dateAndTime,
-                      style: primaryTextStyle(size: 14, color: secondaryTextColor),
+                      style: primaryTextStyle(size: 14, color: context.themeMuted),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -111,7 +111,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                 16.height,
                 Text(
                   locale.value.prescriptionInfo,
-                  style: primaryTextStyle(size: 14, color: secondaryTextColor),
+                  style: primaryTextStyle(size: 14, color: context.themeMuted),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -186,7 +186,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   locale.value.patientInfo,
-                  style: primaryTextStyle(size: 14, color: secondaryTextColor),
+                  style: primaryTextStyle(size: 14, color: context.themeMuted),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -240,7 +240,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                                         12.width,
                                         Text(
                                           prescriptionData.userEmail,
-                                          style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: appColorSecondary),
+                                          style: secondaryTextStyle(decoration: TextDecoration.underline, decorationColor: appColorSecondary, color: context.themePrimary),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -295,7 +295,7 @@ class PrescriptionCardWidget extends StatelessWidget {
                           }
                         });
                       },
-                      child: Text(locale.value.addMedicine, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: appColorSecondary)).paddingSymmetric(horizontal: 8),
+                      child: Text(locale.value.addMedicine, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themePrimary)).paddingSymmetric(horizontal: 8),
                     ),
                     Row(
                       children: [

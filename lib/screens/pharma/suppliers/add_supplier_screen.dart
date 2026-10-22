@@ -81,7 +81,7 @@ class AddSupplierScreen extends StatelessWidget {
                               width: Get.width,
                               constraints: BoxConstraints(minHeight: Get.height * 0.18),
                               backgroundColor: context.cardColor,
-                              border: Border.all(color: borderColor, width: 0.8),
+                              border: Border.all(color: context.themeBorder, width: 0.8),
                               borderRadius: defaultRadius,
                               onTap: () {
                                 hideKeyboard(context);
@@ -98,7 +98,7 @@ class AddSupplierScreen extends StatelessWidget {
                                   16.height,
                                   Text(
                                     locale.value.chooseImageToUpload,
-                                    style: secondaryTextStyle(color: secondaryTextColor, size: 14),
+                                    style: secondaryTextStyle(color: context.themeMuted, size: 14),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -122,7 +122,7 @@ class AddSupplierScreen extends StatelessWidget {
                     fillColor: context.cardColor,
                     filled: true,
                   ),
-                  suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+                  suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
                 ).paddingTop(16),
                 AppTextField(
                   textStyle: primaryTextStyle(size: 12),
@@ -138,7 +138,7 @@ class AddSupplierScreen extends StatelessWidget {
                     fillColor: context.cardColor,
                     filled: true,
                   ),
-                  suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: secondaryTextColor, size: 12).paddingAll(16),
+                  suffix: commonLeadingWid(imgPath: Assets.navigationIcUserOutlined, color: context.themeMuted, size: 12).paddingAll(16),
                 ).paddingTop(16),
                 AppTextField(
                   textStyle: primaryTextStyle(size: 12),
@@ -154,7 +154,7 @@ class AddSupplierScreen extends StatelessWidget {
                     fillColor: context.cardColor,
                     filled: true,
                   ),
-                  suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: secondaryTextColor, size: 12).paddingAll(16),
+                  suffix: commonLeadingWid(imgPath: Assets.iconsIcMail, color: context.themeMuted, size: 12).paddingAll(16),
                 ).paddingTop(16),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -221,7 +221,7 @@ class AddSupplierScreen extends StatelessWidget {
                         fillColor: context.cardColor,
                         filled: true,
                       ),
-                      suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: secondaryTextColor, size: 12).paddingAll(16),
+                      suffix: commonLeadingWid(imgPath: Assets.iconsIcCall, color: context.themeMuted, size: 12).paddingAll(16),
                     ).expand(flex: 8),
                   ],
                 ).paddingTop(16),

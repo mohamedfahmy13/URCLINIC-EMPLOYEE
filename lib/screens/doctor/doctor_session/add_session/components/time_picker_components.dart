@@ -48,7 +48,7 @@ class TimePickerComponent extends StatelessWidget {
             ),
             highlightedTextStyle: boldTextStyle(
               size: 20,
-              color: appColorPrimary,
+              color: context.themePrimary,
             ),
             onTimeChange: (time) {
               dateTime(time);

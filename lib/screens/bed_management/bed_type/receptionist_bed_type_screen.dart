@@ -290,7 +290,7 @@ class ReceptionistBedTypeScreen extends StatelessWidget {
                             ? locale.value.readLess
                             : locale.value.readMore,
                         style:
-                            primaryTextStyle(size: 12, color: appColorPrimary),
+                            primaryTextStyle(size: 12, color: context.themePrimary),
                       ).paddingTop(4),
                     )
                 ],

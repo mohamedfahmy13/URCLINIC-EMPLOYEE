@@ -239,7 +239,7 @@ class AllServiceCard extends StatelessWidget {
                           style: boldTextStyle(
                               size: 10,
                               fontFamily: fontFamilyWeight700,
-                              color: appColorSecondary),
+                              color: context.themePrimary),
                         ),
                       ).flexible(),
                       if (trailing != null) trailing!,
@@ -302,7 +302,7 @@ class AllServiceCard extends StatelessWidget {
                           ),
                           child: Text(
                             '${_formattedPercent(priceMeta.discountValue)}% ${locale.value.off}',
-                            style: boldTextStyle(size: 10, color: Colors.green),
+                            style: boldTextStyle(size: 10, color: context.themeSuccess),
                           ),
                         ),
                     ],
@@ -312,18 +312,18 @@ class AllServiceCard extends StatelessWidget {
                       children: [
                         Text('${locale.value.discount}:',
                             style: secondaryTextStyle(
-                                size: 12, color: Colors.green)),
+                                size: 12, color: context.themeSuccess)),
                         4.width,
                         if (_isPercentDiscountType(priceMeta.discountType) &&
                             priceMeta.discountValue > 0)
                           Text(
                             '${_formattedPercent(priceMeta.discountValue)}% ${locale.value.off}',
-                            style: boldTextStyle(size: 12, color: Colors.green),
+                            style: boldTextStyle(size: 12, color: context.themeSuccess),
                           )
                         else
                           PriceWidget(
                             price: priceMeta.discountAmount,
-                            color: Colors.green,
+                            color: context.themeSuccess,
                             size: 12,
                             isDiscountedPrice: true,
                           ),
@@ -332,7 +332,7 @@ class AllServiceCard extends StatelessWidget {
                   if (priceMeta.includesInclusiveTax)
                     Text(locale.value.includesInclusiveTax,
                         style: secondaryTextStyle(
-                            color: appColorSecondary,
+                            color: context.themePrimary,
                             size: 10,
                             fontStyle: FontStyle.italic)),
                 ],
@@ -348,7 +348,7 @@ class AllServiceCard extends StatelessWidget {
                   style: boldTextStyle(
                       size: 14,
                       fontFamily: fontFamilyWeight700,
-                      color: appColorSecondary),
+                      color: context.themePrimary),
                 ).paddingSymmetric(horizontal: 8),
               ).flexible().visible(showActionButton &&
                   trailing == null &&

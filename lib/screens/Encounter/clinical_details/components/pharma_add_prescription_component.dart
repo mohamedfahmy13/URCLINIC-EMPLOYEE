@@ -83,7 +83,7 @@ class AddPrescriptionComponentPharma extends StatelessWidget {
                               Text(form.medicine.name, style: boldTextStyle()),
                               8.width,
                               AppButton(
-                                textStyle: boldTextStyle(color: appColorSecondary, size: 14),
+                                textStyle: boldTextStyle(color: context.themePrimary, size: 14),
                                 color: isDarkMode.value ? scaffoldDarkColor : Colors.white,
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 shapeBorder: RoundedRectangleBorder(borderRadius: radius(4)),
@@ -92,7 +92,7 @@ class AddPrescriptionComponentPharma extends StatelessWidget {
 
                                   prescriptionFormDataList.remove(form);
                                 },
-                                child: const Icon(Icons.delete, size: 20, color: Colors.red),
+                                child: Icon(Icons.delete, size: 20, color: context.themeDanger),
                               ),
                             ],
                           ),
@@ -109,7 +109,7 @@ class AddPrescriptionComponentPharma extends StatelessWidget {
                               hintText: locale.value.dosageHint,
                               border: OutlineInputBorder(
                                 borderRadius: radius(defaultRadius / 2),
-                                borderSide: const BorderSide(color: borderColor, width: 0.0),
+                                borderSide: BorderSide(color: context.themeBorder, width: 0.0),
                               ),
                             ),
                           ),
@@ -126,7 +126,7 @@ class AddPrescriptionComponentPharma extends StatelessWidget {
                               hintText: locale.value.form1,
                               border: OutlineInputBorder(
                                 borderRadius: radius(defaultRadius / 2),
-                                borderSide: const BorderSide(color: borderColor, width: 0.0),
+                                borderSide: BorderSide(color: context.themeBorder, width: 0.0),
                               ),
                             ),
                           ),
@@ -210,7 +210,7 @@ class AddPrescriptionComponentPharma extends StatelessWidget {
                               hintText: locale.value.quantity,
                               border: OutlineInputBorder(
                                 borderRadius: radius(defaultRadius / 2),
-                                borderSide: const BorderSide(color: borderColor, width: 0.0),
+                                borderSide: BorderSide(color: context.themeBorder, width: 0.0),
                               ),
                             ),
                           ),

@@ -32,7 +32,7 @@ class AddSessionScreen extends StatelessWidget {
                   "*${locale.value.selectDoctor}",
                   style: boldTextStyle(
                     size: 14,
-                    color: appColorSecondary,
+                    color: context.themePrimary,
                     weight: FontWeight.w600,
                     fontStyle: FontStyle.italic,
                   ),

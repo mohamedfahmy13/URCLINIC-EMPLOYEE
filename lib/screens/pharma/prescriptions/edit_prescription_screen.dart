@@ -128,7 +128,7 @@ class EditPrescriptionScreen extends StatelessWidget {
                                       }
                                     });*/
                                   },
-                                  child: Text(locale.value.addMedicine, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: appColorSecondary)).paddingSymmetric(horizontal: 8),
+                                  child: Text(locale.value.addMedicine, style: boldTextStyle(size: 14, fontFamily: fontFamilyWeight700, color: context.themePrimary)).paddingSymmetric(horizontal: 8),
                                 ),
                               ],
                             ),
@@ -407,7 +407,7 @@ class EditPrescriptionScreen extends StatelessWidget {
                   leadingWidget: Row(
                     children: [
                       Text(locale.value.exclusiveTax, style: secondaryTextStyle()).expand(),
-                      const Icon(Icons.info_outline_rounded, size: 20, color: appColorPrimary).onTap(
+                      Icon(Icons.info_outline_rounded, size: 20, color: context.themePrimary).onTap(
                         () {
                           showModalBottomSheet(
                             context: context,
@@ -440,7 +440,7 @@ class EditPrescriptionScreen extends StatelessWidget {
                   Text(locale.value.total, style: boldTextStyle(size: 14)),
                   PriceWidget(
                     price: editPrescriptionCont.prescriptionDetail.value.paymentInfo.totalAmount,
-                    color: appColorPrimary,
+                    color: context.themePrimary,
                     size: 16,
                   ),
                 ],

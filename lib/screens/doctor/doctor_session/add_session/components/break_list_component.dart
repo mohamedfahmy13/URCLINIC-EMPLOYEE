@@ -55,7 +55,7 @@ class BreakListComponent extends StatelessWidget {
                   },
                   child: Text(
                     locale.value.editBreak,
-                    style: boldTextStyle(size: 12, color: appColorSecondary),
+                    style: boldTextStyle(size: 12, color: context.themePrimary),
                   ),
                 ),
               ],

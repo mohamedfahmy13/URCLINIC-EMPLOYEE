@@ -19,7 +19,7 @@ class BedStatusItemWidget extends StatelessWidget {
       decoration: boxDecorationDefault(
         color: context.cardColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: 1.0),
+        border: Border.all(color: context.themeBorder, width: 1.0),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

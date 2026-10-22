@@ -341,7 +341,7 @@ class BedAssignScreen extends StatelessWidget {
                                                                       Icons
                                                                           .check_circle,
                                                                       color:
-                                                                          appColorPrimary,
+                                                                          context.themePrimary,
                                                                       size: 20),
                                                               ],
                                                             ),
@@ -492,7 +492,7 @@ class BedAssignScreen extends StatelessWidget {
                                                                         Icons
                                                                             .check_circle,
                                                                         color:
-                                                                            appColorPrimary,
+                                                                            context.themePrimary,
                                                                         size:
                                                                             20),
                                                                 ],
@@ -626,7 +626,7 @@ class BedAssignScreen extends StatelessWidget {
                                                               Icons
                                                                   .check_circle,
                                                               color:
-                                                                  appColorPrimary,
+                                                                  context.themePrimary,
                                                               size: 20),
                                                       ],
                                                     ),
@@ -771,7 +771,7 @@ class BedAssignScreen extends StatelessWidget {
                                                               Icons
                                                                   .check_circle,
                                                               color:
-                                                                  appColorPrimary,
+                                                                  context.themePrimary,
                                                               size: 20),
                                                       ],
                                                     ),
@@ -815,7 +815,7 @@ class BedAssignScreen extends StatelessWidget {
                                 ? null
                                 : commonLeadingWid(
                                         imgPath: Assets.iconsIcCalendar,
-                                        color: secondaryTextColor,
+                                        color: context.themeMuted,
                                         size: 10)
                                     .paddingAll(16),
                           ),
@@ -836,7 +836,7 @@ class BedAssignScreen extends StatelessWidget {
                             labelText: locale.value.dischargeDate,
                             suffixIcon: commonLeadingWid(
                                     imgPath: Assets.iconsIcCalendar,
-                                    color: secondaryTextColor,
+                                    color: context.themeMuted,
                                     size: 10)
                                 .paddingAll(16),
                           ),
@@ -1050,7 +1050,7 @@ class BedAssignScreen extends StatelessWidget {
                                                                   Icons
                                                                       .check_circle,
                                                                   color:
-                                                                      appColorPrimary,
+                                                                      context.themePrimary,
                                                                   size: 20),
                                                           ],
                                                         ),

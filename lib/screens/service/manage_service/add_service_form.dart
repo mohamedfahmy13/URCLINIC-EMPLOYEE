@@ -43,7 +43,7 @@ class AddServiceForm extends StatelessWidget {
                   6.height,
                   Text(
                     locale.value.onlyJpegJpgPngAllowed,
-                    style: secondaryTextStyle(size: 11, color: secondaryTextColor),
+                    style: secondaryTextStyle(size: 11, color: context.themeMuted),
                   ),
                   12.height,
                   _buildImagePicker(context),
@@ -302,7 +302,7 @@ class AddServiceForm extends StatelessWidget {
         width: Get.width,
         constraints: BoxConstraints(minHeight: Get.height * 0.18),
         backgroundColor: context.cardColor,
-        border: Border.all(color: borderColor, width: 0.8),
+        border: Border.all(color: context.themeBorder, width: 0.8),
         borderRadius: defaultRadius,
         onTap: () {
           hideKeyboard(context);
@@ -319,7 +319,7 @@ class AddServiceForm extends StatelessWidget {
             16.height,
             Text(
               locale.value.chooseImageToUpload,
-              style: secondaryTextStyle(color: secondaryTextColor, size: 14),
+              style: secondaryTextStyle(color: context.themeMuted, size: 14),
               textAlign: TextAlign.center,
             ),
           ],
@@ -334,7 +334,7 @@ class AddServiceForm extends StatelessWidget {
       decoration: boxDecorationDefault(
         color: context.cardColor,
         borderRadius: radius(defaultRadius / 2),
-        border: Border.all(color: borderColor, width: 0.8),
+        border: Border.all(color: context.themeBorder, width: 0.8),
       ),
       child: Row(
         children: [
@@ -372,7 +372,7 @@ class AddServiceForm extends StatelessWidget {
               titleTextStyle: primaryTextStyle(size: 14),
               leading: Icon(
                 option['key'] == ServiceTypes.inClinic ? Icons.local_hospital_outlined : Icons.videocam_outlined,
-                color: appColorPrimary,
+                color: context.themePrimary,
               ),
               onTap: () {
                 c.selectType({'key': option['key']!, 'label': label});

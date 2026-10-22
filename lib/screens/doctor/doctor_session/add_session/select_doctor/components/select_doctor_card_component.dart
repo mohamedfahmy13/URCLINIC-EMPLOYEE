@@ -60,10 +60,10 @@ class SelectDoctorCardComponents extends StatelessWidget {
                             size: 20,
                             color: lightGrey,
                           )
-                        : const Icon(
+                        : Icon(
                             Icons.radio_button_checked_outlined,
                             size: 20,
-                            color: appColorPrimary,
+                            color: context.themePrimary,
                           )
                     : selectDoctorCon.selectDoctorData.value.fullName != doctorData.fullName
                         ? const Icon(
@@ -71,10 +71,10 @@ class SelectDoctorCardComponents extends StatelessWidget {
                             size: 20,
                             color: lightGrey,
                           )
-                        : const Icon(
+                        : Icon(
                             Icons.radio_button_checked_outlined,
                             size: 20,
-                            color: appColorPrimary,
+                            color: context.themePrimary,
                           ),
               ),
             ),

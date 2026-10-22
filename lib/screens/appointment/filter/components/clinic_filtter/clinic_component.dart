@@ -137,7 +137,7 @@ class FilterClinicComponent extends StatelessWidget {
                                                 ),
                                                 child: Text(
                                                   getClinicStatus(status: clinic.clinicStatus.toLowerCase()),
-                                                  style: boldTextStyle(size: 10, color: Colors.green.shade600),
+                                                  style: boldTextStyle(size: 10, color: context.themeSuccess),
                                                 ),
                                               ),
                                               6.height,

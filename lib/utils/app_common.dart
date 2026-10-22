@@ -1,3 +1,4 @@
+import 'theme_mode_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,11 @@ RxString selectedLanguageCode = DEFAULT_LANGUAGE.obs;
 RxBool isLoggedIn = false.obs;
 Rx<UserData> loginUserData = UserData().obs;
 RxBool isDarkMode = false.obs;
+final themeModeController = AppThemeModeController(onBrightnessChanged: (dark) {
+  isDarkMode(dark);
+  textPrimaryColorGlobal = dark ? appDarkTextPrimary : primaryTextColor;
+  textSecondaryColorGlobal = dark ? appDarkTextSecondary : appLightTextSecondary;
+});
 RxInt unreadNotificationCount = 0.obs;
 
 Rx<Currency> appCurrency = Currency().obs;
