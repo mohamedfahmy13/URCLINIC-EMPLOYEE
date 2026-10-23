@@ -107,7 +107,7 @@ class ClinicBoost {
   final String endDate;
   final int daysRemaining;
   final int durationDays;
-  final bool isLive;
+  final bool _isLive;
   final bool _canUpload;
   final String imageUrl;
   final String rejectedReason;
@@ -130,14 +130,13 @@ class ClinicBoost {
         endDate = json['end_date']?.toString() ?? '',
         daysRemaining = _integer(json['days_remaining']),
         durationDays = _integer(json['duration_days']),
-        isLive = json['publication_status'] != null
-            ? json['publication_status'] == 'live'
-            : json['is_live'] == true,
+        _isLive = json['is_live'] == true,
         _canUpload = json['can_upload'] == true,
         imageUrl = json['meta']?['banner_media_url']?.toString() ?? '',
         rejectedReason = json['meta']?['rejected_reason']?.toString() ?? '';
 
   bool get isBanner => type == 'banner_ad';
+  bool get isLive => displayStatus == 'live';
   bool get isEnded =>
       displayStatus == 'expired' || displayStatus == 'cancelled';
   bool get canUpload => _canUpload && !isEnded;
@@ -152,7 +151,7 @@ class ClinicBoost {
           ? bannerStatus
           : 'missing';
     }
-    if (isLive) return 'live';
+    if (_isLive) return 'live';
     if (startDate.isNotEmpty && endDate.isNotEmpty) return 'scheduled';
     return 'awaiting_publication';
   }

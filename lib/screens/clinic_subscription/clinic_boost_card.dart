@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import '../../main.dart';
 import '../../utils/colors.dart';
 import 'clinic_subscription_models.dart';
@@ -18,7 +19,8 @@ class ClinicBoostCard extends StatelessWidget {
     final date = DateTime.tryParse(value);
     return date == null
         ? value
-        : MaterialLocalizations.of(context).formatMediumDate(date);
+        : DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+            .format(date);
   }
 
   String? _message(BuildContext context, String status) => switch (status) {

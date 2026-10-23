@@ -91,6 +91,13 @@ void main() {
     });
     expect(legacy.displayStatus, 'awaiting_publication');
     expect(legacy.isLive, isFalse);
+    final staleLegacy = ClinicBoost.fromJson({
+      'type': 'banner_ad',
+      'status': 'cancelled',
+      'banner_status': 'approved',
+      'is_live': true,
+    });
+    expect(staleLegacy.isLive, isFalse);
   });
 
   for (final state in [
@@ -142,6 +149,9 @@ void main() {
       };
       expect(find.text(label), findsOneWidget);
       expect(find.text(locale.value.clinicBenefitFromRenewal), findsOneWidget);
+      expect(find.textContaining('2028'), findsOneWidget,
+          reason:
+              'The subscription period must include its year to distinguish a future renewal.');
       if (state != 'live') {
         expect(find.text(locale.value.clinicBenefitLive), findsNothing);
       }
