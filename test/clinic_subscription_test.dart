@@ -142,14 +142,16 @@ void main() {
       };
       expect(find.text(label), findsOneWidget);
       expect(find.text(locale.value.clinicBenefitFromRenewal), findsOneWidget);
-      if (state != 'live')
+      if (state != 'live') {
         expect(find.text(locale.value.clinicBenefitLive), findsNothing);
+      }
       if (state == 'expired') {
         expect(find.byType(OutlinedButton), findsNothing);
         expect(find.text(locale.value.clinicDaysRemaining(0)), findsNothing);
       }
-      if (state == 'paused')
+      if (state == 'paused') {
         expect(find.text(locale.value.clinicBenefitPausedHint), findsOneWidget);
+      }
       if (state == 'awaiting_publication') {
         expect(find.text(locale.value.clinicBannerScheduleMissingHint),
             findsOneWidget);

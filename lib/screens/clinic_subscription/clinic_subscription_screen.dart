@@ -403,8 +403,7 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen>
       ],
       if (upcoming.isNotEmpty) ...[
         const SizedBox(height: 8),
-        _heading(locale.value.clinicUpcomingBenefits,
-            locale.value.clinicRenewalNotStarted),
+        _heading(locale.value.clinicUpcomingBenefits),
         ...upcoming.map(card),
       ],
       if (_controller.state.pastBoosts.isNotEmpty)
