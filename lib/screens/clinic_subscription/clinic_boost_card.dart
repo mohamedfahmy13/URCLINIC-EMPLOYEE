@@ -17,10 +17,13 @@ class ClinicBoostCard extends StatelessWidget {
 
   String _date(BuildContext context, String value) {
     final date = DateTime.tryParse(value);
-    return date == null
-        ? value
-        : DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-            .format(date);
+    if (date == null) return value;
+    try {
+      return DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
+          .format(date);
+    } catch (_) {
+      return MaterialLocalizations.of(context).formatShortDate(date);
+    }
   }
 
   String? _message(BuildContext context, String status) => switch (status) {
