@@ -13,12 +13,16 @@ import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscri
 import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_subscription_screen.dart';
 import 'package:kivicare_clinic_admin/screens/clinic_subscription/clinic_boost_card.dart';
 import 'package:kivicare_clinic_admin/utils/app_common.dart';
+import 'package:kivicare_clinic_admin/app_theme.dart';
 
 class FakeSubscriptionApi extends ClinicSubscriptionApi {
   String status = 'pending';
   bool unavailable = false;
   List<ClinicPlan>? catalog;
   List<Map<String, dynamic>> benefits = [];
+  List<Map<String, dynamic>> pastBenefits = [];
+  Map<String, dynamic>? renewal;
+  int currentLoads = 0;
   List<ClinicPayment> payments = [];
 
   @override
@@ -37,20 +41,25 @@ class FakeSubscriptionApi extends ClinicSubscriptionApi {
       ];
 
   @override
-  Future<ClinicSubscriptionState> current() async =>
-      ClinicSubscriptionState.fromJson({
-        'subscription': status == 'paid'
-            ? {
-                'plan_id': 1,
-                'plan_name': 'Quarterly',
-                'plan_name_ar': 'ربع سنوية',
-                'start_date': '2026-10-01',
-                'end_date': '2027-01-01',
-                'days_remaining': 70
-              }
-            : null,
-        'boosts': benefits,
-      });
+  Future<ClinicSubscriptionState> current() async {
+    currentLoads++;
+    return ClinicSubscriptionState.fromJson({
+      'subscription': status == 'paid'
+          ? {
+              'id': 9,
+              'plan_id': 1,
+              'plan_name': 'Quarterly',
+              'plan_name_ar': 'ربع سنوية',
+              'start_date': '2026-10-01',
+              'end_date': '2027-01-01',
+              'days_remaining': 70
+            }
+          : null,
+      'boosts': benefits,
+      'past_boosts': pastBenefits,
+      'upcoming_subscription': renewal,
+    });
+  }
 
   @override
   Future<List<ClinicPayment>> history() async => payments;
@@ -63,6 +72,219 @@ class FakeSubscriptionApi extends ClinicSubscriptionApi {
 }
 
 void main() {
+  test('server publication state overrides stale live and upload flags', () {
+    final expired = ClinicBoost.fromJson({
+      'type': 'banner_ad',
+      'status': 'active',
+      'banner_status': 'approved',
+      'publication_status': 'expired',
+      'is_live': true,
+      'can_upload': true,
+    });
+    expect(expired.displayStatus, 'expired');
+    expect(expired.isLive, isFalse);
+    expect(expired.canUpload, isFalse);
+    final legacy = ClinicBoost.fromJson({
+      'type': 'banner_ad',
+      'status': 'pending',
+      'banner_status': 'approved',
+    });
+    expect(legacy.displayStatus, 'awaiting_publication');
+    expect(legacy.isLive, isFalse);
+  });
+
+  for (final state in [
+    'scheduled',
+    'live',
+    'pending_review',
+    'expired',
+    'paused',
+    'awaiting_publication'
+  ]) {
+    testWidgets('banner publication state $state has an accurate explanation',
+        (tester) async {
+      locale.value = LanguageEn();
+      final boost = ClinicBoost.fromJson({
+        'id': 1,
+        'type': 'banner_ad',
+        'banner_status': 'approved',
+        'status': state == 'pending_review' ? 'pending' : 'active',
+        'publication_status': state,
+        'start_date': state == 'awaiting_publication' ? null : '2027-10-22',
+        'end_date': state == 'awaiting_publication' ? null : '2027-10-25',
+        'days_remaining': state == 'expired' ? 0 : 4,
+        'can_upload': true,
+        'subscription_id': 10,
+        'subscription': {
+          'id': 10,
+          'phase': 'upcoming',
+          'start_date': '2027-10-22',
+          'end_date': '2028-10-22'
+        },
+      });
+      await tester.pumpWidget(MaterialApp(
+        theme: AppTheme.create(Brightness.light, fontFamily: 'Test'),
+        home: Scaffold(
+            body: SingleChildScrollView(
+                child: ClinicBoostCard(
+          boost: boost,
+          busy: false,
+          onUpload: () {},
+        ))),
+      ));
+      final label = switch (state) {
+        'scheduled' => locale.value.clinicBannerApprovedScheduled,
+        'live' => locale.value.clinicBenefitLive,
+        'pending_review' => locale.value.clinicBannerReview,
+        'expired' => locale.value.clinicBenefitExpired,
+        'paused' => locale.value.clinicBenefitPaused,
+        _ => locale.value.clinicBannerAwaitingPublication,
+      };
+      expect(find.text(label), findsOneWidget);
+      expect(find.text(locale.value.clinicBenefitFromRenewal), findsOneWidget);
+      if (state != 'live')
+        expect(find.text(locale.value.clinicBenefitLive), findsNothing);
+      if (state == 'expired') {
+        expect(find.byType(OutlinedButton), findsNothing);
+        expect(find.text(locale.value.clinicDaysRemaining(0)), findsNothing);
+      }
+      if (state == 'paused')
+        expect(find.text(locale.value.clinicBenefitPausedHint), findsOneWidget);
+      if (state == 'awaiting_publication') {
+        expect(find.text(locale.value.clinicBannerScheduleMissingHint),
+            findsOneWidget);
+        expect(find.text(locale.value.clinicBannerApprovedScheduled),
+            findsNothing);
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets(
+      'current benefits, renewal and expired history are distinct in compact Arabic dark mode',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    locale.value = LanguageAr();
+    selectedLanguageCode.value = 'ar';
+    loginUserData.value = UserData(userRole: ['receptionist']);
+    addTearDown(() {
+      locale.value = LanguageEn();
+      selectedLanguageCode.value = 'en';
+      loginUserData.value = UserData();
+    });
+    final api = FakeSubscriptionApi()
+      ..status = 'paid'
+      ..renewal = {
+        'id': 10,
+        'plan_id': 1,
+        'plan_name': 'Quarterly',
+        'plan_name_ar': 'ربع سنوية',
+        'start_date': '2027-01-01',
+        'end_date': '2027-04-01',
+        'phase': 'upcoming'
+      }
+      ..benefits = [
+        {
+          'id': 1,
+          'type': 'banner_ad',
+          'publication_status': 'live',
+          'banner_status': 'approved',
+          'subscription': {
+            'id': 9,
+            'phase': 'current',
+            'start_date': '2026-10-01',
+            'end_date': '2027-01-01'
+          },
+          'start_date': '2026-10-22',
+          'end_date': '2026-10-25',
+          'days_remaining': 4
+        },
+        {
+          'id': 2,
+          'type': 'banner_ad',
+          'publication_status': 'scheduled',
+          'banner_status': 'approved',
+          'subscription': {
+            'id': 10,
+            'phase': 'upcoming',
+            'start_date': '2027-01-01',
+            'end_date': '2027-04-01'
+          },
+          'start_date': '2027-01-01',
+          'end_date': '2027-01-04',
+          'days_remaining': 4
+        },
+      ]
+      ..pastBenefits = [
+        {
+          'id': 3,
+          'type': 'banner_ad',
+          'publication_status': 'expired',
+          'banner_status': 'approved',
+          'can_upload': true,
+          'start_date': '2026-10-01',
+          'end_date': '2026-10-04'
+        },
+      ];
+    final controller = ClinicSubscriptionController(api: api);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(MaterialApp(
+      theme: AppTheme.create(Brightness.dark, fontFamily: 'Test'),
+      locale: const Locale('ar'),
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.4)),
+          child: child!),
+      home: ClinicSubscriptionScreen(controller: controller),
+    ));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+        find.text(locale.value.clinicBenefitFromCurrent), 200);
+    expect(find.text(locale.value.clinicBenefitFromCurrent), findsOneWidget);
+    await tester.scrollUntilVisible(
+        find.text(locale.value.clinicBenefitFromRenewal), 200);
+    expect(
+        find.text(locale.value.clinicBannerApprovedScheduled), findsOneWidget);
+    await tester.scrollUntilVisible(
+        find.text(locale.value.clinicPastBenefits), 200);
+    await tester.tap(find.text(locale.value.clinicPastBenefits));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+        find.text(locale.value.clinicBenefitExpired), 200);
+    expect(find.text(locale.value.clinicBenefitExpired), findsOneWidget);
+    final historyCard = find.byWidgetPredicate(
+        (widget) => widget is ClinicBoostCard && widget.boost.id == 3);
+    expect(
+        find.descendant(of: historyCard, matching: find.byType(OutlinedButton)),
+        findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+      'returning to the subscription screen refreshes publication state',
+      (tester) async {
+    locale.value = LanguageEn();
+    loginUserData.value = UserData(userRole: ['receptionist']);
+    addTearDown(() => loginUserData.value = UserData());
+    final api = FakeSubscriptionApi()..status = 'paid';
+    final controller = ClinicSubscriptionController(api: api);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+        MaterialApp(home: ClinicSubscriptionScreen(controller: controller)));
+    await tester.pumpAndSettle();
+    final before = api.currentLoads;
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(api.currentLoads, before + 1);
+    expect(tester.takeException(), isNull);
+  });
+
   test(
       'benefits preserve pending days, moderation feedback and scheduled dates',
       () {

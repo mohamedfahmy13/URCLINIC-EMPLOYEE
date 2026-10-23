@@ -1898,4 +1898,24 @@ abstract class BaseLanguage {
   String clinicPackageMonths(int months) => '$months months';
   String clinicPackageDays(int days) => '$days days';
   String clinicDaysRemaining(int days) => '$days days remaining';
+  String get clinicBannerApprovedScheduled => 'Approved and scheduled';
+  String get clinicBenefitExpired => 'Expired';
+  String get clinicBenefitCancelled => 'Cancelled';
+  String get clinicBenefitPaused => 'Temporarily paused';
+  String get clinicBannerAwaitingPublication => 'Approved, awaiting a publication schedule';
+  String get clinicBannerScheduleMissingHint => 'Approval is complete, but the publication schedule is missing. Contact the administrator to review it.';
+  String get clinicBannerLiveHint => 'Your banner appears at the top of the patient home screen. Tapping it opens your clinic.';
+  String get clinicBenefitExpiredHint => 'The display period has ended. This benefit is kept here for your records.';
+  String get clinicBenefitCancelledHint => 'This benefit was cancelled and is not shown to patients.';
+  String get clinicBenefitPausedHint => 'The clinic is inactive, so this benefit is not visible to patients.';
+  String get clinicCurrentBenefits => 'Current benefits';
+  String get clinicUpcomingBenefits => 'Benefits of your scheduled renewal';
+  String get clinicPastBenefits => 'Expired and cancelled benefits';
+  String get clinicBenefitFromCurrent => 'Included in your current subscription';
+  String get clinicBenefitFromRenewal => 'Included in your scheduled renewal';
+  String get clinicBenefitFromPrevious => 'Included in a previous subscription';
+  String get clinicBenefitAdditional => 'Additional clinic benefit';
+  String get clinicRenewalNotStarted => 'This renewal has not started yet. Its benefits become available in its subscription period, after any required approval.';
+  String clinicBenefitScheduledHint(String start, String end) => 'Scheduled from $start to $end. This benefit is not live yet.';
+  String clinicRenewalStartsOn(String date) => 'Your renewal starts on $date, after your current subscription ends.';
 }

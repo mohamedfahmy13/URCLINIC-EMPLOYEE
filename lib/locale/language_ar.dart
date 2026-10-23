@@ -2974,4 +2974,64 @@ class LanguageAr extends BaseLanguage {
   String clinicPackageDays(int days) => '$days يوم';
   @override
   String clinicDaysRemaining(int days) => 'متبقي $days يوم';
+  @override
+  String get clinicBannerApprovedScheduled => 'معتمد ومجدول';
+
+  @override
+  String get clinicBenefitExpired => 'منتهي';
+
+  @override
+  String get clinicBenefitCancelled => 'ملغى';
+
+  @override
+  String get clinicBenefitPaused => 'متوقف مؤقتًا';
+
+  @override
+  String get clinicBannerAwaitingPublication => 'معتمد بانتظار تحديد العرض';
+
+  @override
+  String get clinicBannerScheduleMissingHint => 'تم الاعتماد لكن موعد النشر غير مكتمل. راجع الإدارة لتحديد فترة العرض.';
+
+  @override
+  String get clinicBannerLiveHint => 'بانرك ظاهر أعلى الصفحة الرئيسية للمريض، والضغط عليه يفتح صفحة عيادتك.';
+
+  @override
+  String get clinicBenefitExpiredHint => 'انتهت فترة العرض. تظل هذه الميزة في السجل للرجوع إليها.';
+
+  @override
+  String get clinicBenefitCancelledHint => 'تم إلغاء هذه الميزة ولا تظهر للمرضى.';
+
+  @override
+  String get clinicBenefitPausedHint => 'العيادة غير مفعلة، لذلك لا تظهر هذه الميزة للمرضى حاليًا.';
+
+  @override
+  String get clinicCurrentBenefits => 'المزايا الحالية';
+
+  @override
+  String get clinicUpcomingBenefits => 'مزايا التجديد القادم';
+
+  @override
+  String get clinicPastBenefits => 'المزايا المنتهية والملغاة';
+
+  @override
+  String get clinicBenefitFromCurrent => 'ضمن اشتراكك الحالي';
+
+  @override
+  String get clinicBenefitFromRenewal => 'ضمن التجديد القادم';
+
+  @override
+  String get clinicBenefitFromPrevious => 'ضمن اشتراك سابق';
+
+  @override
+  String get clinicBenefitAdditional => 'ميزة إضافية للعيادة';
+
+  @override
+  String get clinicRenewalNotStarted => 'لم يبدأ هذا التجديد بعد. تتاح مزاياه عند حلول فترته وبعد اعتماد ما يتطلب المراجعة.';
+
+  @override
+  String clinicBenefitScheduledHint(String start, String end) => 'العرض مجدول من $start إلى $end. لم يبدأ ظهور هذه الميزة بعد.';
+
+  @override
+  String clinicRenewalStartsOn(String date) => 'يبدأ تجديدك يوم $date بعد انتهاء اشتراكك الحالي.';
+
 }

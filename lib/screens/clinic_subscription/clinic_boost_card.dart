@@ -14,26 +14,60 @@ class ClinicBoostCard extends StatelessWidget {
     required this.onUpload,
   });
 
+  String _date(BuildContext context, String value) {
+    final date = DateTime.tryParse(value);
+    return date == null
+        ? value
+        : MaterialLocalizations.of(context).formatMediumDate(date);
+  }
+
+  String? _message(BuildContext context, String status) => switch (status) {
+        'scheduled' => locale.value.clinicBenefitScheduledHint(
+            _date(context, boost.startDate), _date(context, boost.endDate)),
+        'live' => boost.isBanner ? locale.value.clinicBannerLiveHint : null,
+        'expired' => locale.value.clinicBenefitExpiredHint,
+        'cancelled' => locale.value.clinicBenefitCancelledHint,
+        'paused' => locale.value.clinicBenefitPausedHint,
+        'awaiting_publication' => locale.value.clinicBannerScheduleMissingHint,
+        'missing' ||
+        'pending_review' ||
+        'rejected' =>
+          locale.value.clinicBannerTimeHint,
+        _ => null,
+      };
+
   @override
   Widget build(BuildContext context) {
-    final awaiting = boost.isBanner && boost.bannerStatus != 'approved';
-    final rejected = boost.bannerStatus == 'rejected';
-    final label = !awaiting
-        ? (boost.isLive
-            ? locale.value.clinicBenefitLive
-            : locale.value.clinicBenefitScheduled)
-        : switch (boost.bannerStatus) {
-            'pending_review' => locale.value.clinicBannerReview,
-            'rejected' => locale.value.clinicBannerRejected,
-            _ => locale.value.clinicBannerMissing,
-          };
-    final color = rejected
-        ? Theme.of(context).colorScheme.error
-        : boost.isLive
-            ? context.themeSuccess
-            : boost.bannerStatus == 'pending_review'
-                ? context.themeWarning
-                : context.themePrimary;
+    final status = boost.displayStatus;
+    final label = switch (status) {
+      'live' => locale.value.clinicBenefitLive,
+      'scheduled' => boost.isBanner
+          ? locale.value.clinicBannerApprovedScheduled
+          : locale.value.clinicBenefitScheduled,
+      'pending_review' => locale.value.clinicBannerReview,
+      'rejected' => locale.value.clinicBannerRejected,
+      'missing' => locale.value.clinicBannerMissing,
+      'expired' => locale.value.clinicBenefitExpired,
+      'cancelled' => locale.value.clinicBenefitCancelled,
+      'paused' => locale.value.clinicBenefitPaused,
+      _ => locale.value.clinicBannerAwaitingPublication,
+    };
+    final color = switch (status) {
+      'live' => context.themeSuccess,
+      'rejected' || 'cancelled' => context.themeDanger,
+      'pending_review' || 'paused' => context.themeWarning,
+      'expired' => context.themeMuted,
+      _ => context.themePrimary,
+    };
+    final contextLabel = switch (boost.subscriptionPhase) {
+      'current' => locale.value.clinicBenefitFromCurrent,
+      'upcoming' => locale.value.clinicBenefitFromRenewal,
+      'expired' || 'cancelled' => locale.value.clinicBenefitFromPrevious,
+      _ => boost.source == 'purchased'
+          ? locale.value.clinicBenefitAdditional
+          : null,
+    };
+    final message = _message(context, status);
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 12),
@@ -71,12 +105,40 @@ class ClinicBoostCard extends StatelessWidget {
                           fontWeight: FontWeight.w500)),
                 ])),
           ]),
+          if (contextLabel != null) ...[
+            const SizedBox(height: 14),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: context.themeSubtleSurface,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(contextLabel,
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: context.themeMuted,
+                            fontWeight: FontWeight.w600)),
+                    if (boost.subscriptionStartDate.isNotEmpty &&
+                        boost.subscriptionEndDate.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                          '${_date(context, boost.subscriptionStartDate)} — ${_date(context, boost.subscriptionEndDate)}',
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ]),
+            ),
+          ],
           const SizedBox(height: 16),
-          Text(locale.value.clinicDaysRemaining(boost.daysRemaining),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w600)),
+          if (!boost.isEnded)
+            Text(locale.value.clinicDaysRemaining(boost.daysRemaining),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
           if (boost.isLive && boost.durationDays > 0) ...[
             const SizedBox(height: 10),
             ClipRRect(
@@ -88,12 +150,23 @@ class ClinicBoostCard extends StatelessWidget {
                     color: color,
                     backgroundColor: color.withValues(alpha: .08))),
           ],
-          if (boost.startDate.isNotEmpty && boost.endDate.isNotEmpty)
+          if (status != 'scheduled' &&
+              boost.startDate.isNotEmpty &&
+              boost.endDate.isNotEmpty)
             Padding(
                 padding: const EdgeInsets.only(top: 8),
-                child: Text('${boost.startDate} → ${boost.endDate}',
-                    textDirection: TextDirection.ltr,
+                child: Text(
+                    '${_date(context, boost.startDate)} — ${_date(context, boost.endDate)}',
                     style: Theme.of(context).textTheme.bodySmall)),
+          if (message != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(message,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: context.themeMuted)),
+            ),
           if (boost.isBanner) ...[
             if (boost.imageUrl.isNotEmpty)
               Padding(
@@ -118,11 +191,6 @@ class ClinicBoostCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Text(boost.rejectedReason,
                       style: TextStyle(color: color))),
-            if (awaiting)
-              Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Text(locale.value.clinicBannerTimeHint,
-                      style: Theme.of(context).textTheme.bodySmall)),
             if (boost.canUpload) ...[
               const SizedBox(height: 14),
               SizedBox(

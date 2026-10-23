@@ -37,6 +37,8 @@ class ClinicPlanPerk {
 }
 
 class ClinicSubscription {
+  final int id;
+  final String phase;
   final int planId;
   final String name;
   final String nameAr;
@@ -45,7 +47,9 @@ class ClinicSubscription {
   final int daysRemaining;
 
   ClinicSubscription.fromJson(Map<String, dynamic> json)
-      : planId = _integer(json['plan_id']),
+      : id = _integer(json['id']),
+        phase = json['phase']?.toString() ?? '',
+        planId = _integer(json['plan_id']),
         name = json['plan_name']?.toString() ?? '',
         nameAr = json['plan_name_ar']?.toString() ?? '',
         startDate = json['start_date']?.toString() ?? '',
@@ -60,13 +64,20 @@ class ClinicSubscriptionState {
   final ClinicSubscription? current;
   final ClinicSubscription? upcoming;
   final List<ClinicBoost> boosts;
+  final List<ClinicBoost> pastBoosts;
 
   const ClinicSubscriptionState(
-      {this.current, this.upcoming, this.boosts = const []});
+      {this.current,
+      this.upcoming,
+      this.boosts = const [],
+      this.pastBoosts = const []});
 
   factory ClinicSubscriptionState.fromJson(Map<String, dynamic> json) {
     return ClinicSubscriptionState(
       boosts: (json['boosts'] as List? ?? [])
+          .map((item) => ClinicBoost.fromJson(Map<String, dynamic>.from(item)))
+          .toList(),
+      pastBoosts: (json['past_boosts'] as List? ?? [])
           .map((item) => ClinicBoost.fromJson(Map<String, dynamic>.from(item)))
           .toList(),
       current: json['subscription'] is Map
@@ -86,12 +97,18 @@ class ClinicBoost {
   final String type;
   final String status;
   final String bannerStatus;
+  final String publicationStatus;
+  final String source;
+  final int subscriptionId;
+  final String subscriptionPhase;
+  final String subscriptionStartDate;
+  final String subscriptionEndDate;
   final String startDate;
   final String endDate;
   final int daysRemaining;
   final int durationDays;
   final bool isLive;
-  final bool canUpload;
+  final bool _canUpload;
   final String imageUrl;
   final String rejectedReason;
 
@@ -100,16 +117,45 @@ class ClinicBoost {
         type = json['type']?.toString() ?? '',
         status = json['status']?.toString() ?? '',
         bannerStatus = json['banner_status']?.toString() ?? '',
+        publicationStatus = json['publication_status']?.toString() ?? '',
+        source = json['source']?.toString() ?? '',
+        subscriptionId =
+            _integer(json['subscription_id'] ?? json['subscription']?['id']),
+        subscriptionPhase = json['subscription']?['phase']?.toString() ?? '',
+        subscriptionStartDate =
+            json['subscription']?['start_date']?.toString() ?? '',
+        subscriptionEndDate =
+            json['subscription']?['end_date']?.toString() ?? '',
         startDate = json['start_date']?.toString() ?? '',
         endDate = json['end_date']?.toString() ?? '',
         daysRemaining = _integer(json['days_remaining']),
         durationDays = _integer(json['duration_days']),
-        isLive = json['is_live'] == true,
-        canUpload = json['can_upload'] == true,
+        isLive = json['publication_status'] != null
+            ? json['publication_status'] == 'live'
+            : json['is_live'] == true,
+        _canUpload = json['can_upload'] == true,
         imageUrl = json['meta']?['banner_media_url']?.toString() ?? '',
         rejectedReason = json['meta']?['rejected_reason']?.toString() ?? '';
 
   bool get isBanner => type == 'banner_ad';
+  bool get isEnded =>
+      displayStatus == 'expired' || displayStatus == 'cancelled';
+  bool get canUpload => _canUpload && !isEnded;
+
+  // Older API versions still supply moderation status and is_live. An approved
+  // image with no dates must never be presented as an already scheduled banner.
+  String get displayStatus {
+    if (publicationStatus.isNotEmpty) return publicationStatus;
+    if (status == 'expired' || status == 'cancelled') return status;
+    if (isBanner && bannerStatus != 'approved') {
+      return ['pending_review', 'rejected'].contains(bannerStatus)
+          ? bannerStatus
+          : 'missing';
+    }
+    if (isLive) return 'live';
+    if (startDate.isNotEmpty && endDate.isNotEmpty) return 'scheduled';
+    return 'awaiting_publication';
+  }
 }
 
 class ClinicPayment {

@@ -22,7 +22,8 @@ class ClinicSubscriptionScreen extends StatefulWidget {
       _ClinicSubscriptionScreenState();
 }
 
-class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
+class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen>
+    with WidgetsBindingObserver {
   late final ClinicSubscriptionController _controller;
   int _section = 0;
   int? _selectedPlanId;
@@ -33,14 +34,26 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller = widget.controller ?? ClinicSubscriptionController();
     if (_allowed) _controller.load();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     if (widget.controller == null) _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed &&
+        _allowed &&
+        !_controller.loading &&
+        !_controller.busy) {
+      _controller.load();
+    }
   }
 
   String _price(double? value, String currency) => value == null
@@ -154,7 +167,8 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                 Text(locale.value.clinicPackageMonths(plan.durationMonths)),
                 const SizedBox(height: 16),
                 Text(_controller.state.current != null
-                    ? locale.value.clinicRenewalHint
+                    ? locale.value.clinicRenewalStartsOn(
+                        _date(_controller.state.current!.endDate))
                     : locale.value.clinicPackagesHint),
               ]),
           actions: [
@@ -368,12 +382,41 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
         _heading(locale.value.clinicBenefits, locale.value.clinicBenefitsHint),
         if (_controller.state.boosts.isEmpty)
           _empty(Icons.auto_awesome_outlined, locale.value.clinicNoBenefits),
-        for (final boost in _controller.state.boosts)
-          ClinicBoostCard(
-              boost: boost,
-              busy: _controller.busy || _controller.loading,
-              onUpload: () => _uploadBanner(boost)),
+        ..._benefits(),
       ];
+
+  List<Widget> _benefits() {
+    final current = _controller.state.boosts
+        .where((boost) => boost.subscriptionPhase != 'upcoming')
+        .toList();
+    final upcoming = _controller.state.boosts
+        .where((boost) => boost.subscriptionPhase == 'upcoming')
+        .toList();
+    Widget card(ClinicBoost boost) => ClinicBoostCard(
+        boost: boost,
+        busy: _controller.busy || _controller.loading,
+        onUpload: () => _uploadBanner(boost));
+    return [
+      if (current.isNotEmpty) ...[
+        _heading(locale.value.clinicCurrentBenefits),
+        ...current.map(card),
+      ],
+      if (upcoming.isNotEmpty) ...[
+        const SizedBox(height: 8),
+        _heading(locale.value.clinicUpcomingBenefits,
+            locale.value.clinicRenewalNotStarted),
+        ...upcoming.map(card),
+      ],
+      if (_controller.state.pastBoosts.isNotEmpty)
+        ExpansionTile(
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: const EdgeInsets.only(top: 12),
+          title: Text(locale.value.clinicPastBenefits),
+          trailing: const Icon(Icons.expand_more),
+          children: _controller.state.pastBoosts.map(card).toList(),
+        ),
+    ];
+  }
 
   Widget _subscriptionSummary() {
     final sub = _controller.state.current;
@@ -447,6 +490,9 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                 backgroundColor: Colors.white24,
                 color: const Color(0xFF7AD8CB))),
         const SizedBox(height: 16),
+        Text('${locale.value.clinicStarts}  ${_date(sub.startDate)}',
+            style: const TextStyle(color: Colors.white70)),
+        const SizedBox(height: 6),
         Text('${locale.value.clinicExpires}  ${_date(sub.endDate)}',
             style: const TextStyle(color: Colors.white70)),
         const SizedBox(height: 12),
@@ -465,8 +511,7 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
         child: Padding(
             padding: const EdgeInsets.all(18),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Icon(Icons.event_available_outlined,
-                  color: context.themePrimary),
+              Icon(Icons.event_available_outlined, color: context.themePrimary),
               const SizedBox(width: 12),
               Expanded(
                   child: Column(
@@ -479,6 +524,12 @@ class _ClinicSubscriptionScreenState extends State<ClinicSubscriptionScreen> {
                     const SizedBox(height: 6),
                     Text(
                         '${locale.value.clinicStarts}  ${_date(sub.startDate)}'),
+                    const SizedBox(height: 4),
+                    Text(
+                        '${locale.value.clinicExpires}  ${_date(sub.endDate)}'),
+                    const SizedBox(height: 10),
+                    Text(locale.value.clinicRenewalNotStarted,
+                        style: Theme.of(context).textTheme.bodySmall),
                   ])),
             ])),
       );
